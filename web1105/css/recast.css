@@ -1,0 +1,57 @@
+.recastMes{
+	width: 90%;
+	background: #fff;
+	margin: 0 auto;
+	margin-top: 20px;
+	box-shadow: 0 1px 10px 0 rgba(202,201,201,0.50);
+	border-radius: 5px;
+}
+.recastMes .top{
+	height: 68px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: #40424E;
+	padding: 0 15px;
+	background: #F4F4F4;
+	border-radius: 5px 5px 0px 0px;
+}
+.recastMes .top p{
+	font-size: 21px;
+	color: #40424E;
+}
+.recastMes .top span{
+	font-size: 34px;
+}
+.recastMes .bot{
+/* 	background: orange; */
+	padding: 15px 15px 33px 15px;
+	
+}
+.recastMes .bot p{
+	font-size: 12px;
+	color: #333333;
+	letter-spacing: 0;
+}
+.recastMes .bot input{
+	border: none;
+	border-bottom: 1px solid #CBCBCB;
+	padding: 25px 15px;
+	color: #E5E5E5;
+	font-size: 25px;
+}
+.mui-input-row{
+	display: flex;
+	justify-content: center;
+}
+.mui-input-row button{
+	width: 310px !important;
+	height: 50px !important;
+	margin-top: 40px;
+	font-size: 21px;
+	background: #25B364;
+	border-radius: 5px;
+	border: none;
+	letter-spacing: 8px;
+	
+}

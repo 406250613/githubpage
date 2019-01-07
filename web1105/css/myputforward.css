@@ -1,0 +1,51 @@
+.mesContainer{
+	padding-top: 65px;
+}
+.recastMes{
+	width: 90%;
+	height: 100%;
+	background: #fff;
+	margin: 0 auto;
+	box-shadow: 0 1px 10px 0 rgba(202,201,201,0.50);
+	border-radius: 5px;
+	overflow-y: scroll;
+}
+.listUl{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.listUl .item{
+	padding: 16px 22px;
+	padding-bottom: 12px;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid #EBEBEB;
+}
+.listUl .item > div{
+	display: flex;
+	flex-direction: column;
+	align-content: space-between;
+}
+.listUl .item > p{
+	color: #E1AF48;
+	font-size: 21px;
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+.listUl .item > p > span{
+    position: absolute;
+    bottom: -13px;
+    left: 0;
+    font-size: 16px;
+    width: 120%;
+}
+.listUl .item > div > p{
+	color: #000;
+	font-size: 16px;
+}
+.listUl .item > div > span{
+	color: #999;
+	font-size: 13px;
+}

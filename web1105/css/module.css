@@ -1,0 +1,45 @@
+html{
+	height: 100%;
+}
+body{
+	background-color: #F5F5F5;
+	height: 100%;
+	overflow: hidden;
+}
+p{
+	margin: 0;
+	padding: 0;
+}
+.mesContainer{
+	height: 100%;
+	padding-top: 45px;
+}
+
+.mui-bar-nav{
+	background: #40424E;
+}
+.mui-bar .mui-title{
+	color: #fff;
+}
+.mui-bar .mui-icon{
+	color: #fff;
+}
+.mui-btn-blue.mui-active:enabled,
+ .mui-btn-blue:enabled:active,
+  .mui-btn-primary.mui-active:enabled,
+   .mui-btn-primary:enabled:active,
+	input[type=submit].mui-active:enabled,
+	 input[type=submit]:enabled:active{
+		background-color: #697581;
+}
+.mui-btn, button, input[type=button], input[type=reset], input[type=submit]{
+	font-weight: normal;
+}
+/* 处理中 */
+.coloring{
+	color: #CF1515;
+}
+/* 已处理 */
+.colored{
+	color: #25B364;
+}

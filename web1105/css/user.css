@@ -1,0 +1,110 @@
+.userTop{
+	background: #40424E;
+	padding-top: 60px;
+	z-index: 1;
+	height: 100%;
+}
+.userTop .card{
+	width: 335px;
+	height: 180px;
+	background: url(../images/pic.png) no-repeat;
+	background-size: cover;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.userTop .card .mes{
+	font-size: 19px;
+	font-weight: bold;
+	display: flex;
+	margin-top: 15px;
+}
+.userTop .card .mes div{
+	width: 60px;
+	height: 20px;
+	margin-left: 5px;
+	background: url(../images/等级.png) no-repeat;
+	background-size: cover;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 12px;
+	color: #fff;
+	padding-left: 16px;
+}
+.card .avater{
+	width: 93px;
+	height: 93px;
+	border-radius: 50%;
+	margin-top: 25px;
+}
+.userTop .list{
+	background: #fff;
+	height: 100%;
+	padding-top: 15px;
+}
+.userTop .list .item{
+	width: 345px;
+	height: 73px;
+	background: #FFFFFF;
+	box-shadow: 0 2px 10px 0 rgba(192,189,189,0.50);
+	border-radius: 5px;
+	margin: 0 auto;
+	margin-bottom: 15px;
+	padding: 0 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.list .item .left{
+	display: flex;
+	align-items: center;
+}
+.list .item .left img{
+	width: 46px;
+	height: 46px;
+}
+.list .item .left div{
+	margin-left: 8px;
+}
+.list .item .left div p{
+	color: #333;
+	font-size: 18px;
+}
+.list .item .left div span{
+	color: #D6A644;
+	font-size: 16px;
+}
+.list .item .to{
+	background: #159BD5;
+	border-radius: 2px;
+	width: 52px;
+	height: 27px;
+	font-size: 16px;
+	color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.list .item .to2{
+	color: #159BD5;
+	border: 1px solid #159BD5;
+	background: #fff;
+}
+.mui-table-view{
+	width: 345px;
+	box-shadow: 0 2px 10px 0 rgba(192,189,189,0.50);
+	border-radius: 5px;
+	margin: 0 auto;
+}
+.mui-table-view li{
+	padding: 13px 15px;
+}
+.mui-table-view-cell:after{
+	left: 0;
+}
+.mui-bar-nav{
+	webkit-box-shadow: none;
+    box-shadow: none;
+}

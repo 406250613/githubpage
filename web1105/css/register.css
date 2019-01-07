@@ -1,0 +1,72 @@
+.mui-input-group{
+	margin-top: 80px;
+	background: transparent;
+}
+.mui-input-group:after{
+	display: none;
+}
+.mui-input-group input{
+	color: #999;
+	padding: 26px 8px;
+}
+.mui-input-group .mui-input-row{
+	height: auto;
+	padding: 0 20px;
+	display: flex;
+	align-items: center;
+}
+.mui-input-row .mui-input-password~.mui-icon-eye
+{
+	padding-top: 8px;
+	position: relative;
+	top: 0;
+}
+.mui-input-group .mui-input-row:after{
+	right: 15px;
+}
+.mui-input-group:before{
+	display: none;
+}
+.mui-input-row:last-child:after{
+	display: none;
+}
+.inputIcon{
+	width: 28px;
+	height: 32px;
+}
+.sendyanzhengma{
+	width: 125px;
+	height: 28px;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
+	color: #40424E;
+	border: 1px solid #979797;
+	border-radius: 4px;
+	background: #D8D8D8;
+}
+.mui-input-row button{
+	width: 320px !important;
+	height: 50px !important;
+	margin: 0 auto;
+	margin-top: 75px;
+	font-size: 24px;
+	background: #40474E;
+	border-radius: 5px;
+	border: none;
+	letter-spacing: 8px;
+}
+.footer{
+	position: absolute;
+	bottom: 40px;
+	left: 0;
+	/* padding-bottom: 70px; */
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.footer a{
+	color: #3082BC;
+	font-size: 19px;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>注册</title>
+    <link href="../css/mui.min.css" rel="stylesheet"/>
+	<link href="../css/module.css" rel="stylesheet"/>
+    <link href="../css/register.css" rel="stylesheet"/>
+</head>
+<body>
+	<!-- 顶部导航 -->
+	<header class="mui-bar mui-bar-nav mui-bar-nav-bg">
+		<a id="icon-menu" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<h1 class="mui-title">注册</h1>
+	</header>
+	<!-- 顶部导航 -->
+	<section class="mesContainer">
+		<form class="mui-input-group">
+			<div class="mui-input-row">
+				<img src="../images/shape.png"  class="inputIcon"/>
+				<input type="text" class="mui-input-clear" placeholder="请输入用户昵称">
+			</div>
+			<div class="mui-input-row">
+				<img src="../images/手机.png" style="width: 26px;margin-right: 2px;margin-left: 2px;"  class="inputIcon"/>
+				<input type="text" class="mui-input-clear" placeholder="请输入手机号">
+			</div>
+			<div class="mui-input-row">
+				<img src="../images/验证码.png"  class="inputIcon"/>
+				<input type="text" class="mui-input-clear" placeholder="请输入短信验证码">
+				<div class="sendyanzhengma">发送验证码</div>
+			</div>
+			<div class="mui-input-row">
+				<img src="../images/密码_copy.png"  class="inputIcon"/>
+				<input type="password" class="mui-input-password" placeholder="请设置密码">
+			</div>
+			<div class="mui-input-row">
+				<img src="../images/确认密码.png"  class="inputIcon"/>
+				<input type="password" class="mui-input-password" placeholder="请再次输入密码">
+			</div>
+			<div class="mui-input-row">
+				<button type="button" class="mui-btn mui-btn-primary" >注册</button>
+			</div>
+		</form>
+		
+		<div class="footer">
+			<a href="login.html">去登录</a>
+		</div>
+		
+		
+	</section>
+	
+	
+</body>
+<script src="../js/mui.min.js"></script>
+<script src="../js/auto-fontSize.js"></script>
+<script src="../js/jquery.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    mui.init();
+	
+	var winHeight = $(window).height();   //获取当前页面高度
+	$(window).resize(function(){
+    var thisHeight=$(this).height();
+    if(winHeight - thisHeight >50){
+         //当软键盘弹出，在这里面操作
+	    $(".footer").css("position","static")
+	    }else{
+	        //当软键盘收起，在此处操作
+	   $(".footer").css("position","absolute")
+    }
+});
+
+</script>
+</html>

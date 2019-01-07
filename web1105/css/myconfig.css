@@ -1,0 +1,56 @@
+.mesContainer{
+	padding-top: 65px;
+}
+.configMes{
+	background: #fff;
+	margin: 0 auto;
+	box-shadow: 0 1px 10px 0 rgba(202,201,201,0.50);
+	border-radius: 5px;
+	overflow-y: scroll;
+}
+.configMes .inputDiv{
+	padding: 4px 18px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	color: #000;
+	font-size: 17px;
+	color: #000;
+	border-bottom: 1px solid #F2F2F2;
+}
+.inputDiv .avater{
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
+.configMes .inputDiv input{
+	margin: 0;
+	text-align: right;
+	color: #999;
+	border: none;
+	font-size: 17px;
+	padding-right: 0;
+}
+.configMes .inputDiv label{
+	width: 130px;
+}
+.configMes .divider{
+	background: #F5F5F5;
+	height: 30px;
+}
+ .saveDiv{
+	display: flex;
+	justify-content: center;
+}
+.save{
+	width: 320px !important;
+    height: 50px !important;
+	margin: 0 auto;
+    margin-top: 40px;
+    font-size: 21px;
+    background: #25B364;
+    border-radius: 5px;
+    border: none;
+    letter-spacing: 8px;
+	color: #fff;
+}
