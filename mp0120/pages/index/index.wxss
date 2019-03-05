@@ -1,0 +1,129 @@
+/* pages/index.wxss */
+.container{
+  background: #F9F9F9;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.container > .top{
+  height: 320rpx;
+}
+.navBox{
+  width: 100%;
+  white-space:nowrap;
+  background: #4E44C6;
+}
+.navBox .item{
+  display:inline-block;
+  width:20%;
+  margin: 0 15rpx;
+  text-align: center;
+  color: white;
+  font-size: 32rpx;
+  padding-bottom: 4rpx;
+}
+.checked{
+  border-bottom: 3px solid white;
+}
+.banner{
+  width: 100%;
+  height: 250rpx;
+}
+.container .mesBox{
+  flex: 1;
+  height: 320rpx;
+}
+.mesBox .mesScroll{
+  height: 100%;
+}
+.mesBox .mesScroll .item{
+  padding: 26rpx 22rpx;
+  background: #fff;
+  margin-bottom: 15rpx;
+}
+.mesBox .mesScroll .item .top{
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333
+}
+.mesBox .mesScroll .item .top text{
+  float: right;
+  font-weight: normal
+}
+.mesBox .mesScroll .item .des{
+  font-size: 30rpx;
+  color: #3A3B3B;
+  margin-top: 14rpx;
+  width: 70%;
+}
+.mesBox .mesScroll .item .bot{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30rpx;
+}
+.mesBox .mesScroll .item .bot > view{
+  font-size: 30rpx;
+  color: #9F9F9F;
+}
+.mesBox .mesScroll .item .bot navigator{
+  font-size: 30rpx;
+  color: #5697D4;
+}
+.mesBox .mesScroll .item .bot > view image:nth-of-type(2){
+  width: 24rpx;
+  height: 28rpx;
+  margin-right: 8rpx;
+  position: relative;
+  top: 4rpx;
+}
+.mesBox .mesScroll .item .bot > view image:nth-of-type(3){
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 8rpx;
+  position: relative;
+  top: 4rpx;
+}
+.mesBox .mesScroll .item .bot > view image:nth-of-type(1){
+  width: 26rpx;
+  height: 30rpx;
+  margin-right: 8rpx;
+  position: relative;
+  top: 4rpx;
+}
+
+.color1{
+  color: #D2A650;
+}
+.color2{
+  color: #33B952;
+}
+.top{
+  position: relative;
+}
+.top .tips{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  color: #fff;
+  position: absolute;
+  width: 100%;
+  bottom: 44rpx;
+  letter-spacing:1px;
+}
+.top .tips > view{
+  display: flex;
+  margin: 0 4rpx 0 4rpx;
+  align-items: center;
+}
+.top .tips > view > view{
+  background: #F5A24C;
+  color: #fff;
+  font-size: 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 26rpx;
+  height: 38rpx;
+  margin-right: 4rpx;
+}

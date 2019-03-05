@@ -1,0 +1,121 @@
+<!--pages/details/details.wxml-->
+<!-- 弹窗 -->
+<view class='bg' wx:if='{{ifOutput}}'></view>
+<view class='output' wx:if='{{ifOutput}}'>
+  <view class='mes'>
+    <view class='title'>
+      资源价值
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}"><text>{{array[index]}}</text></picker>
+    </view>
+    <view class='des'>*如果判定为事实，提供虚假信息者，将会扣除20分的诚信分，并且禁止在一个月发布资源，并且退还你所扣的共享币。</view>
+    <view class='des'>*如果经判定你为恶意举报，将会扣除你20分的诚分，并禁止一个月获取资源。</view>
+    <view class='read'>
+      <checkbox value="" id='a' /><label for='a' bindtap='showShareRule'>我已阅读并同意共享资源规则</label>
+    </view>
+  </view>
+  <view class='bottom'>
+    <view class='yes'>确认
+      <text style='position:absolute;right:0;top:24rpx'>|</text>
+    </view>
+    <view class='no' bindtap='cancel'>取消</view>
+  </view>
+</view>
+<view wx:if='{{ifShareRule}}' class='shareRuleOutput'>
+  <view class='title'>共享规则</view>
+  <view class='des'>规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容规则内容</view>
+  <view class='cancel' bindtap='cloeseShareRule'>已阅读</view>
+</view>
+
+<!-- <view class='top'>
+  <view class='progressBox'>
+    <view></view>———
+    <view></view>———
+    <view class='active'></view>———
+    <view></view>
+  </view>
+</view> -->
+<view class='top2'>
+  <view class='progressBox'>
+    <view class='line'></view>
+    <view class='box'>
+      <view class='item'>
+        <view></view>
+        待对接
+      </view>
+      <view class='item'>
+        <view></view>
+        对接中
+      </view>
+      <view class='item active'>
+        <view></view>
+        待反馈
+      </view>
+      <view class='item'>
+        <view></view>
+        已结束
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class='section1'>
+  需求描述：
+  <text>需求描述需求描述需求描述需求描述需求描述需求描述需求描述</text>
+  <view class='info'>
+    <view>
+      <image src='../../assets/images/icon-money.png'></image>
+      雇主预算：<text>2000元</text>
+    </view>
+    <view>
+      <image src='../../assets/images/icon-time.png'></image>
+      工期要求：<text>2000元</text>
+    </view>
+    <view>
+      <image src='../../assets/images/icon-add.png'></image>
+      雇主所在地：<text>2000元</text>
+    </view>
+    
+  </view>
+</view>
+
+<view class='section2'>
+  联系方式：
+  <view style='margin-top:8rpx !important'>
+    <image src='../../assets/images/icon-mb.png'></image>
+    电话：321-111-111<view class='payphone' bindtap='makeCall'>拨号</view>
+  </view>
+  <view>
+    <image src='../../assets/images/icon-wechat.png'></image>
+    微信：321-111-111
+  </view>
+  <view>
+    <image src='../../assets/images/icon-qq.png'></image>
+    QQ：321312312
+  </view>
+</view>
+
+<view class='section3'>
+ 雇主对服务商的要求：
+ <view style='margin-top:10rpx;'>
+  <view class='but1'>提供源码</view>
+  <view class='but2'>有成品</view>
+ </view>
+ <text>最好能提供多种解决方案。。。。</text>
+</view>
+
+<view class='section4'>
+  任务进度：
+  <view class='progressBox2'>
+    <view class='left'>01-11<text>10:22</text><view class='active2'></view></view>
+    <view class='right'>请与雇主详细沟通后，确认是否接收需求</view>
+    <view class='left'>01-11<text>10:22</text><view ></view></view>
+    <view class='right'>请与雇主详细沟通后，确认是否接收需求</view>
+    <view class='left'>01-11<text>10:22</text><view ></view></view>
+    <view class='right'>请与雇主详细沟通后，确认是否接收需求</view>
+  </view>
+</view>
+
+<view class='bot'>
+  <view class='left' bindtap='toCollect'><image src='../../assets/images/收藏.png' wx:if='{{ifCollect}}'></image><image src='../../assets/images/icon-collection.png' wx:if='{{!ifCollect}}'></image>收藏</view>
+  <view class='right' bindtap='showOutput'><image src='../../assets/images/icon-edit.png'></image>反馈结果</view>
+</view>

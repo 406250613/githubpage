@@ -1,0 +1,55 @@
+<!--pages/index.wxml-->
+<view class='container'>
+  <view class='top'>
+    <scroll-view scroll-x class='navBox'>
+        <view wx:for='{{navLists}}' class='item {{item.checked==true?"checked":""}}' bindtap='switchNav' data-id='{{index}}'>{{item.name}}</view>
+    </scroll-view>
+    <image src='../../assets/images/banner.png' class='banner'></image>
+    <view class='tips'>
+      已共享了
+      <view>
+        <view>2</view><view>2</view><view>5</view><view>0</view>
+      </view>
+      个业务资源
+    </view>
+  </view>
+
+  <view class='mesBox'>
+    <scroll-view
+      scroll-y
+      class='mesScroll'
+    >
+      <navigator class='item' url='../details/details'>
+        <view class='top'>网站建设<text class='color1'>待对接</text></view>
+        <view class='des'>收回手机、平板、电脑，有一个小商城买配件，需要私聊.</view>
+        <view class='bot'>
+          <view>
+            <image src='../../assets/images/icon-add.png'></image>深圳 | <image src='../../assets/images/icon-money.png'></image>200元 | <image src='../../assets/images/icon-time.png'></image>20天
+          </view>
+          <navigator url=''>查看详情>></navigator>
+        </view>
+      </navigator>
+      <navigator class='item'>
+        <view class='top'>网站建设<text class='color1'>待对接</text></view>
+        <view class='des'>收回手机、平板、电脑，有一个小商城买配件，需要私聊.</view>
+        <view class='bot'>
+          <view>
+            <image src='../../assets/images/icon-add.png'></image>深圳 | <image src='../../assets/images/icon-money.png'></image>200元 | <image src='../../assets/images/icon-time.png'></image>20天
+          </view>
+          <navigator url=''>查看详情>></navigator>
+        </view>
+      </navigator>
+      <navigator class='item'>
+        <view class='top'>网站建设<text class='color2'>已结束</text></view>
+        <view class='des'>收回手机、平板、电脑，有一个小商城买配件，需要私聊.</view>
+        <view class='bot'>
+          <view>
+            <image src='../../assets/images/icon-add.png'></image>深圳 | <image src='../../assets/images/icon-money.png'></image>200元 | <image src='../../assets/images/icon-time.png'></image>20天
+          </view>
+          <navigator url=''>查看详情>></navigator>
+        </view>
+      </navigator>
+    </scroll-view>
+  </view>
+
+</view>

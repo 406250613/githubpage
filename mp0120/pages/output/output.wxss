@@ -1,0 +1,317 @@
+
+.container{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.container .top{
+  background: #EFEFF4;
+  height: 80rpx;
+  line-height: 80rpx;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  }
+.container .top .progress{
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #BABABB;
+}
+.container .top .progress .circle{
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px solid #BABABB;
+  font-size: 30rpx;
+}
+.container .top text{
+  font-size: 16rpx;
+  position: absolute;
+  right: 0;
+  color: #1A9BD4;
+}
+.container .message{
+  padding: 42rpx 35rpx;
+}
+.container .message .title{
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #535353;
+  margin-bottom: 40rpx;
+}
+.container .message .title text{
+  color: red;
+  margin-right: 6rpx;
+}
+.container .message .box{
+ 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.container .message .box view{
+  border: 1px solid #888888;
+  color: #888888;
+  border-radius: 10rpx;
+  font-size: 32rpx;
+  padding: 8rpx 28rpx;
+  margin: 0 20rpx 24rpx 0;
+}
+.container .message .next{
+  width: 100%;
+  background: #1E6EF5;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36rpx;
+  border-radius: 10rpx;
+  height: 100rpx;
+  margin-top: 50rpx;
+}
+.back{
+  color: #B6B6B6;
+  font-size: 32rpx;
+  text-align: center;
+  display: block;
+  margin-top: 15rpx;
+}
+.selected{
+  background: #1E6EF5;
+  color: white !important;
+  border-color: #1E6EF5 !important;
+}
+
+.container .step2 .title{
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #535353;
+  margin-bottom: 0rpx;
+}
+.container .step2 textarea{
+  border-bottom: 1px solid;
+  width: 100%;
+  color: #B6B6B6;
+  font-size: 32rpx;
+  margin-top: 15rpx;
+}
+.container .step3 .inputGroup{
+  border-bottom: 2px solid #F0F0F0;
+  display: flex;
+  height: 90rpx;
+  align-items: center
+}
+.container .step3 .inputGroup text{
+  font-size: 32rpx;
+}
+.container .step3 .inputGroup input{
+  font-size: 30rpx;
+  flex: 1;
+  text-align: right;
+}
+.container .step3 .tips{
+  font-size: 24rpx;
+  color: #A9A9A9;
+  text-align: center;
+  margin-top: 14rpx;
+  margin-bottom: 80rpx;
+}
+
+.container .step4 .message{
+  padding: 0rpx 35rpx;
+}
+.container .step4 .tips{
+  font-size: 24rpx;
+  color: #C03304;
+  margin-top: 10rpx;
+  margin-bottom: 15rpx;
+}
+.container .step4 .inputGroup{
+  min-height: 82rpx;
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-top: 12rpx;
+}
+.container .step4 .inputGroup > text{
+  width: 20%;
+  font-size: 28rpx;
+}
+.container .step4 .inputGroup picker{
+  flex: 1;
+  font-size: 34rpx;
+  border: 1px solid #A4B3C1;
+  padding: 14rpx 12rpx;
+  position: relative;
+}
+.container .step4 .inputGroup picker::after{
+  content: '>';
+  display: block;
+  position: absolute;
+  right: 20rpx;
+  top: 14rpx;
+  font-size: 30rpx;
+}
+.container .step4 .inputGroup > view{
+  flex: 1;
+  padding: 14rpx 12rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.container .step4 .inputGroup > view .input1{
+  position: relative;
+  /* padding: 10rpx 12rpx 10rpx 20rpx; */
+  padding-left: 20rpx;
+  font-size: 28rpx;
+  color: #7E7E7E;
+  width: 145rpx;
+}
+.container .step4 .inputGroup > view .input1::before{
+  content: '￥';
+  display: block;
+  position: absolute;
+  left: -8rpx;
+  top: 8rpx;
+}
+.container .step4 .inputGroup > view .range{
+  font-size: 28rpx;
+  color: #292929;
+  display: flex;
+  align-items: center;
+  padding-left: 50rpx;
+  position: relative;
+  margin-left: 10rpx;
+}
+.container .step4 .inputGroup > view .range::before{
+  content: '+';
+  color: white;
+  background: #1D6DF5;
+  border-radius: 50%;
+  width: 32rpx;height: 32rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32rpx;
+  position: absolute;
+  left: 0;
+}
+.container .step4 .inputGroup > view .cancel{
+  background: #1D6DF5;
+  border-radius: 50%;
+  width: 32rpx;height: 32rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22rpx;
+  color: white;
+}
+.container .step4 .inputGroup > view > text{
+  font-size: 28rpx;
+  border: 1px solid #777777;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777777;
+  padding: 6rpx 10rpx;
+  position: absolute;
+  right: 0;
+}
+.container .step4 .switchBox{
+
+}
+.container .step4 .switchBox > text{
+  font-size:28rpx;
+  
+}
+.container .step4 .switchBox .inner{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15rpx;
+}
+.container .step4 .switchBox .inner > view{
+  color: #373737;
+  background: #F2F2F2;
+  font-size: 22rpx;
+  padding: 10rpx 5rpx;
+}
+.container .step4 .otherText{
+  border: 1px solid #A4B3C1;
+  font-size: 28rpx;
+  color: #7E7E7E;
+  padding: 10px 10px;
+  height: 200rpx;
+  margin-top: 20rpx;
+}
+
+.bg{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: .2;
+  z-index: 10;
+}
+.output{
+  width: 80%;
+  height: 470rpx;
+  background: #fff;
+  position: fixed;
+  left: 50%;
+  margin-left: -40%;
+  top: 45%;
+  margin-top: -235rpx;
+  z-index: 100;
+  border-radius: 2px;
+  display: flex;
+  overflow: auto
+}
+.output .bottom{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 90rpx;
+}
+.output .bottom view{
+  color: white;
+  background: #477CEF;
+  font-size: 32rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  position: relative;
+}
+.output .mes{
+  width: 100%;
+  padding: 30rpx 38rpx;
+
+}
+.output .mes .title{
+  font-size: 32rpx;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.output .mes .des{
+  font-size: 24rpx;
+  color: #4C4C4C;
+  margin-top: 25rpx;
+  
+}
+
+.selected2{
+  background: #1E6EF5 !important;
+  color: #fff !important;
+}
