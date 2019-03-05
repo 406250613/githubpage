@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>首页</title>
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/module.css">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+</head>
+<body>
+	<div class="nav">
+		<div class="container-fluid">
+			<h1>地方金融机构预警监管平台</h1>
+			<div class="navList">
+				<ul>
+					<li><a href="index.html" class="navActive">首页</a></li>
+	                <li><a href="organization.html">机构管理</a></li>
+	                <li><a href="supervision.html">监管预警</a></li>
+					<li><a href="">统计分析</a></li>
+					<li><a href="">现场检查</a></li>
+					<li><a href="">审批管理</a></li>
+					<li><a href="">系统配置</a></li>
+				</ul>
+				<img src="../images/module01.png">
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid section">
+		<div class="col-xs-7 left">
+			<div class="cont">
+				<div class="secHeader">		
+					<span>机构区域分布</span>
+				</div>
+				<div class="secBody">
+					<!-- echarts地图 -->
+					<div id="main"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-5 right">
+			<div class="col-xs-12" style="padding-left: 20px">
+				<div class="cont" style="height: 245px;">
+				<div class="secHeader">		
+					<span>统计指数展示</span>
+				</div>
+				<div class="secBody">
+					<div class="sec_body">
+						<ul class="count_show">
+							<li><span>机构数量&nbsp;&nbsp;:&nbsp;&nbsp;200</span></li><li ><span >净资产&nbsp;&nbsp;:&nbsp;&nbsp;200万</span></li><li ><span >统计指数&nbsp;&nbsp;:&nbsp;&nbsp;200</span></li><li><span >从业人数&nbsp;&nbsp;:&nbsp;&nbsp;230</span></li><li><span >实收资本&nbsp;&nbsp;:&nbsp;&nbsp;2530</span></li><li ><span >贷款余额&nbsp;&nbsp;:&nbsp;&nbsp;3210</span></li><li ><span >融资余额&nbsp;&nbsp;:&nbsp;&nbsp;2510</span></li><li ><span >不良率&nbsp;&nbsp;:&nbsp;&nbsp;2.5%</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			</div>
+			<div class="col-xs-12">
+				<div class="cont" style="height: 250px;margin-top: 20px">
+					<div class="secBody">
+						<div style="width: 100%;position: relative;">
+						  <div style="height: 1px; width:100%;background: #ddd;position: absolute;top: 40px"></div>
+						  <!-- Nav tabs -->
+						  <ul class="nav nav-tabs" role="tablist">
+						    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">客户类型</a></li>
+						    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">业务类型</a></li>
+						    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">业务用途</a></li>
+						    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">担保形式</a></li>
+						  </ul>
+
+						  <!-- Tab panes -->
+						  <div class="tab-content">
+						    <div role="tabpanel" class="tab-pane active" id="home">
+						    	<div class="pie1"></div>
+						    </div>
+						    <div role="tabpanel" class="tab-pane" id="home">
+						  	    <div class="pie1"></div>
+							</div>
+						    <div role="tabpanel" class="tab-pane" id="home">	 
+						    	<div class="pie1"></div>
+						    </div>
+						    <div role="tabpanel" class="tab-pane" id="home">	
+						    	<div class="pie1"></div>
+						    </div>
+						  </div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<div class="cont" style="height: 285px;margin-top: 20px">
+					<div class="secHeader">		
+						<span>预警信息</span>
+					</div>
+					<div class="secBody">
+						<div class="sec_body"><div class="info_show"><div class="el-table el-table--fit el-table--enable-row-hover el-table--enable-row-transition"><div class="el-table__header-wrapper"><table cellspacing="0" cellpadding="0" border="0" class="el-table__header"><colgroup><col name="el-table_4_column_21" width="120"><col name="el-table_4_column_22" width="105"><col name="el-table_4_column_23" width="160"><col name="gutter" width="0"></colgroup><thead class="has-gutter"><tr class=""><th colspan="1" rowspan="1" class="el-table_4_column_21     is-leaf" ><div class="cell">序号</div></th><th colspan="1" rowspan="1" class="el-table_4_column_22     is-leaf" ><div class="cell">预警信号类别</div></th><th colspan="1" rowspan="1" class="el-table_4_column_23     is-leaf" ><div class="cell">企业家数</div></th><th class="gutter" style="width: 0px; display: none;"></th></tr></thead></table></div><div class="el-table__body-wrapper is-scrolling-none"><table cellspacing="0" cellpadding="0" border="0" class="el-table__body" style="width: 453px;"><colgroup><col name="el-table_4_column_21" width="120"><col name="el-table_4_column_22" width="105"><col name="el-table_4_column_23" width="160"></colgroup><tbody><tr class="el-table__row"><td rowspan="1" colspan="1" class="el-table_4_column_21  " ><div class="cell"><div>1</div></div></td><td rowspan="1" colspan="1" class="el-table_4_column_22  " ><div class="cell">资本风险</div></td><td rowspan="1" colspan="1" class="el-table_4_column_23  " ><div class="cell">5</div></td></tr><tr class="el-table__row"><td rowspan="1" colspan="1" class="el-table_4_column_21  " ><div class="cell"><div>2</div></div></td><td rowspan="1" colspan="1" class="el-table_4_column_22  " ><div class="cell">资产质量风险</div></td><td rowspan="1" colspan="1" class="el-table_4_column_23  " ><div class="cell">1</div></td></tr><tr class="el-table__row"><td rowspan="1" colspan="1" class="el-table_4_column_21  " ><div class="cell"><div>3</div></div></td><td rowspan="1" colspan="1" class="el-table_4_column_22  " ><div class="cell">流动性风险</div></td><td rowspan="1" colspan="1" class="el-table_4_column_23  " ><div class="cell">2</div></td></tr><tr class="el-table__row"><td rowspan="1" colspan="1" class="el-table_4_column_21  " ><div class="cell"><div>4</div></div></td><td rowspan="1" colspan="1" class="el-table_4_column_22  " ><div class="cell">盈利能力风险</div></td><td rowspan="1" colspan="1" class="el-table_4_column_23  " ><div class="cell">9</div></td></tr><!----></tbody></table><!----><!----></div><!----><!----><!----><!----><div class="el-table__column-resize-proxy" style="display: none;"></div></div></div></div>
+					</div>
+				</div>
+			</div>
+	</div>
+
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/echarts-all.js"></script>
+<script type="text/javascript">
+	//左侧大地图配置
+
+		//模拟数据
+		var mydata = [  
+                {name: '阿坝藏族羌族自治州',value: '100' },{name: '甘孜藏族自治州',value: '193' },  
+                {name: '凉山彝族自治州',value: '132' },{name: '攀枝花市',value: '20' },  
+                {name: '泸州市',value: '134' },{name: '宜宾市',value: '80' },  
+                {name: '乐山市',value: '45' },{name: '自贡市',value: '110' },  
+                {name: '内江市',value: '162' },{name: '眉山市',value: '77' },  
+                {name: '雅安市',value: '45' },{name: '资阳市',value: '77' },  
+                {name: '成都市',value: '110' },{name: '遂宁市',value: '134' },  
+                {name: '德阳市',value: '134' },{name: '广安市',value: '45' },  
+                {name: '南充市',value: '77' },{name: '绵阳市',value: '162' },  
+                {name: '达州市',value: '110' },{name: '广元市',value: '162' },  
+                {name: '巴中市',value: '134' } 
+            ]; 
+        var optionMap = {  
+                title: {  
+                    text: '',  
+                    subtext: '',  
+                    x:'center'  
+                },  
+                tooltip : {  
+                    trigger: 'item'  
+                },
+                
+                dataRange: {
+			        min: 0,
+			        max: 200,
+			        color:['#FF6733','#FFCB33'],
+			        text:['高','低'],           // 文本，默认为数值文本
+			        calculable : true
+			    },
+                
+                //配置属性
+                series: [{  
+                    name: '',  
+                    type: 'map',  
+                    mapType: '四川',   
+                    roam: false, 
+                    selectedMode : 'single',
+                    itemStyle:{
+		                normal:{
+		                	label:{show:true},
+		                	borderWidth:2,
+                            borderColor:'#444444'
+		                },
+		                emphasis:{
+		                	label:{show:true},
+		                	borderWidth:2,
+                            borderColor:'#444444'
+		                }
+		            }, 
+                    label: {  
+                        normal: {  
+                            show: true, //省份名称
+
+                        },  
+                        emphasis: {  
+                            show: false  
+                        }  
+                    },  
+                    data:mydata  //数据
+                }]  
+            };  
+        //初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        //使用制定的配置项和数据显示图表
+        myChart.setOption(optionMap);
+
+    </script>
+    	<script type="text/javascript">
+		//右侧饼图配置
+		var pieOptions = function(legendName,seriesData){
+			return {
+			    title : {
+			        text: '',
+			        subtext: '',
+			        x:'center'
+			    },
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    legend: {
+			        orient : 'vertical',
+			        x : 'left',
+			        // data:['第一产业','第二产业','第三产业']
+			        data: legendName, //图标名称
+			        icon: "circle"
+			    },
+			    toolbox: {
+			        show : false,
+			       
+			    },
+			    calculable : false,
+			    series : [
+			        {
+			            name:'分布占比',
+			            type:'pie',
+			            radius : '55%',
+			            center: ['57%', '42%'],
+			            // data:[
+			            //     {value:335, name:'第一产业'},
+			            //     {value:310, name:'第二产业'},
+			            //     {value:234, name:'第三产业'}
+
+			            // ]
+			            data: seriesData  //具体数据
+			        }
+			    ],
+			    color:[ 
+					    '#C23531', '#2F4554', '#61A0A8', '#D48265', '#91C7AE', 
+					    '#749F83', '#CA8622', '#cd5c5c', '#ffa500', '#40e0d0', 
+					    '#1e90ff', '#ff6347', '#7b68ee', '#00fa9a', '#ffd700', 
+					    '#6b8e23', '#ff00ff', '#3cb371', '#b8860b', '#30e0e0' 
+					]
+			};
+		}
+                    
+                    
+        //加载时初始化echarts实例
+        let myPieChart = echarts.init(document.querySelector('.pie1'));
+
+        //使用制定的配置项和数据显示图表
+        myPieChart.setOption(pieOptions([{name:'农户',icon:'stack'},{name:'个人消费',icon:'stack'},{name:'关联企业或个体工商户',icon:'stack'},{name:'农村业务',icon:'stack'},{name:'城市企业',icon:'stack'},{name:'农村各类组织',icon:'stack'},{name:'城市各类组织',icon:'stack'}],[{value:100,name:'农户'},{value:130,name:'个人消费'},{value:200,name:'关联企业或个体工商户'},{value:200,name:'农村业务'},{value:200,name:'城市企业'},{value:200,name:'农村各类组织'},{value:200,name:'城市各类组织'}]),true);
+
+        //点击tab切换饼图
+        $(function(){
+        	$('.nav-tabs li:eq(0) a').click(function(){
+        		let myPieChart = echarts.init(document.querySelector('.pie1'));
+				/*动态获取数据，下面这是固定的虚拟数据，故点按钮切换时只切换了一次，因为只变了一次数据*/
+				myPieChart.setOption(pieOptions([{name:'农户',icon:'stack'},{name:'个人消费',icon:'stack'},{name:'关联企业或个体工商户',icon:'stack'},{name:'农村业务',icon:'stack'},{name:'城市企业',icon:'stack'},{name:'农村各类组织',icon:'stack'},{name:'城市各类组织',icon:'stack'}],[{value:100,name:'农户'},{value:130,name:'个人消费'},{value:200,name:'关联企业或个体工商户'},{value:200,name:'农村业务'},{value:200,name:'城市企业'},{value:200,name:'农村各类组织'},{value:200,name:'城市各类组织'}]),true);
+			})
+        	$('.nav-tabs li:eq(1) a').click(function(){
+        		let myPieChart = echarts.init(document.querySelector('.pie1'));
+				/*动态获取数据，下面这是固定的虚拟数据，故点按钮切换时只切换了一次，因为只变了一次数据*/
+				myPieChart.setOption(pieOptions([{name:'消费',icon:'stack'},{name:'三农',icon:'stack'},{name:'小微',icon:'stack'},{name:'产业链',icon:'stack'},{name:'科技小货',icon:'stack'},{name:'其他',icon:'stack'}],[{value:100,name:'消费'},{value:130,name:'三农'},{value:200,name:'小微'},{value:50,name:'产业链'},{value:200,name:'科技小货'},{value:50,name:'其他'}]),true);
+			})
+			$('.nav-tabs li:eq(2) a').click(function(){
+				let myPieChart = echarts.init(document.querySelector('.pie1'));
+				/*动态获取数据，下面这是固定的虚拟数据，故点按钮切换时只切换了一次，因为只变了一次数据*/
+				myPieChart.setOption(pieOptions([{name:'第一产业',icon:'stack'},{name:'第二产业',icon:'stack'},{name:'第三产业',icon:'stack'},{name:'第四产业',icon:'stack'}],[{value:100,name:'第一产业'},{value:130,name:'第二产业'},{value:200,name:'第三产业'},{value:150,name:'第四产业'}]),true);
+			})
+			$('.nav-tabs li:eq(3) a').click(function(){
+				let myPieChart = echarts.init(document.querySelector('.pie1'));
+				/*动态获取数据，下面这是固定的虚拟数据，故点按钮切换时只切换了一次，因为只变了一次数据*/
+				myPieChart.setOption(pieOptions([{name:'纯信用贷款',icon:'stack'},{name:'抵押贷款',icon:'stack'},{name:'保证贷款',icon:'stack'},{name:'其他',icon:'stack'}],[{value:130,name:'纯信用贷款'},{value:130,name:'抵押贷款'},{value:300,name:'保证贷款'},{value:50,name:'其他'}]),true);
+			})
+		})
+    </script>
+    <script src="../js/module.js"></script>
+</html>

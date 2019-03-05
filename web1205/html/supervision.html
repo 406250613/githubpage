@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>监管预警</title>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/module.css">
+    <link rel="stylesheet" type="text/css" href="../css/supervision.css">
+</head>
+<body>
+
+<div class="nav">
+    <div class="container-fluid">
+        <h1>地方金融机构预警监管平台</h1>
+        <div class="navList">
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="organization.html">机构管理</a></li>
+                <li><a href="supervision.html" class="navActive">监管预警</a></li>
+                <li><a href="">统计分析</a></li>
+                <li><a href="">现场检查</a></li>
+                <li><a href="">审批管理</a></li>
+                <li><a href="">系统配置</a></li>
+            </ul>
+            <img src="../images/module01.png">
+        </div>
+    </div>
+</div>
+<div class="main-body clearfix">
+    <div class="container-fluid section">
+        <div class="subContent">
+            <form class="form-horizontal">
+
+                <div class="top_path">
+                    <ol class="breadcrumb">
+                        <li><a href="#">四川省金融局</a></li>
+                        <li><a href="#">XX市金融办</a></li>
+                        <li class="active">金融办</li>
+                    </ol>
+                </div>
+                <div class="find_box">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="请输入机构名称"/>
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="button">Go!</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="group-title">已选条件</label>
+                        <div>
+                            <span class="label label-success">高新区 <i style="color: #ffffff">X</i></span>
+                            <span class="label label-success">高新区</span>
+                            <span class="label label-success">高新区</span>
+                            <span class="label label-success">高新区</span>
+                            <span class="label label-success">高新区</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="group-title">区域选择</label>
+                        <div>
+                            <span class="label label-default">成都</span>
+                            <span class="label label-default">成都</span>
+                            <span class="label label-default">成都</span>
+                            <span class="label label-default">成都</span>
+                            <span class="label label-default">成都</span>
+                            <span class="label label-default">成都</span>
+                            <span class="label label-default">成都</span>
+                            <span class="label label-default">成都</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="body-content-box">
+                    <div class="cardsBox">
+                        <div class="item">
+                            <h2>合规风险机构数</h2>
+                            3
+                        </div>
+                        <div class="item">
+                            <h2>操作风险机构数</h2>
+                            2
+                        </div>
+                        <div class="item">
+                            <h2>管理风险机构数</h2>
+                            1
+                        </div>
+                        <div class="item">
+                            <h2>经营风险机构数</h2>
+                            8
+                        </div>
+                    </div>
+
+                    <ul>
+                        <li class="left-item">
+                            <div class="title">四川YYY小额贷有限公司</div>
+                            <p class="p1">
+                                <span>法定代表人：李四娘</span> <span>注册资本：1000万</span>
+                                <span>成立时间：2014-08-24</span>
+                            </p>
+                            <p>经营范围:系统集成，监控服务</p>
+                            <p class="tips">
+                                <font>
+                                    经营异常
+                                </font>
+                                <font>
+                                    不良贷款率超标
+                                </font>
+                            </p>
+                            <div class="rada rada1">
+                            </div>
+                        </li>
+                        <li class="left-item">
+                            <div class="title">四川YYY小额贷有限公司</div>
+                            <p class="p1">
+                                <span>法定代表人：李四娘</span> <span>注册资本：1000万</span>
+                                <span>成立时间：2014-08-24</span>
+                            </p>
+                            <p>经营范围:系统集成，监控服务</p>
+                            <p class="tips">
+                                <font>
+                                    经营异常
+                                </font>
+                                <font>
+                                    不良贷款率超标
+                                </font>
+                            </p>
+                            <div class="rada rada2">
+                            </div>
+                        </li>
+                        <li class="left-item">
+                            <div class="title">四川YYY小额贷有限公司</div>
+                            <p class="p1">
+                                <span>法定代表人：李四娘</span> <span>注册资本：1000万</span>
+                                <span>成立时间：2014-08-24</span>
+                            </p>
+                            <p>经营范围:系统集成，监控服务</p>
+                            <p class="tips">
+                                <font>
+                                    经营异常
+                                </font>
+                                <font>
+                                    不良贷款率超标
+                                </font>
+                            </p>
+                            <div class="rada rada3">
+                            </div>
+                        </li>
+                      
+                    </ul>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/echarts-all.js"></script>
+
+<script type="text/javascript">
+    //右侧饼图配置
+    var pieOptions = function (seriesData) {
+        return {
+              tooltip : {
+                    // position: [100,50],
+                    enterable:true,
+                    padding:10,
+                },
+             
+                toolbox: {
+                    show : false,
+                },
+                polar : [
+                   {
+                       indicator : [
+                           { text: 'A指标', max: 1000},
+                           { text: 'B指标', max: 1000},
+                           { text: 'C指标', max: 1000},
+                           { text: 'D指标', max: 1000},
+                           { text: 'E指标', max: 1000}
+                        ],
+                        splitLine : {
+                            show : true,
+                            lineStyle : {
+                                width : 1,
+                                color : '#FF8534' // 图表背景网格线的颜色
+                            }
+                        }
+                    }
+                ],
+                calculable : false,
+                series : [
+                    {
+                        name: '',
+                        type: 'radar',
+                        // data : [
+                        //     {
+                        //         value : [80, 60, 20, 100, 50],
+                        //         name : ''
+                        //     }
+                        // ]
+                        itemStyle: {
+                            normal: {
+                                color : "#FFA55F", // 图表中各个图区域的边框线拐点颜色
+                                areaStyle: {
+                                    type: 'default'
+                                }
+                            }
+                        },
+                        data: seriesData
+                    }
+                ]
+        }
+    }
+
+    //加载时初始化echarts实例
+    let myPieChart1 = echarts.init(document.querySelector('.rada1'))
+    let myPieChart2 = echarts.init(document.querySelector('.rada2'))
+    let myPieChart3 = echarts.init(document.querySelector('.rada3'))
+    //使用制定的配置项和数据显示图表
+    myPieChart1.setOption(
+        pieOptions(
+                [{
+                    value:[800,500,200,300,600],
+                    name : ''
+                }]    
+        ), true)
+    myPieChart2.setOption(
+        pieOptions(
+                [{
+                    value:[800,500,200,300,600],
+                    name : ''
+                }]    
+        ), true)
+    myPieChart3.setOption(
+        pieOptions(
+                [{
+                    value:[800,500,200,300,600],
+                    name : ''
+                }]    
+        ), true)
+</script>
+<script src="../js/module.js"></script>
+
+<!--<script>-->
+<!--var accordionsMenu = $('.cd-accordion-menu')-->
+
+<!--if (accordionsMenu.length > 0) {-->
+<!--handInitTree()-->
+<!--accordionsMenu.each(function () {-->
+<!--var accordion = $(this)-->
+<!--accordion.find('.tree-label').each(function (index, item) {-->
+<!--handleOpen(item, true)-->
+<!--})-->
+<!--accordion.on('click', '.tree-label', function () {-->
+<!--handleOpen(this)-->
+<!--})-->
+
+<!--})-->
+<!--}-->
+
+<!--function handleOpen(oUl, init) {-->
+<!--var $label = $(oUl)-->
+<!--var isOpen = $label.hasClass('isOpen')-->
+<!--if (isOpen) {-->
+<!--if (!init) {-->
+<!--$label.removeClass('isOpen')-->
+<!--$label.siblings('ul').attr('style', 'display:none;').slideUp(300)-->
+
+<!--}-->
+<!--else {-->
+<!--$label.siblings('ul').attr('style', 'display:block;')-->
+<!--}-->
+<!--}-->
+<!--else {-->
+<!--if (!init) {-->
+<!--$label.addClass('isOpen', 1)-->
+<!--$label.siblings('ul').attr('style', 'display:block;').slideDown(300)-->
+<!--}-->
+<!--else {-->
+<!--$label.siblings('ul').attr('style', 'display:none;')-->
+<!--}-->
+<!--}-->
+<!--}-->
+
+<!--function handInitTree() {-->
+<!--accordionsMenu.find('.tree-label').each(function (index, item) {-->
+<!--var $item = $(item)-->
+<!--if ($item.siblings('ul').find('.tree-label').length > 0) {-->
+<!--$item.addClass('has-children')-->
+<!--}-->
+<!--else {-->
+<!--$item.removeClass('has-children')-->
+<!--}-->
+<!--})-->
+<!--}-->
+<!--</script>-->
+</html>

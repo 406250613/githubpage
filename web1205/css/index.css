@@ -1,0 +1,147 @@
+.section{
+	padding: 20px 10px;
+	padding-top: 80px;
+	overflow: auto;
+	height: 100%;
+}
+
+.section .cont{
+    border: 1px solid #d7d7d7;
+}
+.section .left{
+	padding: 0;
+}
+.section .left .cont{
+	height: 820px;
+}
+.section .secHeader {
+    padding-left: 25px;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #d7d7d7;
+    font-size: 20px;
+}
+.section .right {
+	padding-right: 0;
+}
+.section .right > div{
+	padding-right: 0;
+}
+
+
+.count_show {
+    margin: 10px;
+}
+.count_show li {
+    display: inline-block;
+    width: 33%;
+    text-align: center;
+}
+.count_show li span {
+    margin: 5px 10px;
+    line-height: 50px;
+    display: block;
+    height: 50px;
+    font-size: 14px;
+    background: #f2f2f2;
+}
+
+.info_show {
+    margin: 10px;
+    padding: 0 20px;
+}
+.el-table--fit {
+    border-right: 0;
+    border-bottom: 0;
+}
+.el-table .hidden-columns {
+    position: absolute;
+    z-index: -1;
+}
+.el-table__footer-wrapper, .el-table__header-wrapper {
+    overflow: hidden;
+}
+.el-table thead {
+    color: #909399;
+    font-weight: 500;
+}
+.el-table th, .el-table tr {
+    background-color: #fff;
+}
+.el-table th>.cell {
+    position: relative;
+    word-wrap: normal;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    width: 100%;
+    box-sizing: border-box;
+}
+.el-table td, .el-table th {
+    padding: 15px 0;
+    min-width: 0;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    position: relative;
+    text-align: left;
+    color: rgb(51,51,51);
+    font-size: 14px;
+    border:1px solid rgb(238, 238, 238)
+}
+.el-table--border td:first-child .cell, .el-table--border th:first-child .cell, .el-table .cell, .el-table th div {
+    padding-left: 10px;
+}
+.el-table_4_column_21{
+	background: rgb(255, 255, 255); color: rgb(51, 51, 51); border: 1px solid rgb(238, 238, 238); height: 30px;
+}
+#main{
+	width: 680px;
+	height: 700px;
+	margin: 0 auto;
+	margin-top: 60px;
+}
+.nav-tabs{
+	background: #fff;
+	border: none;
+	position: relative;
+	z-index: 1;
+}
+.nav-tabs li{
+/*	border: 1px solid #ddd;*/
+}
+.nav-tabs li a{
+	border: 1px solid #ddd;
+	border-top: none;
+	margin-right: 0 ;
+	border-radius: 0;
+	font-size: 20px;
+	padding: 6px 15px;
+	color: #333;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #555 !important;
+    cursor: default !important;
+    border-top-color: white !important;
+    border-left-color: white !important;
+    border-bottom-color: white !important;
+    color: #ffb822 !important;
+}
+.el-table__header{
+	width: 100% ;
+}
+.el-table__body{
+	width: 100% !important;
+}
+.tab-pane{
+	padding: 10px 20px;
+}
+.tab-pane > div{
+	width: 100% ;
+	height: 200px ;
+}
+.is-leaf{
+	background: rgb(204, 204, 204) !important;
+	color: rgb(51, 51, 51) !important;
+	border: 1px solid rgb(204, 204, 204) !important;
+}

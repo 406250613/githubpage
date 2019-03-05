@@ -1,0 +1,67 @@
+
+/** * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/) * http://cssreset.com */html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var,b, u, i, center,dl, dt, dd, ol, ul, li,fieldset, form, label, legend,table, caption, tbody, tfoot, thead, tr, th, td,article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,time, mark, audio, video {    margin: 0;    padding: 0;    border: 0;    font-size: 16px;    font: inherit;    vertical-align: baseline; color: #333}/* HTML5 display-role reset for older browsers */article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {    display: block;}body {    line-height: 1;}ol, ul {    list-style: none;}blockquote, q {    quotes: none;}blockquote:before, blockquote:after,q:before, q:after {    content: '';    content: none;}table {    border-collapse: collapse;    border-spacing: 0;}
+html,body{
+	height: 100%;
+	min-width: 1250px;
+	overflow-x: hidden;
+}
+.nav{
+	background: #2F313D;
+	height: 60px;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+.nav .container-fluid{
+	padding: 0 20px;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.nav h1{
+    font-weight: 400;
+    font-style: normal;
+    font-size: 26px;
+    color: #fff;
+    margin: 0;
+}
+.nav .navList{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex: 1;
+}
+.nav .navList img{
+	margin-right: 10px;
+}
+.nav .navList ul{
+	list-style: none;
+	border: 1px solid;
+	display: inline-block;
+	margin: 0;
+	margin-left: 120px;
+	white-space: nowrap;
+}
+.nav .navList ul li{
+	float: left;
+}
+.nav .navList ul li a{
+	font-size: 20px;
+	color: white;
+	padding-bottom: 5px;
+	margin-right: 25px;
+	text-decoration: none;
+}
+.nav .navList ul li:first-child a{
+	margin-right: 50px
+}
+.nav .navList ul li:last-child a{
+	margin-right: 0px
+}
+.navActive{
+	border-bottom: 3px solid #ffb822 !important;
+    color: #ffb822 !important;
+}
