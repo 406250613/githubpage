@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<head lang='ch'>
+	<meta charset='utf-8'>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum=1.0,minimum=1.0,user-scalable=0" />
+	<title>信息认证</title>
+	<link rel="stylesheet" href="../css/mui.css">
+	<link rel="stylesheet" href="../css/authenticate.css">
+	<link rel="stylesheet" href="../css/mui.picker.css">
+</head>
+<body>
+	<div class="authenticate">
+		<div class="header">
+			信息认证
+		</div>
+		<div class="holder">
+			<p class="title">基础信息</p>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>姓名</label>
+					<input type="text" placeholder="请输入姓名">
+				</div>
+				<div class="mui-input-row">
+					<label>性别</label>
+					<div class="radioBox">
+						<div><input name="radio1" type="radio"><label>女</label></div>
+						<div><input name="radio1" type="radio"><label>男</label></div>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>年龄</label>
+					<input type="text" placeholder="请输入年龄">
+				</div>
+				<div class="mui-input-row">
+					<label>出生日期</label>
+					<div class="inner timeinner">请选择时间</div>
+				</div>
+				<div class="mui-input-row">
+					<label>身份证号码</label>
+					<input type="text" placeholder="保密">
+				</div>
+				<div class="mui-input-row">
+					<label>工作地区</label>
+					<div id="showCityPicker" class="inner placeinner">请选择地区</div>
+					<div id="cityResult3"></div>
+				</div>
+			</form>
+
+		</div>
+
+		<div class="holder">
+			<p class="title">信用情况</p>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>是否在用信用贷</label>
+					<span class="icon1">></span>
+					<select class="mui-btn mui-btn-block">
+						<option value="item-1">在用</option>
+						<option value="item-2">没用</option>
+					</select>
+				</div>
+				<div class="mygroup">
+					<div class="mui-input-row">
+						<label>信用贷月供</label>
+						<span>元</span>
+						<input type="text" placeholder="请输入">
+					</div>
+					<div class="mui-input-row">
+						<label>小额贷笔数</label>
+						<span>笔</span>
+						<input type="text" placeholder="请输入">
+					</div>
+					<div class="mui-input-row">
+						<label>小贷总额</label>
+						<span>元</span>
+						<input type="text" placeholder="请输入">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>是否在用信用卡</label>
+					<span class="icon1">></span>
+					<select class="mui-btn mui-btn-block">
+						<option value="item-1">在用</option>
+						<option value="item-2">没用</option>
+					</select>
+				</div>
+				<div class="mygroup">
+					<div class="mui-input-row">
+						<label>信用卡总额</label>
+						<span>元</span>
+						<input type="text" placeholder="请输入">
+					</div>
+					<div class="mui-input-row">
+						<label>已用成数</label>
+						<span>成</span>
+						<input type="text" placeholder="请输入">
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>是否在有负债担保</label>
+					<span class="icon1">></span>
+					<select class="mui-btn mui-btn-block">
+						<option value="item-1">有</option>
+						<option value="item-2">无</option>
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<label>是否在有过逾期</label>
+					<span class="icon1">></span>
+					<select class="mui-btn mui-btn-block">
+						<option value="item-1">有</option>
+						<option value="item-2">无</option>
+					</select>
+				</div>
+				<div class="mygroup">
+					<div class="mui-input-row">
+						<label>逾期分类</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">精确预期</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>逾期情况</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">情况1</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>信用查询</label>
+					<span class="icon1">></span>
+					<select class="mui-btn mui-btn-block">
+						<option value="item-1">有</option>
+						<option value="item-2">无</option>
+					</select>
+				</div>
+				<div class="mygroup">
+					<div class="mui-input-row">
+						<label>近60天贷款及信用卡申请次数</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">2次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>近9天贷款及信用卡申请次数</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>芝麻分</label>
+					<span>分</span>
+					<input type="text" placeholder="请输入">
+				</div>
+			</form>
+
+		</div>
+
+		<div class="holder" style="padding-bottom: 40px;">
+			<p class="title">信贷信息</p>
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>申请贷款金额</label>
+					<span>万元</span>
+					<input type="text" placeholder="请输入">
+				</div>
+				<div class="mui-input-row">
+					<label>申请期限</label>
+					<span>月</span>
+					<input type="text" placeholder="请输入">
+				</div>
+				<div class="mui-input-row">
+					<label>小额贷笔数</label>
+					<span>笔</span>
+					<input type="text" placeholder="请输入">
+				</div>
+				<div class="mui-input-row">
+					<label>用途</label>
+					<span class="icon1">></span>
+					<select class="mui-btn mui-btn-block">
+						<option value="item-1">有</option>
+						<option value="item-2">无</option>
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<label>还款方式</label>
+					<span class="icon1">></span>
+					<select class="mui-btn mui-btn-block">
+						<option value="item-1">有</option>
+						<option value="item-2">无</option>
+					</select>
+				</div>
+				<div class="mui-input-row">
+					<label>亲属是否知情</label>
+					<div class="radioBox">
+						<div><input name="radio1" type="radio"><label>是</label></div>
+						<div><input name="radio1" type="radio"><label>否</label></div>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>职业</label>
+					<span class="icon1">></span>
+					<select class="mui-btn mui-btn-block">
+						<option value="item-1">无固定职业</option>
+						<option value="item-2">无</option>
+					</select>
+				</div>
+				<div class="mygroup">
+					<div class="mui-input-row">
+						<label>月平均收入</label>
+						<span>万元</span>
+						<input type="text" placeholder="请输入">
+					</div>
+					<div class="mui-input-row">
+						<label>名下房产类型</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>车辆情况</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>保单</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>微粒贷</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+				</div>
+				<div class="mui-input-row">
+					<label>您的手机号</label>
+					<input type="text" placeholder="请输入手机号">
+				</div>
+			</form>
+		</div>
+		<div class="bot">
+			<div class="item">
+				<input name="radio1" type="radio"><label>我已阅读并同意<a href="#" class="f">《保密协议》</a><a href="#" class="f">《免责声明》条款</a></label>
+			</div>
+			<div class="item" style="align-items: baseline;">
+				<input name="radio2" type="radio"><label><font>+99元享受VIP加速服务</font><a href="#" class="s">详情</a><br>
+				已有<font>10086</font>位用户通过加速服务得到贷款</label>
+			</div>
+			<a href="#" class="sub">确认提交</a>
+		</div>
+	</div>
+
+
+
+</body>
+<script src="../js/mui.js"></script>
+<script src="../js/mui.picker.js"></script>
+<script>
+	
+			(function($) {
+				$.init();
+				var result = document.querySelector('.timeinner');
+				result.addEventListener('tap', function() {
+						var optionsJson = '{"type":"date","beginYear":2014,"endYear":2016}';
+						var options = JSON.parse(optionsJson);
+						var id = this.getAttribute('id');
+						var picker = new $.DtPicker(options);
+						picker.show(function(rs) {
+							/*
+							 * rs.value 拼合后的 value
+							 * rs.text 拼合后的 text
+							 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+							 * rs.m 月，用法同年
+							 * rs.d 日，用法同年
+							 * rs.h 时，用法同年
+							 * rs.i 分（minutes 的第二个字母），用法同年
+							 */
+							result.innerText =rs.text;
+							picker.dispose();
+						});
+				}, false);
+
+				//placeinner
+				var cityData = [{
+					"value": "110000",
+					"text": "山东省",
+					children: [{
+						"value": "110100",
+						"text": "青岛市",
+						children: [{
+							"value": "110101",
+							"text": "滨海区"
+						}, {
+							value: "110102",
+							text: "老城区"
+						}]
+					}]
+				},{
+					"value": "110001",
+					"text": "四川省",
+					children: [{
+						"value": "110100",
+						"text": "成都市",
+						children: [{
+							"value": "110101",
+							"text": "成华区"
+						}, {
+							value: "110102",
+							text: "武侯区"
+						}]
+					}]
+				}]
+
+				var cityPicker3 = new $.PopPicker({
+						layer: 3
+					});
+					cityPicker3.setData(cityData);
+					var showCityPickerButton = document.getElementById('showCityPicker');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							showCityPickerButton.innerText = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+						});
+					}, false);
+			})(mui);
+		
+</script>
+</html>
+

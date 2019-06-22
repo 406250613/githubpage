@@ -1,0 +1,224 @@
+
+.submitSuc{
+	height: 100%;
+	background: #f5f5f5;
+	font-size: 14px;
+	overflow: auto;
+}
+.submitSuc .header{
+	height: 50px;
+	background-color: #4380ff;
+	font-size: 16px;
+	color: #fff;
+	text-align: center;
+	line-height: 50px;
+}
+.submitSuc .sucpic{
+	width: 185px;
+	height: 160px;
+	margin: 0 auto;
+	margin-top: 25px;
+}
+.submitSuc .top{
+	background: #fff;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.submitSuc .top .tips{
+	font-size: 16px;
+	line-height: 40px;
+	letter-spacing: 0px;
+	color: #333333;
+	text-align: center;
+	margin-bottom: 10px;
+	width: 100%;
+}
+.submitSuc .top .mes{
+	width: 93.8%;
+	border-top: 1px dotted #999;
+	margin: 0 auto;
+	padding: 25px 0;
+}
+.top .mes table{
+	width: 100%;
+}
+.top .mes table tr td:nth-of-type(1){
+	width: 28%;
+	text-align: right;
+	font-size: 12px;
+	color: #999;
+	line-height: 35px;
+}
+.top .mes table tr td:nth-of-type(2){
+	font-size: 12px;
+	color: #333;
+	padding-left: 10px;
+}
+.top .mes table span{
+	color: #f19149;
+	font-size:36px;
+	margin-right: 10px;
+}
+	
+.submitSuc > .holder{
+	width: 93.8%;
+	margin: 0 auto;
+	margin-top: 10px;
+	background: #fff;
+	padding: 10px 3% 10px 3%;
+}
+.holder .topp{
+	box-sizing: border-box;
+	display: flex;
+}
+.holder .topp .left{
+	width: 40%;
+	border-right: 1px solid #eee;
+}
+.holder .topp .right{
+	width: 60%;
+	display: flex;
+	margin-top: 5px;
+}
+.holder .topp .first{
+	font-size: 10px;
+	margin-bottom: 5px;
+}
+.holder .topp .sec{
+	color: #eb6100;
+	font-size: 19px;
+}
+.holder .topp .third{
+	font-size: 10px;
+	color: #999;
+	text-align: center;
+}
+.holder .topp .first img{
+	width: 11px;
+	height: 11px;
+	margin-right: 12px;
+}
+
+.holder .topp .right .l1{
+	width: 53%;
+	color: #eb6100;
+	font-size: 19px;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+.holder .topp .right .r1{
+
+	width: 47%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.holder .topp .right .l1 span{
+	font-size: 11px;
+	color: #999;
+	display: block;
+	margin-top: -2px;
+}
+.holder .topp .right .r1 .sq{
+	height: 24px;
+	background-color: #ffffff;
+	border: solid 1px #4380ff;
+	font-size: 9px;
+	color: #4380ff;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+}
+.holder .topp .right .r1 .tj{
+	height: 24px;
+	background-color: #ffffff;
+	border: solid 1px #eb6100;
+	font-size: 9px;
+	color: #eb6100;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	margin-top: 2px;
+}
+.holder .bott{
+	font-size: 9px;
+	color: #999;
+	margin-top: 5px;
+	line-height: 30px;
+}
+.holder .bott img{
+	width: 11px;
+	height: 11px;
+	margin-right: 4px;
+}
+.bg{
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: #000;
+	opacity: .4;
+	z-index: 10;
+	display: none;
+}
+.outHolder{
+	width: 94%;
+	background: #fff;
+	position: fixed;
+	top: 10%;
+	left: 50%;
+	margin-left: -47%;
+	z-index: 100;
+	padding: 0 15px;
+	display: none;
+}
+.outHolder .tit{
+	color: #eb6100;
+	font-size: 14px;
+	text-align: center;
+	border-bottom: 1px solid #eee;
+	line-height: 40px;
+	margin-top: 5px;
+}
+
+.outHolder table{
+	width: 100%;
+	margin-bottom: 30px;
+}
+.outHolder table tr{
+	display: inline-flex;
+	align-items: baseline;
+}
+.outHolder table tr td:nth-of-type(1){
+	width: 62px;
+	font-size: 12px;
+	color: #333;
+	line-height: 40px;
+}
+.outHolder table tr td:nth-of-type(2){
+	font-size: 12px;
+	color: #999;
+	flex: 1;
+	padding-left: 8px;
+}
+.outHolder .mes{
+	font-size: 12px;
+	color: #333;
+	line-height: 30px;
+	margin-bottom: 20px;
+	margin-top: 10px;
+}
+.cancel{
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: -25px;
+	right: 0;
+}
