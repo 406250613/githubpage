@@ -1,6 +1,7 @@
 
 .login{
 	height: 100%;
+	display: block;
 	background-image: url('../images/登录注册@2x.png');
 	background-size: cover;
 	background-position: top;
