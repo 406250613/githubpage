@@ -209,12 +209,15 @@
 				<div class="mui-input-row">
 					<label>职业</label>
 					<span class="icon1">></span>
-					<select class="mui-btn mui-btn-block">
-						<option value="item-1">无固定职业</option>
-						<option value="item-2">无</option>
+					<select class="mui-btn mui-btn-block" onchange="jobChange(this)">
+						<option value="item-1" name='f' selected="selected">无固定职业</option>
+						<option value="item-2" name='s'>上班人群</option>
+						<option value="item-3" name='t'>个体工商户</option>
+						<option value="item-4" name='fr'>企业主</option>
 					</select>
 				</div>
-				<div class="mygroup">
+			<!-- 	无固定职业 -->
+				<div class="mygroup toggleGroup" name='tog1' style="display: block">
 					<div class="mui-input-row">
 						<label>月平均收入</label>
 						<span>万元</span>
@@ -236,7 +239,7 @@
 							<option value="item-2">其他</option>
 						</select>
 					</div>
-					<div class="mui-input-row">
+					<div class="mui-input-row" style="padding-left: 15px;">
 						<label>保单</label>
 						<span class="icon1">></span>
 						<select class="mui-btn mui-btn-block">
@@ -244,7 +247,206 @@
 							<option value="item-2">其他</option>
 						</select>
 					</div>
+					<div class="mui-input-row" style="padding-left: 15px;">
+						<label>微粒贷</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+				</div>
+			<!-- 	上班人群 -->
+				<div class="mygroup toggleGroup" name='tog2'>
 					<div class="mui-input-row">
+						<label>公司类型</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">公务员事业单位</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>月打卡工资</label>
+						<span>元</span>
+						<input type="text" placeholder="请输入">
+					</div>
+					<div class="mui-input-row">
+						<label>现单位工作年限</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3年</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>是否有本地社保</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">是</option>
+							<option value="item-2">无</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>是否有本地公积金</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">是</option>
+							<option value="item-2">无</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>名下房产类型</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">是</option>
+							<option value="item-2">无</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>车辆情况</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row" style="padding-left: 15px;">
+						<label>保单</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row" style="padding-left: 15px;">
+						<label>微粒贷</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+				</div>
+				<!-- 	个体工商户 -->
+				<div class="mygroup toggleGroup" name='tog3'>
+					<div class="mui-input-row">
+						<label>经营注册地</label>
+						<div id="showCityPicker4" class="inner placeinner">请选择地区</div>
+						<div id="cityResult4"></div>
+					</div>
+					<div class="mui-input-row">
+						<label>总经营流水收入/月</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">100</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>是否办理过营业执照</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">是</option>
+							<option value="item-2">否</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>营业年限</label>
+						<span>年</span>
+						<input type="text" placeholder="请输入">
+					</div>
+					<div class="mui-input-row">
+						<label>名下房产类型</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">类型1</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>车辆情况</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row" style="padding-left: 15px;">
+						<label>保单</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row" style="padding-left: 15px;">
+						<label>微粒贷</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+				</div>
+				<!-- 	企业主 -->
+				<div class="mygroup toggleGroup" name='tog4'>
+					<div class="mui-input-row">
+						<label>经营注册地</label>
+						<div id="showCityPicker5" class="inner placeinner">请选择地区</div>
+						<div id="cityResult5"></div>
+					</div>
+					<div class="mui-input-row">
+						<label>总经营流水收入/月</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">100</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>是否办理过营业执照</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">是</option>
+							<option value="item-2">否</option>
+						</select>
+					</div>
+					<div class="mui-input-row">
+						<label>营业年限</label>
+						<span>年</span>
+						<input type="text" placeholder="请输入">
+					</div>
+					<div class="mui-input-row">
+						<label>名下房产类型</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">类型1</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row" style="padding-left: 15px;">
+						<label>住房房龄</label>
+						<span>年</span>
+						<input type="text" placeholder="请输入房龄">		
+					</div>
+					<div class="mui-input-row">
+						<label>车辆情况</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row" style="padding-left: 15px;">
+						<label>保单</label>
+						<span class="icon1">></span>
+						<select class="mui-btn mui-btn-block">
+							<option value="item-1">3次</option>
+							<option value="item-2">其他</option>
+						</select>
+					</div>
+					<div class="mui-input-row" style="padding-left: 15px;">
 						<label>微粒贷</label>
 						<span class="icon1">></span>
 						<select class="mui-btn mui-btn-block">
@@ -261,10 +463,10 @@
 		</div>
 		<div class="bot">
 			<div class="item">
-				<input name="radio1" type="radio"><label>我已阅读并同意<a href="#" class="f">《保密协议》</a><a href="#" class="f">《免责声明》条款</a></label>
+				<input name="" type="checkbox"><label>我已阅读并同意<a href="#" class="f">《保密协议》</a><a href="#" class="f">《免责声明》条款</a></label>
 			</div>
 			<div class="item" style="align-items: baseline;">
-				<input name="radio2" type="radio"><label><font>+99元享受VIP加速服务</font><a href="#" class="s">详情</a><br>
+				<input name="" type="checkbox" style="position: relative;top: 2px;"><label><font>+99元享受VIP加速服务</font><a href="#" class="s">详情</a><br>
 				已有<font>10086</font>位用户通过加速服务得到贷款</label>
 			</div>
 			<a href="#" class="sub">确认提交</a>
@@ -302,7 +504,7 @@
 				}, false);
 
 				//placeinner
-				var cityData = [{
+				var cityData = [{	//这里为城市数据
 					"value": "110000",
 					"text": "山东省",
 					children: [{
@@ -332,6 +534,7 @@
 					}]
 				}]
 
+				//工作地区的地区三联选择
 				var cityPicker3 = new $.PopPicker({
 						layer: 3
 					});
@@ -342,8 +545,40 @@
 							showCityPickerButton.innerText = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
 						});
 					}, false);
+
+				//个体工商户的地区三联选择
+				var cityPicker4 = new $.PopPicker({
+						layer: 4
+					});
+					cityPicker4.setData(cityData);
+					var showCityPickerButton4 = document.getElementById('showCityPicker4');
+					showCityPickerButton4.addEventListener('tap', function(event) {
+						cityPicker4.show(function(items) {
+							showCityPickerButton4.innerText = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+						});
+					}, false);
+
+				//企业主的地区三联选择
+				var cityPicker5 = new $.PopPicker({
+						layer: 5
+					});
+					cityPicker5.setData(cityData);
+					var showCityPickerButton5 = document.getElementById('showCityPicker5');
+					showCityPickerButton5.addEventListener('tap', function(event) {
+						cityPicker5.show(function(items) {
+							showCityPickerButton5.innerText = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+						});
+					}, false);
 			})(mui);
-		
+		function jobChange(that){
+			//index为select的选中值所在索引值
+			var index = that.selectedIndex+1
+			console.log(index)
+			document.querySelectorAll('.toggleGroup').forEach(item=>{
+				item.style.display='none'
+			})
+			document.querySelector('.toggleGroup[name="tog'+index+'"]').style.display='block'
+		}
 </script>
 </html>
 
