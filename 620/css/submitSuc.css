@@ -152,8 +152,8 @@
 .holder .bott{
 	font-size: 9px;
 	color: #999;
-	margin-top: 5px;
-	line-height: 30px;
+	margin-top: 20px;
+/*	line-height: 30px;*/
 	display: flex;
     flex-wrap: wrap;
     align-items: center;
