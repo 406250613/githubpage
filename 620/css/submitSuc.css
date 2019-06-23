@@ -136,7 +136,6 @@
 	width: 100%;
 	justify-content: center;
 	align-items: center;
-	line-height: 24px;
 }
 .holder .topp .right .r1 .tj{
 	height: 24px;
@@ -148,8 +147,7 @@
 	width: 100%;
 	justify-content: center;
 	align-items: center;
-	margin-top: 5px;
-	line-height: 24px;
+	margin-top: 2px;
 }
 .holder .bott{
 	font-size: 9px;
@@ -164,6 +162,9 @@
 	width: 11px;
 	height: 11px;
 	margin-right: 4px;
+}
+.holder .bott  span{
+	margin-right: 8px;
 }
 .bg{
 	position: fixed;
