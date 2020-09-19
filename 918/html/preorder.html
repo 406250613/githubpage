@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>提前预约</title>
+    <link href="../assets/css/mui.min.css" rel="stylesheet"/>
+    <link href="../assets/css/main.css" rel="stylesheet"/>
+    <link href="../assets/css/sitereg.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../assets/css/mui.picker.min.css">
+</head>
+<body>
+<div class="holder">
+    <section class="banner"><img src="../assets/img/baner.png" alt="image"></section>
+    <section class="regForm">
+        <form class="mui-input-group">
+            <div class="mui-input-row">
+                <label>被访人</label>
+                <select class="mui-h5">
+                    <option value="">选择被访人</option>
+                    <option value="1">津</option>
+                    <option value="1">冀</option>
+                    <option value="1">京</option>
+                </select>
+    
+            </div>
+            <div class="mui-input-row" style="height: 80px;">
+                <label>头像上传</label>
+                <input type="file" />
+                <div class="upload"><img src="../assets/img/camera.png" alt=""></div>
+                <!-- <input type="text" class="mui-input-clear" placeholder="请输入密码"> -->
+            </div>
+            <div class="mui-input-row">
+                <label class="must">访客姓名</label>
+                <input type="text" class="mui-input" placeholder="姓名">
+            </div>
+            <div class="mui-input-row">
+                <label class="must">手机号码</label>
+                <input type="number" class="mui-input" placeholder="手机号">
+            </div>
+            <div class="mui-input-row">
+                <label>访客公司</label>
+                <input type="text" class="mui-input" placeholder="公司">
+            </div>
+            <div class="mui-input-row" style="margin-top: 18px;">
+                <label>来访日期</label>
+                <input type="text" class="mui-input vdate" placeholder="公司">
+            </div>
+            <div class="mui-input-row">
+                <label>具体时间(时分)</label>
+                <input type="text" class="mui-input vtime" placeholder="公司">
+            </div>
+            <div class="mui-input-row" style="height: 50px;">
+                <label class="must">人数</label>
+                <div class="mui-numbox" data-numbox-min='0' data-numbox-max=''>
+                    <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                    <input class="mui-numbox-input" type="number" />
+                    <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                </div>
+            </div>
+            <div class="mui-input-row" style="background-color: #fff;">
+                <label>访问事由</label>
+                <div style="float: right;margin-right: 15px;margin-top: 5px">
+                    <div class="radioBtn active">商务</div>
+                    <div class="radioBtn">会议</div>
+                    <div class="radioBtn">面试</div>
+                </div>
+            </div>
+        </form>
+    </section>
+    <div class="submtBox"><div>提交</div></div>
+</div>
+</body>
+<script src="../assets/js/mui.min.js"></script>
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/mui.picker.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    $('.radioBtn').on('click',function() {
+        $('.radioBtn').removeClass('active')
+        $(this).addClass('active')
+    })
+    var winHeight = $(window).height();   //获取当前页面高度
+	$(window).resize(function(){
+    var thisHeight=$(this).height();
+    if(winHeight - thisHeight >50){
+         //当软键盘弹出，在这里面操作
+	    $(".submtBox").css("position","static")
+		}else{
+				//当软键盘收起，在此处操作
+		$(".submtBox").css("position","fixed")
+		}
+    });
+    
+    mui.init();
+	var vdate = document.querySelector('.vdate');
+	var dtPicker = new mui.DtPicker({
+		type:'date'
+	}); 
+	// 监听日期选择点击事件
+	vdate.addEventListener('tap', function() {
+		dtPicker.show(function (selectItems) { 
+			vdate.value=selectItems.value;
+		})
+    }, false);
+    var vtime = document.querySelector('.vtime');
+	var tmPicker = new mui.DtPicker({
+		type:'time'
+	}); 
+    vtime.addEventListener('tap', function() {
+		tmPicker.show(function (selectItems) { 
+			vtime.value=selectItems.value;
+		})
+	}, false);
+
+</script>
+</html>
