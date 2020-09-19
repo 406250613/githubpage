@@ -56,6 +56,9 @@ input::-ms-input-placeholder { /* Microsoft Edge */
     background-color: #fff;
 }
 
+.regForm{
+    margin-bottom: 80px;
+}
 .regForm .upload{
     width: 70px;
     height: 70px;
