@@ -1,0 +1,11 @@
+
+p,h1,h2,h3,h4,h5,h6,div,form{
+    margin: 0px 0px;
+    padding: 0px 0px;
+    box-sizing: border-box;
+}
+.holder{
+    max-width: 800px;
+    border: 1px solid;
+    margin: 0 auto;
+}
