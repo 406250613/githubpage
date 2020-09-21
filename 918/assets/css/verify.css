@@ -1,0 +1,57 @@
+
+.card{
+    width: 90%;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px 14px;
+}
+.card .top{
+    font-size: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+.card .top p{
+    font-size: 15px;
+    margin-top: 7px;
+}
+.item{
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.item p{
+    line-height: 33px;
+    width: 80px;
+    font-size: 14px;
+}
+.item span{
+    color:  #f2a332;
+}
+
+.btnBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+}
+.btnBox div{
+    font-size: 13px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    border-radius: 5px;
+}
+.btnBox div:first-child{
+    margin-right: 10px;
+}
+.refuse{
+    background-color: #f20101c7;
+}
+.allow{
+    background-color: #007affe6;
+}
