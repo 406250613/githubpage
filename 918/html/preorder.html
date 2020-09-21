@@ -39,6 +39,11 @@
                 <input type="number" class="mui-input" placeholder="手机号">
             </div>
             <div class="mui-input-row">
+                <label>验证码</label>
+                <input class="codeInput" type="text" placeholder="验证码" />
+                <div class="getCode" onclick="countdown()">获取验证码</div>
+            </div>
+            <div class="mui-input-row">
                 <label>访客公司</label>
                 <input type="text" class="mui-input" placeholder="公司">
             </div>
@@ -58,18 +63,13 @@
                     <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
                 </div>
             </div>
-            <div class="mui-input-row">
+            <div class="mui-input-row" style="background-color: #fff;">
                 <label>访问事由</label>
                 <div style="float: right;margin-right: 15px;margin-top: 5px">
                     <div class="radioBtn active">商务</div>
                     <div class="radioBtn">会议</div>
                     <div class="radioBtn">面试</div>
                 </div>
-            </div>
-            <div class="mui-input-row" style="background-color: #fff;">
-                <label>验证码</label>
-                <input class="codeInput" type="text" placeholder="验证码" />
-                <div class="getCode">获取验证码</div>
             </div>
         </form>
     </section>
@@ -116,6 +116,24 @@
 			vtime.value=selectItems.value;
 		})
 	}, false);
+
+    function countdown() {
+        if($('.getCode').hasClass('disable')) return
+        $('.getCode').addClass('disable')
+        var count = 60
+        //给按钮添加disabled class
+        var timer= setInterval(()=>{
+            count--
+            console.log(count)
+            $('.getCode').text(`${count}秒可重发`)
+            if(count === 0) {
+                clearInterval(timer)
+                //除去disabled class
+                $('.getCode').text('获取验证码')
+                $('.getCode').removeClass('disable')
+            }
+        },1000)
+    }
 
 </script>
 </html>

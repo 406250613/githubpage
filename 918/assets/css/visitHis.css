@@ -1,0 +1,64 @@
+
+.item{
+    padding: 20px 15px 0 55px;
+    color: #333;
+    position: relative;
+}
+.item::before{
+    content: '';
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    position: absolute;
+    left: 13px;
+    top: 55px;
+}
+.item.d::before{
+    content: '登';
+    background-color: #007aff;
+}
+.item.y::before{
+    content: '预';
+    background-color: #f2a332;
+}
+.item > div{
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+.item > div > span{
+    font-size: 13px;
+    position: relative;
+}
+.item > div > span::before{
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: rosybrown;
+    display: block;
+    position: absolute;
+    left: -9px;
+    top: 8px;
+}
+.item p{
+    color: #333;
+}
+.item p:nth-of-type(1){
+    margin: 10px 0 3px 0;
+}
+.item p:nth-of-type(1) span{
+    color: #f0ad4e;
+}
+.item p:nth-of-type(3){
+    color: #aaa;
+    border-top: 1px dotted;
+    line-height: 35px;
+    margin-top: 10px;
+}

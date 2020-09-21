@@ -47,10 +47,11 @@
     margin-bottom: 6px;
 }
 .powerBy{
-    width: 100%;
     font-size: 12px;
     color: #aaa;
     position: absolute;
+    left: 0;
+    right: 0;
     bottom: 15px;
     text-align: center;
 }

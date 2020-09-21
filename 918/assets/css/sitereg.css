@@ -151,6 +151,9 @@ input::-ms-input-placeholder { /* Microsoft Edge */
     float: right;
     margin-right: 15px;
     margin-top: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .regForm .codeInput{
     width: 100px;
