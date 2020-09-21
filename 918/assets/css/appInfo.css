@@ -1,0 +1,91 @@
+
+.holder{
+    height: 100vh;
+    background:  #338ae9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+}
+
+.topLink{
+    color: #fff;
+    font-size: 14px;
+    float: right;
+    display: inline;
+    margin: 10px 10px;
+}
+.lou{
+    width: 40px;
+}
+h1{
+    font-size: 18px;
+    font-weight: normal;
+    margin: 22px 0;
+}
+.des{
+    color: #fff;
+    font-size: 13px;
+}
+
+.infoBox{
+    background-color: #fff;
+    border-radius: 5px;
+    width: calc(100% - 24px);
+    margin: 18px 12px;
+    color: #333;
+    padding: 22px 14px;
+}
+.uInfo{
+    position: relative;
+    padding-bottom: 13px;
+    border-bottom: 1px solid #ddd;
+}
+.uInfo .name{
+    font-size: 23px;
+    color: #222;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+.uInfo .st{
+    font-size: 13px;
+    color: #222;
+}
+.uInfo .s{
+    font-size: 13px;
+}
+.uInfo .s span{
+    color: #f2a332;
+}
+.uInfo img{
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    position: absolute;
+    top: -4px;
+    right: 0;
+}
+.companyInfo{
+    position: relative;
+}
+.companyInfo .cname{
+    font-size: 15px;
+    color: #222;
+    font-weight: bold;
+    margin: 15px 0 10px 0;
+}
+.companyInfo .des{
+    color: #333;
+}
+.companyInfo .des span{
+    color: #482eda;
+}
+.companyInfo .tips{
+    font-size: 13px;
+}
+.cancel{
+    font-size: 13px;
+    padding: 8px 15px;
+    border: 1px solid;
+    border-radius: 10px;
+}
