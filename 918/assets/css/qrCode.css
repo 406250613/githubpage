@@ -1,0 +1,70 @@
+
+.card{
+    width: 90%;
+    margin: 10px auto;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card h1{
+    font-size: 18px;
+    font-weight: 600;
+    color: #2e80da;
+    margin-top: 25px;
+}
+.card .des{
+    font-size: 14px;
+    margin: 20px 0;
+}
+.card > img{
+    width: 150px;
+    height: 150px;
+    margin-top: 15px;
+}
+.card .actionBox{
+    display: flex;
+    width: 100%;
+    margin: 40px 0 10px 0;
+}
+.card .actionBox > div{
+    width: 50%;
+    font-size: 14px;
+    color: #1296db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card .actionBox > div:nth-of-type(1){
+    border-right: 1px solid #aaa;
+}
+
+.card .actionBox > div img{
+    width: 14px;
+    margin-right: 3px;
+}
+.moreBox{
+    width: 90%;
+    margin: 10px auto;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+.moreBox p{
+    text-align: center;
+    line-height: 26px;
+    margin: 20px 0 20px 0;
+}
+.moreBox .btn{
+    color: #fff;
+    padding: 10px 65px;
+    background: #30a043;
+    font-size: 13px;
+    border-radius: 5px;
+}
