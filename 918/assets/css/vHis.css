@@ -1,0 +1,92 @@
+
+.item{
+    padding: 22px 15px 15px 55px;
+    color: #333;
+    position: relative;
+    background: #fff;
+    margin: 10px 15px;
+}
+.item::before{
+    content: '';
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    position: absolute;
+    left: 13px;
+    top: 55px;
+}
+.item.y::before{
+    content: '邀';
+    background-color: #007aff;
+}
+.item.f::before{
+    content: '访';
+    background-color: #f2a332;
+}
+.item.q::before{
+    content: '取';
+    background-color: #c8c7cc;
+}
+.item.j::before{
+    content: '拒';
+    background-color: #333;
+}
+.item > div{
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+.item > div > span{
+    font-size: 13px;
+    position: relative;
+}
+.item > div > span::before{
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    left: -9px;
+    top: 8px;
+}
+.item.d > div > span::before{
+    background-color: #007aff;
+}
+.item.y > div > span::before{
+    background-color: #f2a332;
+}
+.item p{
+    color: #333;
+}
+.item p:nth-of-type(1){
+    margin: 10px 0 3px 0;
+}
+.item p:nth-of-type(1) span{
+    color: #f0ad4e;
+}
+.mui-segmented-control.mui-segmented-control-inverted {
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    background: #fff;
+}
+.count{
+    font-size: 12px;
+    padding: 5px 0 0px 15px;
+    margin-top: 50px;
+}
+.mui-segmented-control{
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+.mui-segmented-control .mui-control-item {
+    line-height: 45px;
+}
