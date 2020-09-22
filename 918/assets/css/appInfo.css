@@ -1,7 +1,8 @@
-
+body{
+    background-color: #338ae9;
+}
 .holder{
-    height: 100vh;
-    background:  #338ae9;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -88,4 +89,39 @@ h1{
     padding: 8px 15px;
     border: 1px solid;
     border-radius: 10px;
+}
+
+/* //////// */
+
+.pz{
+    padding-bottom: 13px;
+    border-bottom: 1px solid #ddd;
+}
+.pz .title{
+    font-size: 15px;
+    color: #222;
+    font-weight: bold;
+    margin: 15px 0 10px 0;
+}
+.pz > div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.pz > div > img{
+    width: 120px;
+    height: 120px;
+}
+.pz > div > div{
+    border: 1px solid #ddd;
+    font-size: 14px;
+    padding: 10px 14px;
+    margin-top: 18px;
+}
+.pz > div > div span{
+    color: #666;
+}
+.pz > div > p{
+    font-size: 13px;
+    margin: 10px 0 0;
 }
