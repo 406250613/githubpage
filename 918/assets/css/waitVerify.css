@@ -1,0 +1,125 @@
+
+.holder{
+    margin-bottom: 60px;
+}
+.item{
+    padding: 20px 15px 0 55px;
+    color: #333;
+    position: relative;
+    display: block;
+}
+.item::before{
+    content: '';
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    position: absolute;
+    left: 13px;
+    top: 55px;
+}
+.item.d::before{
+    content: '登';
+    background-color: #007aff;
+}
+.item.y::before{
+    content: '预';
+    background-color: #f2a332;
+}
+.item > div{
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+.item > div > span{
+    font-size: 13px;
+    position: relative;
+}
+.item > div > span::before{
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    left: -9px;
+    top: 8px;
+}
+.item.d > div > span::before{
+    background-color: #007aff;
+}
+.item.y > div > span::before{
+    background-color: #f2a332;
+}
+.item p{
+    color: #333;
+}
+.item p:nth-of-type(1){
+    margin: 10px 0 3px 0;
+}
+.item p:nth-of-type(1) span{
+    color: #f0ad4e;
+}
+.item p:nth-of-type(3){
+    color: #aaa;
+    border-top: 1px dotted;
+    line-height: 35px;
+    margin-top: 10px;
+}
+
+.actionBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 -1px 5px #ddd;
+    padding: 10px 0;
+}
+.actionBox .btnBox{
+    display: flex
+}
+.actionBox .btnBox> div{
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 14px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+.actionBox .refuse{
+    background-color: #dc4242;
+}
+.actionBox .allow{
+    background-color: #3b8ee8;
+}
+.actionBox .sBox{
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+.actionBox .sBox label{
+    margin-left: 10px;
+}
+.actionBox .sBox input{
+    transform: scale(1.2,1.2);
+}
+
+input[name='select']{
+    position: absolute;
+    top: 23px;
+    left: 22px;
+    transform: scale(1.5,1.5);
+}
+.count{
+    font-size: 12px;
+    padding: 10px 0 0px 15px;
+}

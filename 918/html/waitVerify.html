@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>待审批</title>
+    <link href="../assets/css/mui.min.css" rel="stylesheet"/>
+    <link href="../assets/css/main.css" rel="stylesheet"/>
+    <link href="../assets/css/waitVerify.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="holder">
+    <p class="count">共查询到2条</p>
+    <div class="item d">
+        <input type="checkbox" name="select" />
+        <div>张三<span>访问中</span></div>
+        <p>拜访于：<span>2020-9-21 20:10</span></p>
+        <p>成都ABCD公司</p>
+        <p>提交时间：2020-9-21 20:10</p>
+    </div>
+    <div class="item y">
+        <input type="checkbox" name="select" />
+        <div>张三<span>待访问</span></div>
+        <p>拜访于：<span>2020-9-21 20:10</span></p>
+        <p>成都ABCD公司</p>
+        <p>提交时间：2020-9-21 20:10</p>
+    </div>
+    <div class="actionBox">
+        <div class="sBox"><input type="checkbox" name="all" id="" onclick="changeSelect(this)" class="all"><label for="all">全选</label></div>
+        <div class="btnBox">
+            <div class="refuse">批量拒绝</div>
+            <div class="allow">批量批准</div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../assets/js/mui.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+    function changeSelect(ele) {
+        if(ele.checked) setAll()
+        else {
+            setNo()
+        } 
+        
+    }
+    //全选函数
+    function setAll() {
+            var selects = document.getElementsByName("select");
+            for (var i = 0; i < selects.length; i++) {
+                selects[i].checked = true;
+            }
+        }
+
+        //全不选函数
+        function setNo() {
+            var selects = document.getElementsByName("select");
+            for (var i = 0; i < selects.length; i++) {
+                selects[i].checked = false;
+            }
+        }
+
+        //反选
+        function setOthers() {
+            var selects = document.getElementsByName("select");
+            for (var i = 0; i < selects.length; i++) {
+                if (selects[i].checked == false)
+                    selects[i].checked = true;
+                else
+                    selects[i].checked = false;
+            }
+        }
+
+        //全选/全不选操作
+        function setAllNo(){
+            var box = document.getElementById("boxid");
+            var selects = document.getElementsByName("select");
+            if(box.checked == false){
+                for (var i = 0; i < selects.length; i++) {
+                    selects[i].checked = false;
+                }
+            }else{
+                for (var i = 0; i < selects.length; i++) {
+                    selects[i].checked = true;
+                    }
+            }
+        }
+</script>
+</html>
