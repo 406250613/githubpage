@@ -83,6 +83,28 @@
 <script src="../assets/js/jquery.min.js"></script>
 <script src="../assets/js/mui.picker.min.js"></script>
 <script type="text/javascript" charset="utf-8">
+  const PWAInstallationGuide = () => {
+  // @ts-ignore
+  let deferredPrompt = 'init';
+
+  // P.S. Cancel WPA installation dialog will trigger beforeinstallprompt
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    if (deferredPrompt === 'init') {
+      deferredPrompt = e;
+    }
+
+    window.addEventListener('click', () => {
+      if (!deferredPrompt) return;
+
+      deferredPrompt.prompt();
+      deferredPrompt = null;
+    });
+  });
+};
+
+PWAInstallationGuide();
+
     $('.radioBtn').on('click',function() {
         $('.radioBtn').removeClass('active')
         $(this).addClass('active')
