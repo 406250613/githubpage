@@ -79,32 +79,25 @@
     <div class="submtBox"><div>提交</div></div>
 </div>
 </body>
+<script>
+    // Initialize deferredPrompt for use later to show browser install prompt.
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    deferredPrompt = e;
+    // Update UI notify the user they can install the PWA
+    showInstallPromotion();
+    // Optionally, send analytics event that PWA install promo was shown.
+    console.log(`'beforeinstallprompt' event was fired.`);
+    });
+</script>
 <script src="../assets/js/mui.min.js"></script>
 <script src="../assets/js/jquery.min.js"></script>
 <script src="../assets/js/mui.picker.min.js"></script>
 <script type="text/javascript" charset="utf-8">
-  const PWAInstallationGuide = () => {
-  // @ts-ignore
-  let deferredPrompt = 'init';
-
-  // P.S. Cancel WPA installation dialog will trigger beforeinstallprompt
-  window.addEventListener('beforeinstallprompt', function (e) {
-    e.preventDefault();
-    if (deferredPrompt === 'init') {
-      deferredPrompt = e;
-    }
-
-    window.addEventListener('click', () => {
-      if (!deferredPrompt) return;
-
-      deferredPrompt.prompt();
-      deferredPrompt = null;
-    });
-  });
-};
-
-PWAInstallationGuide();
-
     $('.radioBtn').on('click',function() {
         $('.radioBtn').removeClass('active')
         $(this).addClass('active')
