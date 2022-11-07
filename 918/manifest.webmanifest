@@ -19,5 +19,5 @@
     ],
     "name": "A Test App",
     "short_name": "Test App",
-    "start_url": "/html/preOrder.html"
+    "start_url": "./html/preOrder.html"
   }
