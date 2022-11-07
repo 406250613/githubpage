@@ -1,17 +1,20 @@
 {
     "background_color": "lightblue",
+    "theme_color": "lightblue",
     "description": "Shows random fox pictures. Hey, at least it isn't cats.",
     "display": "fullscreen",
     "icons": [
       {
-        "src": "https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com/steam/game/cover/csgo.jpg",
-        "sizes": "192x192",
-        "type": "image/jpg"
+        "src": "https://www.baidu.com/img/PCfb_5bf082d29588c07f842ccde3f97243ea.png",
+        "sizes": "144x144",
+        "type": "image/png",
+        "purpose": "any maskable"
       },
       {
-        "src": "https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com/steam/game/cover/csgo.jpg",
+        "src": "https://www.baidu.com/img/PCfb_5bf082d29588c07f842ccde3f97243ea.png",
         "sizes": "512x512",
-        "type": "image/jpg"
+        "type": "image/png",
+        "purpose": "any maskable"
       }
     ],
     "name": "A Test App",

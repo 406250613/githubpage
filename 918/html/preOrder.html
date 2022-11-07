@@ -3,19 +3,25 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="theme-color" content="#B12A34">
     <title>提前预约</title>
     <link href="../assets/css/mui.min.css" rel="stylesheet"/>
     <link href="../assets/css/main.css" rel="stylesheet"/>
     <link href="../assets/css/sitereg.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="chrome-extension://ikhdkkncnoglghljlkmcimlnlhkeamad/normalize.css">
     <link rel="stylesheet" href="../assets/css/mui.picker.min.css">
     <link rel="manifest" href="../manifest.webmanifest">
     <link rel="apple-touch-icon" href="https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com/steam/game/cover/csgo.jpg">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script>
-        if('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('../assets/js/pwa-sw.js');
-        };
+        // if('serviceWorker' in navigator) {
+        //     navigator.serviceWorker.register('/918/pwa-sw.js');
+        // };
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function () {
+                // navigator.serviceWorker.register("/flutter_service_worker.js");
+                navigator.serviceWorker.register('/918/pwa-sw.js');
+            });
+        }
         // Initialize deferredPrompt for use later to show browser install prompt.
         let deferredPrompt;
     
