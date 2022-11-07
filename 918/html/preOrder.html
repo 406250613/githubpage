@@ -13,12 +13,8 @@
     <link rel="apple-touch-icon" href="https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com/steam/game/cover/csgo.jpg">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script>
-        // if('serviceWorker' in navigator) {
-        //     navigator.serviceWorker.register('/918/pwa-sw.js');
-        // };
-        if ("serviceWorker" in navigator) {
+        if (navigator.serviceWorker) {
             window.addEventListener("load", function () {
-                // navigator.serviceWorker.register("/flutter_service_worker.js");
                 navigator.serviceWorker.register('../pwa-sw.js');
             });
         }
@@ -26,28 +22,36 @@
         let deferredPrompt;
     
         window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevent the mini-infobar from appearing on mobile
-        e.preventDefault();
-        // Stash the event so it can be triggered later.
-        deferredPrompt = e;
-        // Update UI notify the user they can install the PWA
-        // showInstallPromotion();
-        // Optionally, send analytics event that PWA install promo was shown.
-        console.log(`'beforeinstallprompt' event was fired.`);
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Update UI notify the user they can install the PWA
+            // showInstallPromotion();
+            // Optionally, send analytics event that PWA install promo was shown.
+            console.log(`'beforeinstallprompt' event was fired.`);
         });
     
         setTimeout(() => {
+            if(!deferredPrompt) {
+                // 浏览器不支持server worker，弹引导界面引导用户手动添加
+                alert('浏览器不支持server worker，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
+            }
             document.querySelector('.submtBox').addEventListener('click', async () => {
-            // Hide the app provided install promotion
-            // hideInstallPromotion();
-            // Show the install prompt
-            deferredPrompt.prompt();
-            // Wait for the user to respond to the prompt
-            const { outcome } = await deferredPrompt.userChoice;
-            // Optionally, send analytics event with outcome of user choice
-            console.log(`User response to the install prompt: ${outcome}`);
-            // We've used the prompt, and can't use it again, throw it away
-            deferredPrompt = null;
+                if(!deferredPrompt) {
+                    // 浏览器不支持server worker，弹引导界面引导用户手动添加
+                    alert('浏览器不支持server worker，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
+                    return
+                }
+                // Hide the app provided install promotion
+                // Show the install prompt
+                deferredPrompt.prompt();
+                // Wait for the user to respond to the prompt
+                const { outcome } = await deferredPrompt.userChoice;
+                // Optionally, send analytics event with outcome of user choice
+                console.log(`User response to the install prompt: ${outcome}`);
+                // We've used the prompt, and can't use it again, throw it away
+                deferredPrompt = null;
             });
         }, 2000);
     </script>
@@ -116,7 +120,7 @@
             </div>
         </form>
     </section>
-    <div class="submtBox"><div>提交</div></div>
+    <div class="submtBox"><div>添加到桌面</div></div>
 </div>
 </body>
 <script src="../assets/js/mui.min.js"></script>
