@@ -5,13 +5,13 @@
     "display": "fullscreen",
     "icons": [
       {
-        "src": "https://www.baidu.com/img/PCfb_5bf082d29588c07f842ccde3f97243ea.png",
+        "src": "./assets/img/baner.png",
         "sizes": "144x144",
         "type": "image/png",
         "purpose": "any maskable"
       },
       {
-        "src": "https://www.baidu.com/img/PCfb_5bf082d29588c07f842ccde3f97243ea.png",
+        "src": "./assets/img/baner.png",
         "sizes": "512x512",
         "type": "image/png",
         "purpose": "any maskable"
