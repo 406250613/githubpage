@@ -30,18 +30,20 @@
         console.log(`'beforeinstallprompt' event was fired.`);
         });
     
-        document.querySelector('.submtBox').addEventListener('click', async () => {
-        // Hide the app provided install promotion
-        // hideInstallPromotion();
-        // Show the install prompt
-        deferredPrompt.prompt();
-        // Wait for the user to respond to the prompt
-        const { outcome } = await deferredPrompt.userChoice;
-        // Optionally, send analytics event with outcome of user choice
-        console.log(`User response to the install prompt: ${outcome}`);
-        // We've used the prompt, and can't use it again, throw it away
-        deferredPrompt = null;
-        });
+        setTimeout(() => {
+            document.querySelector('.submtBox').addEventListener('click', async () => {
+            // Hide the app provided install promotion
+            // hideInstallPromotion();
+            // Show the install prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+            // Optionally, send analytics event with outcome of user choice
+            console.log(`User response to the install prompt: ${outcome}`);
+            // We've used the prompt, and can't use it again, throw it away
+            deferredPrompt = null;
+            });
+        }, 2000);
     </script>
 </head>
 <body>
@@ -113,7 +115,7 @@
 </body>
 <script src="../assets/js/mui.min.js"></script>
 <script src="../assets/js/jquery.min.js"></script>
-<script src="../assets/js/mui.picker.min.js" defer></script>
+<script src="../assets/js/mui.picker.min.js"></script>
 <script type="text/javascript" charset="utf-8">
     $('.radioBtn').on('click',function() {
         $('.radioBtn').removeClass('active')
