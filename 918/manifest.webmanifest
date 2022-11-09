@@ -19,9 +19,5 @@
     ],
     "name": "A Test App",
     "short_name": "Test App",
-    "start_url": "./html/preOrder.html",
-    "related_applications": [{
-      "platform": "play",
-      "id": "com.android.chrome"
-    }]
+    "start_url": "./html/preOrder.html"
   }
