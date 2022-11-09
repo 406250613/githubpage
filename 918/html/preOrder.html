@@ -13,7 +13,15 @@
     <link rel="apple-touch-icon" href="https://kaleoz-media.oss-ap-southeast-1.aliyuncs.com/steam/game/cover/csgo.jpg">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script>
-        console.log(window.matchMedia('(display-mode: standalone)').matches)
+        function getPWADisplayMode() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+            if (document.referrer.startsWith('android-app://')) {
+                return 'twa';
+            } else if (navigator.standalone || isStandalone) {
+                return 'standalone';
+            }
+            return 'browser';
+        }
 
         if (navigator.serviceWorker) {
             window.addEventListener("load", function () {
@@ -35,6 +43,7 @@
         });
     
         setTimeout(() => {
+            console.log(getPWADisplayMode())
             if(!deferredPrompt && !window.matchMedia('(display-mode: standalone)').matches) {
                 // 浏览器不支持server worker并且不是从桌面打开的，弹引导界面引导用户手动添加
                 alert('浏览器不支持server worker，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
