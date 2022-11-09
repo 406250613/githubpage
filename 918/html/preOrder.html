@@ -58,6 +58,8 @@
             alert('search'+location.search )
             if (location.search.includes('?mode=standalone')) {
                 alert('从桌面打开的')
+            } else {
+                alert('从浏览器打开的')
             }
             if(!deferredPrompt && !location.search.includes('?mode=standalone')) {
                 // 浏览器不支持server worker并且不是从桌面打开的，弹引导界面引导用户手动添加
