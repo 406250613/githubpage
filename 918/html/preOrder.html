@@ -19,8 +19,9 @@
                 return 'twa';
             } else if (navigator.standalone || isStandalone) {
                 return 'standalone';
+            } else {
+                return 'browser';
             }
-            return 'browser';
         }
 
         if (navigator.serviceWorker) {
@@ -53,7 +54,8 @@
     
         setTimeout(() => {
             alert(getPWADisplayMode())
-            if(!deferredPrompt && !window.matchMedia('(display-mode: standalone)').matches) {
+            alert('search'+location.search)
+            if(!deferredPrompt) {
                 // 浏览器不支持server worker并且不是从桌面打开的，弹引导界面引导用户手动添加
                 alert('浏览器不支持server worker，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
             }
