@@ -40,6 +40,7 @@
                 alert('浏览器不支持server worker，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
             }
             document.querySelector('.submtBox').addEventListener('click', async () => {
+                alert(window.matchMedia('(display-mode: standalone)').matches ? 1:2)
                 // 是从桌面打开的，return
                 if (window.matchMedia('(display-mode: standalone)').matches) return;
                 if(!deferredPrompt) {

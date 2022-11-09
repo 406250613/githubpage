@@ -6,7 +6,7 @@ self.addEventListener('install', function(e) {
 
 self.addEventListener('fetch', function(e) {
     console.log('[Service Worker] Fetched resource '+e.request.url);
-    fetch(e.request).then((response) => {
+    fetch(e.request.url).then((response) => {
         console.log('[Service Worker] response: ' + response)
     })
 });
