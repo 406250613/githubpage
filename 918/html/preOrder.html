@@ -62,8 +62,8 @@
             // } else {
             //     alert('从浏览器打开的')
             // }
-            if(!deferredPrompt && getPWADisplayMode() === 'browser') {
-                // 浏览器不支持server worker并且不是从桌面打开的，弹引导界面引导用户手动添加
+            if(!deferredPrompt && getPWADisplayMode() === 'browser' && /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)) {
+                // 浏览器不支持server worker并且是浏览器打开的 并且是safari，弹引导界面引导用户手动添加
                 alert('浏览器不支持server worker(还有种情况是已安装，后面判断这种已安装)，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
             }
             document.querySelector('.submtBox').addEventListener('click', async () => {
