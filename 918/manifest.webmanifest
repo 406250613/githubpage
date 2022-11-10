@@ -2,7 +2,7 @@
     "background_color": "lightblue",
     "theme_color": "lightblue",
     "description": "Shows random fox pictures. Hey, at least it isn't cats.",
-    "display": "fullscreen",
+    "display": "standalone",
     "icons": [
       {
         "src": "./assets/img/baner.png",
@@ -19,5 +19,5 @@
     ],
     "name": "A Test App",
     "short_name": "Test App",
-    "start_url": "./html/preOrder.html?mode=standalone"
+    "start_url": "./html/preOrder.html"
   }
