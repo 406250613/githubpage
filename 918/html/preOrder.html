@@ -24,7 +24,7 @@
                 return 'browser';
             }
         }
-
+        alert(navigator.serviceWorker ? 1:2)
         if (navigator.serviceWorker) {
             window.addEventListener("load", function () {
                 navigator.serviceWorker.register('../pwa-sw.js');
