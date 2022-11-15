@@ -54,8 +54,9 @@
         });
     
         setTimeout(() => {
-            alert(getPWADisplayMode())
-            if (getPWADisplayMode() === 'standalone') $('.submtBox').hide()
+            let _mode = getPWADisplayMode();
+            alert(_mode)
+            if (_mode=== 'standalone') $('.submtBox').hide()
             // alert('search'+location.search )
             // if (location.search.includes('?mode=standalone')) {
             //     alert('从桌面打开的')
@@ -68,7 +69,7 @@
             // }
             document.querySelector('.submtBox').addEventListener('click', async () => {
                 // 是从桌面打开的，return
-                if (getPWADisplayMode() === 'standalone') return;
+                if (_mode === 'standalone') return;
                 if(!deferredPrompt) {
                     // 浏览器不支持beforeinstallprompt，弹引导界面引导用户手动添加
                     alert('浏览器不支持beforeinstallprompt并且浏览器打开(还有种情况是已安装，后面判断这种已安装)，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
