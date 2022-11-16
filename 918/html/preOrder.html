@@ -54,6 +54,7 @@
         });
     
         setTimeout(() => {
+            window.location.href = 'seagm://seagm/'
             let _mode = getPWADisplayMode();
             alert(_mode)
             if (_mode=== 'standalone') $('.submtBox').hide()
