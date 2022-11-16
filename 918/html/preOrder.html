@@ -13,7 +13,7 @@
     <link rel="apple-touch-icon" href="../assets/img/baner.png">
     <link rel="apple-touch-startup-image" href="../assets/img/baner.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <script>
+    <!-- <script>
         let u = navigator.userAgent, app = navigator.appVersion;
         let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
         let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -59,31 +59,27 @@
         setTimeout(() => {
             if (isAndroid) {
                 //这个是安卓操作系统
-                window.location.href = 'seagm://seagm/'
+                
             }
             if (isIOS) {
                 //这个是ios操作系统
                 let _mode = getPWADisplayMode();
                 alert(_mode)
                 if (_mode=== 'standalone') $('.submtBox').hide()
-                // alert('search'+location.search )
-                // if (location.search.includes('?mode=standalone')) {
-                //     alert('从桌面打开的')
-                // } else {
-                //     alert('从浏览器打开的')
-                // }
                 // if(!deferredPrompt && getPWADisplayMode() === 'browser') {
                 //     // 浏览器不支持beforeinstallprompt并且是浏览器打开的，弹引导界面引导用户手动添加
                 //     alert('浏览器不支持beforeinstallprompt并且浏览器打开(还有种情况是已安装，后面判断这种已安装)，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
                 // }
-                document.querySelector('.submtBox').addEventListener('click', async () => {
-                    // 是从桌面打开的，return
-                    if (_mode === 'standalone') return;
-                    if(!deferredPrompt) {
-                        // 浏览器不支持beforeinstallprompt，弹引导界面引导用户手动添加
-                        alert('浏览器不支持beforeinstallprompt并且浏览器打开(还有种情况是已安装，后面判断这种已安装)，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
-                        return
-                    }
+            }
+            document.querySelector('.submtBox').addEventListener('click', async () => {
+                // 是从桌面打开的，return
+                if (_mode === 'standalone') return;
+                if(!deferredPrompt) {
+                    // 浏览器不支持beforeinstallprompt，弹引导界面引导用户手动添加
+                    alert('浏览器不支持beforeinstallprompt并且浏览器打开(还有种情况是已安装，后面判断这种已安装)，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
+                    return
+                }
+                if (isIOS) {
                     // Hide the app provided install promotion
                     // Show the install prompt
                     deferredPrompt.prompt();
@@ -93,10 +89,12 @@
                     console.log(`User response to the install prompt: ${outcome}`);
                     // We've used the prompt, and can't use it again, throw it away
                     deferredPrompt = null;
-                });
-            }
+                } else if (isAndroid) {
+                    window.location.href = 'seagm://';
+                }
+            });
         }, 2000);
-    </script>
+    </script> -->
 </head>
 <body>
 <div class="holder">
@@ -223,5 +221,151 @@
             }
         },1000)
     }
+</script>
+<script src="https://unpkg.com/callapp-lib"></script>
+<script>
+    const platforms = {
+        android: 'android',
+        ios: 'ios',
+        windows: 'windows',
+        macos: 'macOS',
+        ubuntu: 'ubuntu',
+    };
+    let btn;
+    // 获取系统
+    const getPlatform = () => {
+                const u = navigator.userAgent;
+                console.log('u:', u);
+                let platform = '';
+                switch (true) {
+                    case !!/compatible|Windows/i.test(u):
+                        platform = platforms.windows;
+                        break;
+                    case !!/Macintosh|MacIntel/i.test(u):
+                        platform = platforms.macos;
+                        break;
+                    case !!/iphone|Ipad/i.test(u):
+                        platform = platforms.ios;
+                        break;
+                    case !!/android/i.test(u):
+                        platform = platforms.android;
+                        break;
+                    case !!/Ubuntu/i.test(u):
+                        platform = platforms.ubuntu;
+                    default:
+                        break;
+                }
+                console.log('platform:', platform);
+                return platform;
+            };
+    let deferredPrompt;
+    if (navigator.serviceWorker && getPlatform() === platforms.android) {
+        window.addEventListener("load", function () {
+            navigator.serviceWorker.register('../pwa-sw.js');
+        });
+    }
+    function getOpenLink() {
+        const ua = navigator.userAgent.split('(')[1].split(')')[0];
+        let brand = '';
+        const phones = {
+            huawei: /huawei|HarmonyOS/gi,
+            mi: /mi/gi,
+            oppo: /OPPO/gi,
+            samsung: /samsung/gi,
+        };
+        alert(ua)
+
+        switch (true) {
+            case phones.huawei.test(ua):
+                brand =
+                    'https://appgallery1.huawei.com/#/app/C102558419'; // 华为应用市场的链接
+                break;
+            case phones.mi.test(ua):
+                brand =
+                    'https://global.app.mi.com/details?id=com.seagm.store'; // 小米应用市场的链接
+                break;
+            case phones.oppo.test(ua):
+                brand =
+                    'https://seagm-media.seagmcdn.com/app/apk/SEAGM_RELEASE_V2.3.38_1017.apk'; // oppo 应用市场的链接
+                break;
+            case phones.samsung.test(ua):
+                brand =
+                    'https://galaxystore.samsung.com/detail/com.seagm.store'; // samsung 应用市场的链接
+                break;
+            default: // TODO: 默认打开 Google Play 还是官网？
+                brand = 'https://www.seagm.com/app/download';
+                break;
+        }
+        return brand;
+    }
+    
+
+    // config
+    const options = {
+        scheme: {
+            protocol: 'seagm',
+        },
+        timeout: 2000,
+        fallback: getOpenLink(),
+    };
+    const callLib = new CallApp(options);
+
+    function openApp() {
+        alert(1)
+        alert(getPlatform())
+        if (getPlatform() === platforms.android) {
+            callLib.open({ path: 'seagm://' });
+            alert(2)
+        }
+        if (getPlatform() === platforms.ios) {
+            // deferredPrompt.prompt();
+            alert('显示引导界面引导用户手动添加(类似泥巴影院的方式)')
+        }
+    }
+
+    btn = document.querySelector('.submtBox');
+    console.log(btn)
+    btn.onclick = openApp;
+
+    function getPWADisplayMode() {
+        const isStandalone = window.matchMedia(
+            '(display-mode: standalone)'
+        ).matches;
+        if (document.referrer.startsWith('android-app://')) {
+            return 'twa';
+        } else if (navigator.standalone || isStandalone) {
+            return 'standalone';
+        } else {
+            return 'browser';
+        }
+    }
+
+    window.addEventListener('beforeinstallprompt', e => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log(`'beforeinstallprompt' event was fired.`);
+    });
+
+    window.addEventListener('appinstalled', () => {
+        // 安装完成后立刻触发
+        // Hide the app-provided install promotion
+        // hideInstallPromotion();
+        // Clear the deferredPrompt so it can be garbage collected
+        deferredPrompt = null;
+        // Optionally, send analytics event to indicate successful install
+        alert('PWA was installed');
+        btn.remove();
+    });
+
+    window.addEventListener('load', () => {
+        if (
+            getPlatform() === platforms.ios &&
+            getPWADisplayMode() === 'standalone'
+        ) {
+            return btn.remove();
+        }
+        
+        btn.innerText = 'add to desktop';
+    });
 </script>
 </html>
