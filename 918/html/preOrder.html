@@ -14,6 +14,9 @@
     <link rel="apple-touch-startup-image" href="../assets/img/baner.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script>
+        let u = navigator.userAgent, app = navigator.appVersion;
+        let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
+        let isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
         function getPWADisplayMode() {
             const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
             if (document.referrer.startsWith('android-app://')) {
@@ -24,7 +27,7 @@
                 return 'browser';
             }
         }
-        if (navigator.serviceWorker) {
+        if (navigator.serviceWorker && isAndroid) {
             window.addEventListener("load", function () {
                 navigator.serviceWorker.register('../pwa-sw.js');
             });
@@ -54,38 +57,44 @@
         });
     
         setTimeout(() => {
-            window.location.href = 'seagm://seagm/'
-            let _mode = getPWADisplayMode();
-            alert(_mode)
-            if (_mode=== 'standalone') $('.submtBox').hide()
-            // alert('search'+location.search )
-            // if (location.search.includes('?mode=standalone')) {
-            //     alert('从桌面打开的')
-            // } else {
-            //     alert('从浏览器打开的')
-            // }
-            // if(!deferredPrompt && getPWADisplayMode() === 'browser') {
-            //     // 浏览器不支持beforeinstallprompt并且是浏览器打开的，弹引导界面引导用户手动添加
-            //     alert('浏览器不支持beforeinstallprompt并且浏览器打开(还有种情况是已安装，后面判断这种已安装)，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
-            // }
-            document.querySelector('.submtBox').addEventListener('click', async () => {
-                // 是从桌面打开的，return
-                if (_mode === 'standalone') return;
-                if(!deferredPrompt) {
-                    // 浏览器不支持beforeinstallprompt，弹引导界面引导用户手动添加
-                    alert('浏览器不支持beforeinstallprompt并且浏览器打开(还有种情况是已安装，后面判断这种已安装)，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
-                    return
-                }
-                // Hide the app provided install promotion
-                // Show the install prompt
-                deferredPrompt.prompt();
-                // Wait for the user to respond to the prompt
-                const { outcome } = await deferredPrompt.userChoice;
-                // Optionally, send analytics event with outcome of user choice
-                console.log(`User response to the install prompt: ${outcome}`);
-                // We've used the prompt, and can't use it again, throw it away
-                deferredPrompt = null;
-            });
+            if (isAndroid) {
+                //这个是安卓操作系统
+                window.location.href = 'seagm://seagm/'
+            }
+            if (isIOS) {
+                //这个是ios操作系统
+                let _mode = getPWADisplayMode();
+                alert(_mode)
+                if (_mode=== 'standalone') $('.submtBox').hide()
+                // alert('search'+location.search )
+                // if (location.search.includes('?mode=standalone')) {
+                //     alert('从桌面打开的')
+                // } else {
+                //     alert('从浏览器打开的')
+                // }
+                // if(!deferredPrompt && getPWADisplayMode() === 'browser') {
+                //     // 浏览器不支持beforeinstallprompt并且是浏览器打开的，弹引导界面引导用户手动添加
+                //     alert('浏览器不支持beforeinstallprompt并且浏览器打开(还有种情况是已安装，后面判断这种已安装)，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
+                // }
+                document.querySelector('.submtBox').addEventListener('click', async () => {
+                    // 是从桌面打开的，return
+                    if (_mode === 'standalone') return;
+                    if(!deferredPrompt) {
+                        // 浏览器不支持beforeinstallprompt，弹引导界面引导用户手动添加
+                        alert('浏览器不支持beforeinstallprompt并且浏览器打开(还有种情况是已安装，后面判断这种已安装)，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
+                        return
+                    }
+                    // Hide the app provided install promotion
+                    // Show the install prompt
+                    deferredPrompt.prompt();
+                    // Wait for the user to respond to the prompt
+                    const { outcome } = await deferredPrompt.userChoice;
+                    // Optionally, send analytics event with outcome of user choice
+                    console.log(`User response to the install prompt: ${outcome}`);
+                    // We've used the prompt, and can't use it again, throw it away
+                    deferredPrompt = null;
+                });
+            }
         }, 2000);
     </script>
 </head>
