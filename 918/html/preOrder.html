@@ -310,7 +310,6 @@
     const callLib = new CallApp(options);
 
     function openApp() {
-        alert(getPlatform())
         if (getPlatform() === platforms.android) {
             callLib.open({ path: 'seagm://' });
         }
