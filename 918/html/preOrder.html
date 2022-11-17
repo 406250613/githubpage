@@ -310,11 +310,9 @@
     const callLib = new CallApp(options);
 
     function openApp() {
-        alert(1)
         alert(getPlatform())
         if (getPlatform() === platforms.android) {
             callLib.open({ path: 'seagm://' });
-            alert(2)
         }
         if (getPlatform() === platforms.ios) {
             // deferredPrompt.prompt();
