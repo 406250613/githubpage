@@ -27,6 +27,7 @@
                 return 'browser';
             }
         }
+        console.log(11,navigator.serviceWorker)
         if (navigator.serviceWorker && isAndroid) {
             window.addEventListener("load", function () {
                 navigator.serviceWorker.register('../pwa-sw.js');
