@@ -27,8 +27,7 @@
                 return 'browser';
             }
         }
-        console.log(11,navigator.serviceWorker)
-        if (navigator.serviceWorker && isAndroid) {
+        if (navigator.serviceWorker) {
             window.addEventListener("load", function () {
                 navigator.serviceWorker.register('../pwa-sw.js');
             });
@@ -219,7 +218,7 @@
         },1000)
     }
 </script>
-<script src="https://unpkg.com/callapp-lib"></script>
+<!-- <script src="https://unpkg.com/callapp-lib"></script> -->
 <!-- <script>
     const platforms = {
         android: 'android',
