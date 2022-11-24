@@ -13,6 +13,7 @@
     <link rel="apple-touch-icon" href="../assets/img/baner.png">
     <link rel="apple-touch-startup-image" href="../assets/img/baner.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <script src="../assets/js/jquery.min.js"></script>
     <script>
         let u = navigator.userAgent, app = navigator.appVersion;
         let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
@@ -58,8 +59,11 @@
             // Optionally, send analytics event to indicate successful install
             alert('PWA was installed');
         });
-    
-        setTimeout(() => {
+        
+        $(() => {
+            let _mode = getPWADisplayMode();
+            alert(_mode)
+            if (_mode=== 'standalone') $('.submtBox').hide()
             if (isAndroid) {
                 //这个是安卓操作系统
                 
@@ -71,9 +75,6 @@
                 //     alert('浏览器不支持beforeinstallprompt并且浏览器打开(还有种情况是已安装，后面判断这种已安装)，显示引导界面引导用户手动添加(类似泥巴影院的方式)')
                 // }
             }
-            let _mode = getPWADisplayMode();
-            alert(_mode)
-            if (_mode=== 'standalone') $('.submtBox').hide()
             document.querySelector('.submtBox').addEventListener('click', async () => {
                 // 是从桌面打开的，return
                 if (_mode === 'standalone') return;
@@ -92,7 +93,7 @@
                 // We've used the prompt, and can't use it again, throw it away
                 deferredPrompt = null;
             });
-        }, 2000);
+        })
     </script>
 </head>
 <body>
@@ -163,7 +164,6 @@
 </div>
 </body>
 <script src="../assets/js/mui.min.js"></script>
-<script src="../assets/js/jquery.min.js"></script>
 <script src="../assets/js/mui.picker.min.js"></script>
 <script type="text/javascript" charset="utf-8">
     $('.radioBtn').on('click',function() {
