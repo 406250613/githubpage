@@ -60,7 +60,9 @@
             alert('PWA was installed');
         });
         
-        $(() => {
+        let timer = setInterval(function() {
+            if(!document.querySelector('.submtBox')) return;
+            clearInterval(timer);
             let _mode = getPWADisplayMode();
             alert(_mode)
             if (_mode=== 'standalone') $('.submtBox').hide()
@@ -89,11 +91,11 @@
                 // Wait for the user to respond to the prompt
                 const { outcome } = await deferredPrompt.userChoice;
                 // Optionally, send analytics event with outcome of user choice
-                console.log(`User response to the install prompt: ${outcome}`);
+                alert(`User response to the install prompt: ${outcome}`);
                 // We've used the prompt, and can't use it again, throw it away
                 deferredPrompt = null;
             });
-        })
+        }, 1000)
     </script>
 </head>
 <body>
