@@ -14,6 +14,7 @@
     <link rel="apple-touch-startup-image" href="../assets/img/baner.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script src="../assets/js/jquery.min.js"></script>
+    <script src="https://unpkg.com/callapp-lib"></script>
     <script>
         let u = navigator.userAgent, app = navigator.appVersion;
         let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //g
@@ -78,6 +79,16 @@
                 // }
             }
             document.querySelector('.submtBox').addEventListener('click', async () => {
+                const options = {
+                            scheme: {
+                                protocol: 'x-web-search0',
+                            },
+                            timeout: 2000,
+                            callback: ()=>{},
+                            fallback: 'https://support.apple.com/downloads/safari'
+                        };
+                        const callLib = new CallApp(options);
+                        callLib.open({ path: 'x-web-search://' });
                 // 是从桌面打开的，return
                 if (_mode === 'standalone') return;
                 if(!deferredPrompt) {
