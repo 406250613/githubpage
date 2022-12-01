@@ -60,6 +60,9 @@
             // Optionally, send analytics event to indicate successful install
             alert('PWA was installed');
         });
+        function downBroswer(){
+            window.location.href = 'https://support.apple.com/downloads/safari';
+        }
         
         let timer = setInterval(function() {
             if(!document.querySelector('.submtBox')) return;
@@ -83,12 +86,15 @@
                             scheme: {
                                 protocol: 'x-web-search0',
                             },
-                            timeout: 2000,
-                            callback: ()=>{},
-                            fallback: 'https://support.apple.com/downloads/safari'
+                            timeout: 2000
                         };
                         const callLib = new CallApp(options);
-                        callLib.open({ path: 'x-web-search://' });
+                        callLib.open({ 
+                            path: 'x-web-search://',
+                            callback(){
+                                downBroswer()
+                            }
+                         });
                 // 是从桌面打开的，return
                 if (_mode === 'standalone') return;
                 if(!deferredPrompt) {
