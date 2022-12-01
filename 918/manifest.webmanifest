@@ -19,5 +19,9 @@
     ],
     "name": "A Test App",
     "short_name": "Test App",
-    "start_url": "./html/preOrder.html"
+    "start_url": "./html/preOrder.html",
+    "related_applications": [{
+        "platform": "webapp",
+        "url": "https://406250613.github.io/githubpage/918/manifest.webmanifest"
+      }]
   }
