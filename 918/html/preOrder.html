@@ -78,6 +78,11 @@
                 // }
             }
             document.querySelector('.submtBox').addEventListener('click', async () => {
+                if (navigator.clipboard) {
+                            // 复制url到剪切板给用户safari粘贴用
+                            alert(1)
+                            navigator.clipboard.writeText(document.location.href);
+                        }
                 // 是从桌面打开的，return
                 if (_mode === 'standalone') return;
                 if(!deferredPrompt) {
