@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>铲猫砂记录器</title>
+    
+    <!-- PWA相关meta标签 -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="记录和管理家庭成员铲猫砂的惩罚天数">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="铲猫砂">
+    
+    <!-- 引用manifest.json -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- iOS图标 -->
+    <link rel="apple-touch-icon" href="/icon-192.png">
     <style>
         * {
             margin: 0;
@@ -225,12 +238,93 @@
         }
         
         @media (max-width: 480px) {
-            .member-container {
-                flex-direction: column;
+            /* 整体容器调整 */
+            .container {
+                padding: 20px;
+                margin: 10px;
             }
             
+            /* 标题调整 */
+            h1 {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+            
+            /* 成员容器改为垂直排列 */
+            .member-container {
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+            
+            /* 成员卡片调整 */
+            .member {
+                padding: 15px;
+            }
+            
+            /* 成员名称调整 */
+            .member h2 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+            
+            /* 天数显示调整 */
             .days-display {
                 font-size: 36px;
+                margin-bottom: 15px;
+            }
+            
+            /* 按钮组调整 */
+            .btn-group {
+                gap: 8px;
+            }
+            
+            /* 原因输入框调整 */
+            .reason-input {
+                min-height: 50px;
+                font-size: 14px;
+                padding: 10px;
+            }
+            
+            /* 输入框组调整 */
+            .input-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            /* 天数输入框调整 */
+            .days-input {
+                padding: 10px;
+                font-size: 16px;
+            }
+            
+            /* 按钮调整 */
+            .btn {
+                padding: 14px 20px;
+                font-size: 16px;
+                width: 100%;
+            }
+            
+            /* 历史记录调整 */
+            .history {
+                padding: 15px;
+                margin-top: 15px;
+            }
+            
+            .history h3 {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+            
+            .history-list {
+                max-height: 150px;
+            }
+            
+            /* 清空按钮调整 */
+            .clear-btn {
+                margin-top: 15px;
+                padding: 14px;
+                font-size: 16px;
             }
         }
     </style>
@@ -424,6 +518,19 @@
             initData();
             updateDisplay();
         };
+        
+        // 注册 Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(function(registration) {
+                        console.log('Service Worker 注册成功，作用域:', registration.scope);
+                    })
+                    .catch(function(error) {
+                        console.log('Service Worker 注册失败:', error);
+                    });
+            });
+        }
     </script>
 </body>
 </html>

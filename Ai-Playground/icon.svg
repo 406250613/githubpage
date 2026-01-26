@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- 背景 -->
+  <rect width="512" height="512" fill="#667eea" rx="100" ry="100"/>
+  
+  <!-- 猫砂盆 -->
+  <path d="M120 300 Q120 250 180 250 L332 250 Q392 250 392 300 L392 380 Q392 430 332 430 L180 430 Q120 430 120 380 Z" fill="#f8f9fa"/>
+  <path d="M120 300 Q120 280 180 280 L332 280 Q392 280 392 300" fill="#e9ecef"/>
+  <path d="M120 380 Q120 400 180 400 L332 400 Q392 400 392 380" fill="#dee2e6"/>
+  
+  <!-- 猫砂颗粒 -->
+  <circle cx="200" cy="320" r="8" fill="#adb5bd"/>
+  <circle cx="230" cy="330" r="6" fill="#adb5bd"/>
+  <circle cx="260" cy="320" r="7" fill="#adb5bd"/>
+  <circle cx="290" cy="335" r="5" fill="#adb5bd"/>
+  <circle cx="320" cy="325" r="9" fill="#adb5bd"/>
+  <circle cx="215" cy="350" r="7" fill="#adb5bd"/>
+  <circle cx="245" cy="360" r="8" fill="#adb5bd"/>
+  <circle cx="275" cy="355" r="6" fill="#adb5bd"/>
+  <circle cx="305" cy="345" r="7" fill="#adb5bd"/>
+  
+  <!-- 猫爪 -->
+  <path d="M380 220 Q380 200 400 200 L440 200 Q460 200 460 220 L460 240 Q460 260 440 260 L400 260 Q380 260 380 240 Z" fill="#ff6b6b"/>
+  <circle cx="395" cy="220" r="10" fill="#ffffff"/>
+  <circle cx="410" cy="215" r="5" fill="#ffffff"/>
+  <circle cx="425" cy="220" r="8" fill="#ffffff"/>
+  <circle cx="440" cy="218" r="6" fill="#ffffff"/>
+</svg>
