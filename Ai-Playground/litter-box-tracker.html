@@ -385,13 +385,14 @@
             reasonInput.value = '';
         }
         
-        // 完成当天
+        // 完成当天（清零天数）
         function completeDay(member) {
             const data = getData();
             if (data[member] > 0) {
                 // 二次验证
-                if (confirm(`确定要标记${member}的当天任务为已完成吗？`)) {
-                    data[member]--;
+                if (confirm(`确定要清零${member}的所有惩罚天数吗？`)) {
+                    const clearedDays = data[member];
+                    data[member] = 0;
                     saveData(data);
                     
                     // 获取当前日期（仅日期，不含时间）
@@ -402,7 +403,7 @@
                         day: '2-digit'
                     });
                     
-                    addHistory(`${currentDate} - ${member} 完成当天任务`);
+                    addHistory(`${currentDate} - ${member} 清零惩罚天数（共${clearedDays}天）`);
                     updateDisplay();
                 }
             }
