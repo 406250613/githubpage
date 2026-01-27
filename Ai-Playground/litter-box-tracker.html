@@ -330,8 +330,24 @@
     </style>
 </head>
 <body>
+    <!-- PWA安装提示弹窗 -->
+    <div id="pwa-install-prompt" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; max-width: 90%; width: 300px;">
+        <h3 style="margin-top: 0; color: #333;">添加到主屏幕</h3>
+        <p style="margin-bottom: 15px; color: #666; font-size: 14px;">将铲猫砂记录器添加到主屏幕，更方便使用！</p>
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button id="pwa-cancel" style="padding: 8px 16px; border: 1px solid #ddd; border-radius: 5px; background: #f8f9fa; cursor: pointer;">暂不</button>
+            <button id="pwa-install" style="padding: 8px 16px; border: none; border-radius: 5px; background: #667eea; color: white; cursor: pointer;">添加</button>
+        </div>
+    </div>
+    
     <div class="container">
         <h1>🐱 铲猫砂记录器</h1>
+        <!-- 下载按钮 -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button id="download-btn" class="btn" style="background: #667eea; margin: 0 auto;">
+                <span class="tooltip">添加到桌面<span class="tooltiptext">安装到手机桌面</span></span>
+            </button>
+        </div>
         
         <div class="member-container">
             <div class="member">
@@ -531,6 +547,91 @@
                     });
             });
         }
+        
+        // PWA安装提示相关代码
+        let deferredPrompt;
+        
+        // 监听beforeinstallprompt事件
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // 阻止Chrome 67及更早版本自动显示安装提示
+            e.preventDefault();
+            // 保存事件以便稍后触发
+            deferredPrompt = e;
+            // 显示自定义安装提示
+            showInstallPrompt();
+        });
+        
+        // 显示安装提示弹窗
+        function showInstallPrompt() {
+            // 检查是否已经安装过或用户已拒绝
+            if (deferredPrompt && !localStorage.getItem('pwaInstallDismissed')) {
+                document.getElementById('pwa-install-prompt').style.display = 'block';
+            }
+        }
+        
+        // 隐藏安装提示弹窗
+        function hideInstallPrompt() {
+            document.getElementById('pwa-install-prompt').style.display = 'none';
+        }
+        
+        // 处理取消按钮点击
+        document.getElementById('pwa-cancel').addEventListener('click', () => {
+            hideInstallPrompt();
+            // 标记用户已拒绝，7天内不再显示
+            localStorage.setItem('pwaInstallDismissed', 'true');
+            localStorage.setItem('pwaInstallDismissedTime', Date.now().toString());
+        });
+        
+        // 处理安装按钮点击
+        document.getElementById('pwa-install').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // 显示安装提示
+                deferredPrompt.prompt();
+                // 等待用户响应
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`用户选择: ${outcome}`);
+                // 清除保存的事件
+                deferredPrompt = null;
+                // 隐藏弹窗
+                hideInstallPrompt();
+            }
+        });
+        
+        // 处理手动下载按钮点击
+        document.getElementById('download-btn').addEventListener('click', () => {
+            if (deferredPrompt) {
+                // 显示安装提示
+                deferredPrompt.prompt();
+                // 等待用户响应
+                deferredPrompt.userChoice.then(({ outcome }) => {
+                    console.log(`用户选择: ${outcome}`);
+                    // 清除保存的事件
+                    deferredPrompt = null;
+                });
+            } else {
+                // 如果没有deferredPrompt，显示自定义提示
+                alert('请使用Chrome浏览器访问此页面，以添加到主屏幕');
+            }
+        });
+        
+        // 检查是否需要显示安装提示
+        function checkInstallPrompt() {
+            const dismissed = localStorage.getItem('pwaInstallDismissed');
+            const dismissedTime = localStorage.getItem('pwaInstallDismissedTime');
+            
+            // 如果用户已拒绝但超过7天，重新显示
+            if (dismissed && dismissedTime) {
+                const now = Date.now();
+                const sevenDays = 7 * 24 * 60 * 60 * 1000;
+                if (now - parseInt(dismissedTime) > sevenDays) {
+                    localStorage.removeItem('pwaInstallDismissed');
+                    localStorage.removeItem('pwaInstallDismissedTime');
+                }
+            }
+        }
+        
+        // 页面加载时检查
+        window.addEventListener('load', checkInstallPrompt);
     </script>
 </body>
 </html>
