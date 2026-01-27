@@ -566,17 +566,14 @@
         // 显示安装提示弹窗
         function showInstallPrompt() {
             console.log('尝试显示安装提示，deferredPrompt:', !!deferredPrompt);
-            console.log('用户是否已拒绝:', localStorage.getItem('pwaInstallDismissed'));
-            // 检查是否已经安装过或用户已拒绝
-            if (deferredPrompt && !localStorage.getItem('pwaInstallDismissed')) {
+            // 检查是否有deferredPrompt事件
+            if (deferredPrompt) {
                 document.getElementById('pwa-install-prompt').style.display = 'block';
                 console.log('显示了安装提示弹窗');
             } else {
-                console.log('未显示安装提示，原因：', !deferredPrompt ? '没有deferredPrompt' : '用户已拒绝');
+                console.log('未显示安装提示，原因：没有deferredPrompt');
                 // 如果没有deferredPrompt，尝试直接显示手动安装指南
-                if (!deferredPrompt) {
-                    showManualInstallGuide();
-                }
+                showManualInstallGuide();
             }
         }
         
@@ -597,9 +594,8 @@
         // 处理取消按钮点击
         document.getElementById('pwa-cancel').addEventListener('click', () => {
             hideInstallPrompt();
-            // 标记用户已拒绝，7天内不再显示
-            localStorage.setItem('pwaInstallDismissed', 'true');
-            localStorage.setItem('pwaInstallDismissedTime', Date.now().toString());
+            // 移除用户拒绝记录，确保下次仍会提示
+            console.log('用户点击了取消按钮，下次仍会提示安装');
         });
         
         // 处理安装按钮点击
@@ -644,19 +640,11 @@
         
         // 检查是否需要显示安装提示
         function checkInstallPrompt() {
-            const dismissed = localStorage.getItem('pwaInstallDismissed');
-            const dismissedTime = localStorage.getItem('pwaInstallDismissedTime');
-            
-            // 如果用户已拒绝但超过7天，重新显示
-            if (dismissed && dismissedTime) {
-                const now = Date.now();
-                const sevenDays = 7 * 24 * 60 * 60 * 1000;
-                if (now - parseInt(dismissedTime) > sevenDays) {
-                    localStorage.removeItem('pwaInstallDismissed');
-                    localStorage.removeItem('pwaInstallDismissedTime');
-                    console.log('超过7天，重置安装提示状态');
-                }
-            }
+            console.log('检查安装提示条件');
+            // 移除所有用户拒绝记录，确保每次都会提示
+            localStorage.removeItem('pwaInstallDismissed');
+            localStorage.removeItem('pwaInstallDismissedTime');
+            console.log('已清除用户拒绝记录，确保每次都会提示安装');
         }
         
         // 页面加载时检查
