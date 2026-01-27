@@ -553,20 +553,40 @@
         
         // 监听beforeinstallprompt事件
         window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('捕获到beforeinstallprompt事件');
             // 阻止Chrome 67及更早版本自动显示安装提示
             e.preventDefault();
             // 保存事件以便稍后触发
             deferredPrompt = e;
+            console.log('保存了deferredPrompt事件');
             // 显示自定义安装提示
             showInstallPrompt();
         });
         
         // 显示安装提示弹窗
         function showInstallPrompt() {
+            console.log('尝试显示安装提示，deferredPrompt:', !!deferredPrompt);
+            console.log('用户是否已拒绝:', localStorage.getItem('pwaInstallDismissed'));
             // 检查是否已经安装过或用户已拒绝
             if (deferredPrompt && !localStorage.getItem('pwaInstallDismissed')) {
                 document.getElementById('pwa-install-prompt').style.display = 'block';
+                console.log('显示了安装提示弹窗');
+            } else {
+                console.log('未显示安装提示，原因：', !deferredPrompt ? '没有deferredPrompt' : '用户已拒绝');
+                // 如果没有deferredPrompt，尝试直接显示手动安装指南
+                if (!deferredPrompt) {
+                    showManualInstallGuide();
+                }
             }
+        }
+        
+        // 显示手动安装指南
+        function showManualInstallGuide() {
+            document.getElementById('pwa-install-prompt').style.display = 'block';
+            document.querySelector('#pwa-install-prompt h3').textContent = '手动添加到主屏幕';
+            document.querySelector('#pwa-install-prompt p').innerHTML = '请按照以下步骤添加到主屏幕：<br>1. 点击Chrome浏览器右上角的三个点<br>2. 选择「添加到主屏幕」<br>3. 点击「添加」按钮';
+            document.getElementById('pwa-install').textContent = '知道了';
+            document.getElementById('pwa-cancel').style.display = 'none';
         }
         
         // 隐藏安装提示弹窗
@@ -585,6 +605,7 @@
         // 处理安装按钮点击
         document.getElementById('pwa-install').addEventListener('click', async () => {
             if (deferredPrompt) {
+                console.log('用户点击了安装按钮，显示安装提示');
                 // 显示安装提示
                 deferredPrompt.prompt();
                 // 等待用户响应
@@ -594,12 +615,18 @@
                 deferredPrompt = null;
                 // 隐藏弹窗
                 hideInstallPrompt();
+            } else {
+                console.log('用户点击了安装按钮，但没有deferredPrompt');
+                // 隐藏弹窗
+                hideInstallPrompt();
             }
         });
         
         // 处理手动下载按钮点击
         document.getElementById('download-btn').addEventListener('click', () => {
+            console.log('用户点击了添加到桌面按钮');
             if (deferredPrompt) {
+                console.log('有deferredPrompt，显示安装提示');
                 // 显示安装提示
                 deferredPrompt.prompt();
                 // 等待用户响应
@@ -609,8 +636,9 @@
                     deferredPrompt = null;
                 });
             } else {
-                // 如果没有deferredPrompt，显示自定义提示
-                alert('请使用Chrome浏览器访问此页面，以添加到主屏幕');
+                console.log('没有deferredPrompt，显示手动安装指南');
+                // 显示手动安装指南
+                showManualInstallGuide();
             }
         });
         
@@ -626,12 +654,29 @@
                 if (now - parseInt(dismissedTime) > sevenDays) {
                     localStorage.removeItem('pwaInstallDismissed');
                     localStorage.removeItem('pwaInstallDismissedTime');
+                    console.log('超过7天，重置安装提示状态');
                 }
             }
         }
         
         // 页面加载时检查
-        window.addEventListener('load', checkInstallPrompt);
+        window.addEventListener('load', () => {
+            checkInstallPrompt();
+            // 3秒后尝试显示安装提示
+            setTimeout(() => {
+                console.log('3秒后尝试显示安装提示');
+                showInstallPrompt();
+            }, 3000);
+        });
+        
+        // 检查是否为PWA环境
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.matchMedia('(display-mode: standalone)').matches) {
+                console.log('应用已以PWA模式打开');
+                // 隐藏下载按钮
+                document.getElementById('download-btn').style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
