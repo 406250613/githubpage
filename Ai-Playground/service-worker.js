@@ -2,9 +2,9 @@
 const CACHE_NAME = 'litter-box-tracker-v1';
 const ASSETS_TO_CACHE = [
   '/litter-box-tracker.html',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png'
+  '/githubpage/Ai-Playground/manifest.json',
+  '/githubpage/Ai-Playground/icon-192.png',
+  '/githubpage/Ai-Playground/icon-512.png'
 ];
 
 // 安装 Service Worker
