@@ -1,10 +1,10 @@
 // Service Worker for 铲猫砂记录器 PWA
 const CACHE_NAME = 'litter-box-tracker-v1';
 const ASSETS_TO_CACHE = [
-  '/litter-box-tracker.html',
-  '/githubpage/Ai-Playground/manifest.json',
-  '/githubpage/Ai-Playground/icon-192.png',
-  '/githubpage/Ai-Playground/icon-512.png'
+  '/githubpage/Ai-Playground/cat_pwa/litter-box-tracker.html',
+  '/githubpage/Ai-Playground/cat_pwa/manifest.json',
+  '/githubpage/Ai-Playground/cat_pwa/icon-192.png',
+  '/githubpage/Ai-Playground/cat_pwa/icon-512.png'
 ];
 
 // 安装 Service Worker

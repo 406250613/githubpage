@@ -13,10 +13,10 @@
     <meta name="apple-mobile-web-app-title" content="铲猫砂">
     
     <!-- 引用manifest.json -->
-    <link rel="manifest" href="/githubpage/Ai-Playground/manifest.json">
+    <link rel="manifest" href="/githubpage/Ai-Playground/cat_pwa/manifest.json">
     
     <!-- iOS图标 -->
-    <link rel="apple-touch-icon" href="/githubpage/Ai-Playground/icon-192.png">
+    <link rel="apple-touch-icon" href="/githubpage/Ai-Playground/cat_pwa/icon-192.png">
     <style>
         * {
             margin: 0;
@@ -538,7 +538,7 @@
         // 注册 Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('/githubpage/Ai-Playground/service-worker.js')
+                navigator.serviceWorker.register('/githubpage/Ai-Playground/cat_pwa/service-worker.js')
                     .then(function(registration) {
                         console.log('Service Worker 注册成功，作用域:', registration.scope);
                     })
