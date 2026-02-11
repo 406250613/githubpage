@@ -550,6 +550,22 @@
         
         // PWA安装提示相关代码
         let deferredPrompt;
+
+        function isRunningAsPwa() {
+            return (
+                (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+                (window.matchMedia && window.matchMedia('(display-mode: fullscreen)').matches) ||
+                // iOS Safari
+                window.navigator.standalone === true
+            );
+        }
+
+        // 检查是否为PWA环境
+        if(isRunningAsPwa()) {
+            console.log('应用已以PWA模式打开');
+            // 隐藏下载按钮
+            document.getElementById('download-btn').style.display = 'none';
+        }
         
         // 监听beforeinstallprompt事件
         window.addEventListener('beforeinstallprompt', (e) => {
@@ -559,12 +575,20 @@
             // 保存事件以便稍后触发
             deferredPrompt = e;
             console.log('保存了deferredPrompt事件');
-            // 显示自定义安装提示
-            showInstallPrompt();
+
+            if (!isRunningAsPwa()) {
+                // 显示自定义安装提示
+                showInstallPrompt();
+            }
         });
         
         // 显示安装提示弹窗
         function showInstallPrompt() {
+            if (isRunningAsPwa()) {
+                hideInstallPrompt();
+                return;
+            }
+
             console.log('尝试显示安装提示，deferredPrompt:', !!deferredPrompt);
             // 检查是否有deferredPrompt事件
             if (deferredPrompt) {
@@ -579,6 +603,11 @@
         
         // 显示手动安装指南
         function showManualInstallGuide() {
+            if (isRunningAsPwa()) {
+                hideInstallPrompt();
+                return;
+            }
+
             document.getElementById('pwa-install-prompt').style.display = 'block';
             document.querySelector('#pwa-install-prompt h3').textContent = '手动添加到主屏幕';
             document.querySelector('#pwa-install-prompt p').innerHTML = '请按照以下步骤添加到主屏幕：<br>1. 点击Chrome浏览器右上角的三个点<br>2. 选择「添加到主屏幕」<br>3. 点击「添加」按钮';
@@ -657,14 +686,6 @@
             }, 3000);
         });
         
-        // 检查是否为PWA环境
-        window.addEventListener('DOMContentLoaded', () => {
-            if (window.matchMedia('(display-mode: standalone)').matches) {
-                console.log('应用已以PWA模式打开');
-                // 隐藏下载按钮
-                document.getElementById('download-btn').style.display = 'none';
-            }
-        });
     </script>
 </body>
 </html>
