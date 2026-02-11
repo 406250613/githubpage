@@ -1,10 +1,12 @@
 // Service Worker for 铲猫砂记录器 PWA
-const CACHE_NAME = 'litter-box-tracker-v1';
+const CACHE_NAME = 'litter-box-tracker-v2';
+
+const APP_SHELL_URL = new URL('./litter-box-tracker.html', self.location).toString();
 const ASSETS_TO_CACHE = [
-  '/githubpage/Ai-Playground/cat_pwa/litter-box-tracker.html',
-  '/githubpage/Ai-Playground/cat_pwa/manifest.json',
-  '/githubpage/Ai-Playground/cat_pwa/icon-192.png',
-  '/githubpage/Ai-Playground/cat_pwa/icon-512.png'
+  APP_SHELL_URL,
+  new URL('./manifest.json', self.location).toString(),
+  new URL('./icon-192.png', self.location).toString(),
+  new URL('./icon-512.png', self.location).toString(),
 ];
 
 // 安装 Service Worker
@@ -37,33 +39,36 @@ self.addEventListener('activate', (event) => {
 
 // 拦截网络请求
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
-      .then((response) => {
-        // 如果缓存中有匹配的响应，则返回缓存的响应
-        if (response) {
-          return response;
+      .then((cachedResponse) => {
+        if (cachedResponse) {
+          return cachedResponse;
         }
-        // 否则，发送网络请求
-        return fetch(event.request).then(
-          (response) => {
-            // 如果响应无效或不是GET请求，则直接返回响应
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
+
+        return fetch(event.request)
+          .then((networkResponse) => {
+            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+              return networkResponse;
             }
 
-            // 克隆响应，因为响应流只能使用一次
-            const responseToCache = response.clone();
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
 
-            // 将响应添加到缓存
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
-          }
-        );
+            return networkResponse;
+          })
+          .catch(() => {
+            if (event.request.mode === 'navigate') {
+              return caches.match(APP_SHELL_URL);
+            }
+            return undefined;
+          });
       })
   );
 });
