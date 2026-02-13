@@ -478,6 +478,12 @@
                     ⬇️ 下载云端数据
                 </button>
             </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <button id="enable-push-btn" onclick="subscribeToPush()" class="btn" style="background: #e53e3e; color: white; font-size: 14px; padding: 8px 16px; min-width: auto; margin: 0 auto; display: none;">
+                    🔔 开启每日提醒
+                </button>
+                <div id="subscription-info" style="display: none; margin-top: 10px; padding: 10px; background: #fff; border-radius: 8px; font-size: 12px; word-break: break-all; user-select: all; text-align: left; border: 1px solid #eee;"></div>
+            </div>
         </div>
         
         <div class="member-container">
@@ -999,6 +1005,7 @@
                 navigator.serviceWorker.register('service-worker.js')
                     .then(function(registration) {
                         console.log('Service Worker 注册成功，作用域:', registration.scope);
+                        initializePushUI(registration);
                     })
                     .catch(function(error) {
                         console.log('Service Worker 注册失败:', error);
@@ -1143,6 +1150,82 @@
                 showInstallPrompt();
             }, 3000);
         });
+
+        // --- 推送通知相关逻辑 ---
+        // TODO: 请替换为你的 VAPID 公钥 (可通过 npx web-push generate-vapid-keys 生成)
+        // Public Key:BK8LI40647lh1lyPRTwslOs475KPC3TrEM3DCvbpeDoqcqjZ4Cj5ef8tAeZA7ghuslRtTrjm3st2Hk1t75XhoLQ
+        // Private Key:pEmtNslkS-0aW4nBucc_xBZ2bLSclBGKlw8xuiUgOgo
+        const publicVapidKey = 'BK8LI40647lh1lyPRTwslOs475KPC3TrEM3DCvbpeDoqcqjZ4Cj5ef8tAeZA7ghuslRtTrjm3st2Hk1t75XhoLQ'; 
+
+        function initializePushUI(registration) {
+            const pushButton = document.getElementById('enable-push-btn');
+            // 检查是否支持推送
+            if (!('PushManager' in window)) {
+                return;
+            }
+            
+            // 检查当前订阅状态
+            registration.pushManager.getSubscription()
+                .then(function(subscription) {
+                    const isSubscribed = !(subscription === null);
+                    if (isSubscribed) {
+                        console.log('用户已订阅推送');
+                        showSubscriptionInfo(subscription);
+                    } else {
+                        pushButton.style.display = 'inline-flex';
+                    }
+                });
+        }
+
+        function subscribeToPush() {
+            const pushButton = document.getElementById('enable-push-btn');
+            pushButton.disabled = true;
+            pushButton.textContent = '正在订阅...';
+
+            navigator.serviceWorker.ready.then(function(registration) {
+                const subscribeOptions = {
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
+                };
+
+                return registration.pushManager.subscribe(subscribeOptions);
+            })
+            .then(function(pushSubscription) {
+                console.log('订阅成功:', pushSubscription);
+                showToast('订阅成功！请复制订阅信息');
+                showSubscriptionInfo(pushSubscription);
+                pushButton.style.display = 'none';
+            })
+            .catch(function(err) {
+                console.log('订阅失败: ', err);
+                showToast('订阅失败: ' + err.message, 'error');
+                pushButton.disabled = false;
+                pushButton.textContent = '🔔 开启每日提醒';
+            });
+        }
+
+        function showSubscriptionInfo(subscription) {
+            const infoDiv = document.getElementById('subscription-info');
+            infoDiv.style.display = 'block';
+            infoDiv.innerHTML = '<p style="color:#666;margin-bottom:5px;font-weight:bold;">📋 订阅信息 (用于发送通知):</p>' + JSON.stringify(subscription);
+            // 自动复制
+            navigator.clipboard.writeText(JSON.stringify(subscription)).then(() => {
+                showToast('订阅信息已复制到剪贴板');
+            });
+        }
+
+        function urlBase64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding)
+                .replace(/\-/g, '+')
+                .replace(/_/g, '/');
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
         
     </script>
 </body>
