@@ -18,173 +18,224 @@
     <!-- iOS图标 -->
     <link rel="apple-touch-icon" href="icon-192.png">
     <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a6fd6;
+            --secondary: #764ba2;
+            --accent: #ff6b6b;
+            --success: #4ecdc4;
+            --bg-color: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-light: #718096;
+            --input-bg: #edf2f7;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 16px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-main);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            padding: 20px 16px;
+            /* 适配 iPhone 底部安全区 */
+            padding-bottom: env(safe-area-inset-bottom, 20px);
         }
         
         .container {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
+            max-width: 600px;
+            margin: 0 auto;
             width: 100%;
         }
         
         h1 {
             text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
+            color: var(--text-main);
+            margin-bottom: 24px;
+            font-size: 24px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            letter-spacing: -0.5px;
         }
         
         .member-container {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
         
         .member {
-            flex: 1;
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
             transition: transform 0.2s ease;
         }
         
-        .member:hover {
-            transform: translateY(-2px);
+        .member::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0.8;
         }
         
         .member h2 {
-            color: #555;
-            margin-bottom: 15px;
-            font-size: 24px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            font-size: 20px;
+            font-weight: 700;
         }
         
         .days-display {
-            font-size: 48px;
-            font-weight: bold;
-            color: #667eea;
+            font-size: 56px;
+            font-weight: 800;
+            color: var(--primary);
             margin-bottom: 20px;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
         }
         
         .btn-group {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
         
         .input-group {
             display: flex;
-            gap: 5px;
+            gap: 10px;
         }
         
         .days-input {
             flex: 1;
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 14px;
+            background: var(--input-bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-size: 18px;
             font-weight: 600;
             text-align: center;
+            color: var(--text-main);
             transition: all 0.2s ease;
         }
         
         .days-input:focus {
             outline: none;
-            border-color: #667eea;
+            background: #fff;
+            border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
         .reason-input {
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 14px;
+            background: var(--input-bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-size: 15px;
             width: 100%;
-            resize: vertical;
+            resize: none;
             min-height: 60px;
-            margin-bottom: 10px;
+            margin-bottom: 4px;
             transition: all 0.2s ease;
+            font-family: inherit;
         }
         
         .reason-input:focus {
             outline: none;
-            border-color: #667eea;
+            background: #fff;
+            border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
         
         .btn {
-            padding: 12px 20px;
+            padding: 14px 20px;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
         }
         
         .btn-add {
-            background: #ff6b6b;
+            background: var(--accent);
             color: white;
-        }
-        
-        .btn-add:hover {
-            background: #ff5252;
-            transform: translateY(-1px);
+            min-width: 80px;
         }
         
         .btn-complete {
-            background: #4ecdc4;
+            background: var(--success);
             color: white;
-        }
-        
-        .btn-complete:hover {
-            background: #26a69a;
-            transform: translateY(-1px);
+            margin-top: 4px;
         }
         
         .history {
-            background: #f8f9fa;
-            border-radius: 10px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
             padding: 20px;
-            margin-top: 20px;
+            box-shadow: var(--shadow);
+            margin-top: 24px;
         }
         
         .history h3 {
-            color: #555;
-            margin-bottom: 15px;
-            font-size: 20px;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .history-list {
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
             list-style: none;
+            padding-right: 4px;
+        }
+        
+        .history-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .history-list::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 4px;
         }
         
         .history-item {
-            padding: 10px;
-            border-bottom: 1px solid #e9ecef;
-            color: #666;
-            font-size: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--input-bg);
+            color: var(--text-light);
+            font-size: 13px;
+            line-height: 1.5;
         }
         
         .history-item:last-child {
@@ -193,159 +244,124 @@
         
         .clear-btn {
             width: 100%;
-            margin-top: 20px;
-            padding: 12px;
-            background: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            margin-top: 24px;
+            padding: 16px;
+            background: transparent;
+            color: var(--text-light);
+            border: 1px dashed #cbd5e0;
+            border-radius: 12px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         
         .clear-btn:hover {
-            background: #5a6268;
+            background: #fff;
+            border-color: var(--accent);
+            color: var(--accent);
         }
         
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-        
+        /* Tooltip 样式在移动端通常不适用，改为隐藏或优化 */
         .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            left: 50%;
-            margin-left: -60px;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 12px;
+            display: none;
+        }
+
+        /* PWA 安装弹窗样式 */
+        .pwa-prompt {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            z-index: 1000;
+            max-width: 500px;
+            margin: 0 auto;
+            animation: slideUp 0.3s ease-out;
         }
         
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         
-        @media (max-width: 480px) {
-            /* 整体容器调整 */
-            .container {
-                padding: 20px;
-                margin: 10px;
-            }
-            
-            /* 标题调整 */
-            h1 {
-                font-size: 24px;
-                margin-bottom: 20px;
-            }
-            
-            /* 成员容器改为垂直排列 */
+        .pwa-prompt h3 {
+            margin-top: 0;
+            color: var(--text-main);
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .pwa-prompt p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .pwa-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .pwa-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .pwa-btn-cancel {
+            background: var(--input-bg);
+            color: var(--text-light);
+        }
+        
+        .pwa-btn-install {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* 桌面端适配（如果屏幕较大） */
+        @media (min-width: 640px) {
             .member-container {
-                flex-direction: column;
-                gap: 15px;
-                margin-bottom: 20px;
+                flex-direction: row;
             }
-            
-            /* 成员卡片调整 */
             .member {
-                padding: 15px;
+                flex: 1;
             }
-            
-            /* 成员名称调整 */
-            .member h2 {
-                font-size: 20px;
-                margin-bottom: 10px;
-            }
-            
-            /* 天数显示调整 */
-            .days-display {
-                font-size: 36px;
-                margin-bottom: 15px;
-            }
-            
-            /* 按钮组调整 */
-            .btn-group {
-                gap: 8px;
-            }
-            
-            /* 原因输入框调整 */
-            .reason-input {
-                min-height: 50px;
-                font-size: 14px;
-                padding: 10px;
-            }
-            
-            /* 输入框组调整 */
-            .input-group {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            /* 天数输入框调整 */
-            .days-input {
-                padding: 10px;
-                font-size: 16px;
-            }
-            
-            /* 按钮调整 */
-            .btn {
-                padding: 14px 20px;
-                font-size: 16px;
-                width: 100%;
-            }
-            
-            /* 历史记录调整 */
-            .history {
-                padding: 15px;
-                margin-top: 15px;
-            }
-            
-            .history h3 {
-                font-size: 18px;
-                margin-bottom: 10px;
-            }
-            
-            .history-list {
-                max-height: 150px;
-            }
-            
-            /* 清空按钮调整 */
-            .clear-btn {
-                margin-top: 15px;
-                padding: 14px;
-                font-size: 16px;
+            .pwa-prompt {
+                left: 50%;
+                transform: translateX(-50%);
+                width: 400px;
+                right: auto;
             }
         }
     </style>
 </head>
 <body>
     <!-- PWA安装提示弹窗 -->
-    <div id="pwa-install-prompt" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 1000; max-width: 90%; width: 300px;">
-        <h3 style="margin-top: 0; color: #333;">添加到主屏幕</h3>
-        <p style="margin-bottom: 15px; color: #666; font-size: 14px;">将铲猫砂记录器添加到主屏幕，更方便使用！</p>
-        <div style="display: flex; gap: 10px; justify-content: flex-end;">
-            <button id="pwa-cancel" style="padding: 8px 16px; border: 1px solid #ddd; border-radius: 5px; background: #f8f9fa; cursor: pointer;">暂不</button>
-            <button id="pwa-install" style="padding: 8px 16px; border: none; border-radius: 5px; background: #667eea; color: white; cursor: pointer;">添加</button>
+    <div id="pwa-install-prompt" class="pwa-prompt">
+        <h3>添加到主屏幕</h3>
+        <p>将铲猫砂记录器添加到主屏幕，更方便使用！</p>
+        <div class="pwa-actions">
+            <button id="pwa-cancel" class="pwa-btn pwa-btn-cancel">暂不</button>
+            <button id="pwa-install" class="pwa-btn pwa-btn-install">添加</button>
         </div>
     </div>
     
     <div class="container">
         <h1>🐱 铲猫砂记录器</h1>
         <!-- 下载按钮 -->
-        <div style="text-align: center; margin-bottom: 20px;">
-            <button id="download-btn" class="btn" style="background: #667eea; margin: 0 auto;">
-                <span class="tooltip">添加到桌面<span class="tooltiptext">安装到手机桌面</span></span>
+        <div style="text-align: center; margin-bottom: 24px;">
+            <button id="download-btn" class="btn" style="background: var(--primary); color: white; margin: 0 auto;">
+                添加到桌面
             </button>
         </div>
         
