@@ -96,6 +96,51 @@
             background: linear-gradient(90deg, var(--primary), var(--secondary));
             opacity: 0.8;
         }
+
+        .member.active {
+            border: 2px solid var(--primary);
+            background: #f8faff;
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(102, 126, 234, 0.2), 0 4px 6px -2px rgba(102, 126, 234, 0.1);
+            z-index: 10;
+        }
+        
+        .turn-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: normal;
+            margin-left: 8px;
+            vertical-align: middle;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .turn-badge.active {
+            background: var(--success);
+            color: white;
+            cursor: default;
+        }
+
+        .turn-badge.inactive {
+            background: transparent;
+            border: 1px solid var(--text-light);
+            color: var(--text-light);
+        }
+
+        .turn-badge.inactive:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .turn-date {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-left: 6px;
+            font-weight: normal;
+        }
         
         .member h2 {
             color: var(--text-main);
@@ -191,11 +236,67 @@
         }
         
         .btn-complete {
-            background: var(--success);
-            color: white;
-            margin-top: 4px;
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid #cbd5e0;
+            margin-top: 12px;
+            font-size: 13px;
+            padding: 8px;
+        }
+
+        .btn-complete:hover {
+            border-color: var(--success);
+            color: var(--success);
+            background: transparent;
+        }
+
+        .date-info {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            background: var(--bg-color);
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-align: left;
+            display: none; /* 默认隐藏，有数据时显示 */
         }
         
+        .date-info p {
+            margin: 4px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Toast 提示样式 */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 12px;
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+        .toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+
+        .toast.success {
+            background-color: var(--success);
+        }
+
         .history {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -356,6 +457,12 @@
         </div>
     </div>
     
+    <!-- Toast 提示容器 -->
+    <div id="toast" class="toast">操作成功</div>
+    
+    <!-- 隐藏的日期选择器，用于切换铲屎官时选择日期 -->
+    <input type="date" id="turnDateInput" style="visibility: hidden; position: absolute; top: 0; left: 0;">
+
     <div class="container">
         <h1>🐱 铲猫砂记录器</h1>
         <!-- 下载按钮 -->
@@ -374,9 +481,12 @@
         </div>
         
         <div class="member-container">
-            <div class="member">
-                <h2>文弘</h2>
+            <div class="member" id="memberA">
+                <h2>文弘 <span id="turnBadgeA" class="turn-badge" onclick="setTurn('A')"></span></h2>
                 <div class="days-display" id="daysA">0</div>
+                <div class="date-info" id="dateInfoA">
+                    <!-- 日期信息将通过 JS 插入 -->
+                </div>
                 <div class="btn-group">
                     <textarea class="reason-input" id="reasonA" placeholder="请输入增加惩罚的原因..."></textarea>
                     <div class="input-group">
@@ -391,9 +501,12 @@
                 </div>
             </div>
             
-            <div class="member">
-                <h2>玉梅</h2>
+            <div class="member" id="memberB">
+                <h2>玉梅 <span id="turnBadgeB" class="turn-badge" onclick="setTurn('B')"></span></h2>
                 <div class="days-display" id="daysB">0</div>
+                <div class="date-info" id="dateInfoB">
+                    <!-- 日期信息将通过 JS 插入 -->
+                </div>
                 <div class="btn-group">
                     <textarea class="reason-input" id="reasonB" placeholder="请输入增加惩罚的原因..."></textarea>
                     <div class="input-group">
@@ -425,14 +538,34 @@
                     A: 0,
                     B: 0,
                     history: [],
-                    lastUpdated: Date.now()
+                    lastUpdated: Date.now(),
+                    currentTurn: 'A', // 默认为 A
+                    currentTurnDate: new Date().toISOString().split('T')[0] // 默认今天
                 };
                 localStorage.setItem('litterBoxData', JSON.stringify(initialData));
             } else {
-                // 迁移旧数据，添加 lastUpdated
+                // 迁移旧数据
                 const data = JSON.parse(localStorage.getItem('litterBoxData'));
+                let updated = false;
+                
                 if (!data.lastUpdated) {
                     data.lastUpdated = Date.now();
+                    updated = true;
+                }
+                
+                if (!data.currentTurn) {
+                    data.currentTurn = 'A';
+                    data.currentTurnDate = new Date().toISOString().split('T')[0];
+                    updated = true;
+                }
+
+                // 补全 currentTurnDate
+                if (!data.currentTurnDate) {
+                    data.currentTurnDate = new Date().toISOString().split('T')[0];
+                    updated = true;
+                }
+                
+                if (updated) {
                     localStorage.setItem('litterBoxData', JSON.stringify(data));
                 }
             }
@@ -452,12 +585,171 @@
             }
         }
         
+        // 临时存储准备切换的成员
+        let pendingTurnMember = null;
+
+        // 启动日期选择（用于切换或修改日期）
+        function initiateTurnSelection(member) {
+            pendingTurnMember = member;
+            const dateInput = document.getElementById('turnDateInput');
+            
+            // 关键修改：重置为空，强制触发 change 事件（即使用户选择了默认显示的今天）
+            dateInput.value = ''; 
+            
+            // 尝试打开日期选择器
+            try {
+                dateInput.showPicker();
+            } catch (e) {
+                // 降级处理
+                dateInput.click();
+            }
+            
+            // 提示用户
+            const data = getData();
+            if (data.currentTurn === member) {
+                 showToast('请修改开始日期', 'success');
+            } else {
+                 showToast('请选择开始铲屎的日期', 'success');
+            }
+        }
+
+        // 监听日期选择完成
+        document.getElementById('turnDateInput').addEventListener('change', function(e) {
+            if (pendingTurnMember && e.target.value) {
+                finishTurnSwitch(pendingTurnMember, e.target.value);
+                pendingTurnMember = null;
+                // 注意：这里不需要再重置 value，因为下次打开前我们会重置
+            }
+        });
+
+        // 完成切换逻辑
+        function finishTurnSwitch(member, dateStr) {
+            const data = getData();
+            const isSwitching = data.currentTurn !== member;
+            
+            data.currentTurn = member;
+            data.currentTurnDate = dateStr;
+            
+            saveData(data);
+            
+            const name = member === 'A' ? '文弘' : '玉梅';
+            
+            updateDisplay();
+            
+            if (isSwitching) {
+                showToast(`已切换：现在轮到 ${name}`);
+            } else {
+                showToast('开始日期已更新');
+            }
+        }
+
         // 更新显示
         function updateDisplay() {
             const data = getData();
-            document.getElementById('daysA').textContent = data.A;
-            document.getElementById('daysB').textContent = data.B;
+            const currentTurn = data.currentTurn || 'A';
+            const currentTurnDate = data.currentTurnDate;
+            
+            ['A', 'B'].forEach(member => {
+                const days = data[member];
+                document.getElementById(`days${member}`).textContent = days;
+                
+                // 1. 更新卡片选中状态
+                const memberCard = document.getElementById(`member${member}`);
+                const isTurn = (member === currentTurn);
+                
+                if (isTurn) {
+                    memberCard.classList.add('active');
+                } else {
+                    memberCard.classList.remove('active');
+                }
+                
+                // 2. 更新徽章状态和日期显示
+                const badge = document.getElementById(`turnBadge${member}`);
+                let dateHtml = '';
+                
+                if (isTurn) {
+                    badge.className = 'turn-badge active';
+                    badge.innerHTML = '✅ 正在铲';
+                    // 允许点击修改日期
+                    badge.onclick = () => initiateTurnSelection(member);
+                    
+                    // 显示开始日期
+                    if (currentTurnDate) {
+                        const d = new Date(currentTurnDate);
+                        const dateStr = `${d.getMonth() + 1}.${d.getDate()}`;
+                        dateHtml = `<span class="turn-date">自 ${dateStr}</span>`;
+                    }
+                } else {
+                    badge.className = 'turn-badge inactive';
+                    badge.innerHTML = '👋 轮到我';
+                    badge.onclick = () => initiateTurnSelection(member);
+                }
+                
+                // 将日期显示附加到徽章后面（先清空 badge 后面的内容，再添加）
+                // 注意：这里需要操作 DOM 结构，避免重复添加
+                // 简单做法：把 dateHtml 放在 badge 内部或者 badge 后面
+                // 由于 badge 是 span，我们在 badge 后面追加一个 span
+                // 先移除旧的 turn-date
+                const h2 = badge.parentElement;
+                const existingDate = h2.querySelector('.turn-date');
+                if (existingDate) {
+                    existingDate.remove();
+                }
+                if (dateHtml) {
+                    badge.insertAdjacentHTML('afterend', dateHtml);
+                }
+
+                // 3. 更新日期显示
+                const dateInfoEl = document.getElementById(`dateInfo${member}`);
+                if (days > 0) {
+                    let html = '';
+                    
+                    // 起始日期 (始终显示)
+                    const startDateKey = `startDate${member}`;
+                    if (data[startDateKey]) {
+                        const startDate = new Date(data[startDateKey]);
+                        const startStr = `${startDate.getMonth() + 1}月${startDate.getDate()}日`;
+                        html += `<p><span>📅 积累开始:</span> <span>${startStr}</span></p>`;
+                    }
+                    
+                    // 预计结束日期 (仅在轮到该人时显示)
+                    if (isTurn) {
+                        // 计算逻辑：基于“开始日期”往后推 days-1 天
+                        let baseDate = new Date();
+                        if (currentTurnDate) {
+                            // 解析 YYYY-MM-DD 为本地时间，避免时区偏差
+                            const parts = currentTurnDate.split('-');
+                            if (parts.length === 3) {
+                                baseDate = new Date(parts[0], parts[1] - 1, parts[2]);
+                            }
+                        }
+                        
+                        const endTimestamp = baseDate.getTime() + (days - 1) * 24 * 60 * 60 * 1000;
+                        const endDate = new Date(endTimestamp);
+                        const endStr = `${endDate.getMonth() + 1}月${endDate.getDate()}日`;
+                        
+                        html += `<p><span>🏁 预计结束:</span> <span style="font-weight:bold;color:var(--primary)">${endStr}</span></p>`;
+                    }
+                    
+                    dateInfoEl.innerHTML = html;
+                    dateInfoEl.style.display = 'block';
+                } else {
+                    dateInfoEl.style.display = 'none';
+                }
+            });
+
             updateHistory();
+        }
+        
+        // 显示 Toast 提示
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast show ${type}`;
+            
+            setTimeout(() => {
+                toast.className = toast.className.replace('show', '');
+            }, 3000);
         }
         
         // 更新历史记录
@@ -466,8 +758,8 @@
             const historyList = document.getElementById('historyList');
             historyList.innerHTML = '';
             
-            // 只显示最近20条记录
-            const recentHistory = data.history.slice(-20).reverse();
+            // 只显示最近30条记录
+            const recentHistory = data.history.slice(-30).reverse();
             
             recentHistory.forEach(item => {
                 const li = document.createElement('li');
@@ -506,11 +798,17 @@
             const reason = reasonInput.value.trim() || '未说明原因';
             
             if (isNaN(days) || days < 1) {
-                alert('请输入有效的天数（至少1天）');
+                showToast('请输入有效的天数（至少1天）', 'error');
                 return;
             }
             
             const data = getData();
+            
+            // 如果之前是0天，记录起始日期为今天
+            if (data[member] === 0) {
+                data[`startDate${member}`] = new Date().toISOString();
+            }
+            
             data[member] += days;
             saveData(data);
             
@@ -524,6 +822,7 @@
             
             addHistory(`${currentDate} - ${member} 增加${days}天惩罚 | 原因：${reason}`);
             updateDisplay();
+            showToast('添加成功！');
             
             // 清空输入框
             input.value = '';
@@ -538,6 +837,9 @@
                 if (confirm(`确定要清零${member}的所有惩罚天数吗？`)) {
                     const clearedDays = data[member];
                     data[member] = 0;
+                    // 清除起始日期
+                    delete data[`startDate${member}`];
+                    
                     saveData(data);
                     
                     // 获取当前日期（仅日期，不含时间）
@@ -550,6 +852,7 @@
                     
                     addHistory(`${currentDate} - ${member} 清零惩罚天数（共${clearedDays}天）`);
                     updateDisplay();
+                    showToast('已清零，恭喜完成！');
                 }
             }
         }
@@ -562,6 +865,7 @@
                 initData();
                 updateDisplay();
                 addHistory('清空所有记录');
+                showToast('所有记录已清空');
             }
         }
         
@@ -665,22 +969,22 @@
                     if (data) {
                         // 简单的校验
                         if (data.A === undefined || data.B === undefined) {
-                            alert('云端数据格式不正确');
+                            showToast('云端数据格式不正确', 'error');
                             return;
                         }
 
                         if(confirm('确定要用云端数据覆盖本地数据吗？\n(本地未同步的数据将丢失)')) {
                             saveData(data, false); // false 表示不反向同步，避免死循环
                             updateDisplay();
-                            alert('同步成功！');
+                            showToast('同步成功！');
                         }
                     }
                 } else {
-                    alert('未找到云端数据或 ID 错误，请检查设置。');
+                    showToast('未找到云端数据或 ID 错误', 'error');
                 }
             } catch (err) {
                 console.error(err);
-                alert('网络错误，无法加载');
+                showToast('网络错误，无法加载', 'error');
             } finally {
                 if (btn) {
                     btn.textContent = originalText;
