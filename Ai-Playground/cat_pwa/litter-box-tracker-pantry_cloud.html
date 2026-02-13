@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>铲猫砂记录器</title>
+    
+    <!-- PWA相关meta标签 -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="description" content="记录和管理家庭成员铲猫砂的惩罚天数">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="铲猫砂">
+    
+    <!-- 引用manifest.json -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- iOS图标 -->
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <style>
+        :root {
+            --primary: #667eea;
+            --primary-dark: #5a6fd6;
+            --secondary: #764ba2;
+            --accent: #ff6b6b;
+            --success: #4ecdc4;
+            --bg-color: #f4f6f8;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-light: #718096;
+            --input-bg: #edf2f7;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 20px 16px;
+            /* 适配 iPhone 底部安全区 */
+            padding-bottom: env(safe-area-inset-bottom, 20px);
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--text-main);
+            margin-bottom: 24px;
+            font-size: 24px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .member-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .member {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+        
+        .member::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0.8;
+        }
+        
+        .member h2 {
+            color: var(--text-main);
+            margin-bottom: 8px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .days-display {
+            font-size: 56px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 20px;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .days-input {
+            flex: 1;
+            padding: 14px;
+            background: var(--input-bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--text-main);
+            transition: all 0.2s ease;
+        }
+        
+        .days-input:focus {
+            outline: none;
+            background: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .reason-input {
+            padding: 14px;
+            background: var(--input-bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            font-size: 15px;
+            width: 100%;
+            resize: none;
+            min-height: 60px;
+            margin-bottom: 4px;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        
+        .reason-input:focus {
+            outline: none;
+            background: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn {
+            padding: 14px 20px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-add {
+            background: var(--accent);
+            color: white;
+            min-width: 80px;
+        }
+        
+        .btn-complete {
+            background: var(--success);
+            color: white;
+            margin-top: 4px;
+        }
+        
+        .history {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-top: 24px;
+        }
+        
+        .history h3 {
+            color: var(--text-main);
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .history-list {
+            max-height: 250px;
+            overflow-y: auto;
+            list-style: none;
+            padding-right: 4px;
+        }
+        
+        .history-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .history-list::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 4px;
+        }
+        
+        .history-item {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--input-bg);
+            color: var(--text-light);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .clear-btn {
+            width: auto;
+            margin: 40px auto 0;
+            padding: 8px 16px;
+            background: transparent;
+            color: #cbd5e0;
+            border: none;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: block;
+            text-decoration: underline;
+        }
+        
+        .clear-btn:hover {
+            color: var(--accent);
+            background: transparent;
+            border: none;
+        }
+        
+        /* Tooltip 样式在移动端通常不适用，改为隐藏或优化 */
+        .tooltip .tooltiptext {
+            display: none;
+        }
+
+        /* PWA 安装弹窗样式 */
+        .pwa-prompt {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            z-index: 1000;
+            max-width: 500px;
+            margin: 0 auto;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .pwa-prompt h3 {
+            margin-top: 0;
+            color: var(--text-main);
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .pwa-prompt p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .pwa-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        .pwa-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .pwa-btn-cancel {
+            background: var(--input-bg);
+            color: var(--text-light);
+        }
+        
+        .pwa-btn-install {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* 桌面端适配（如果屏幕较大） */
+        @media (min-width: 640px) {
+            .member-container {
+                flex-direction: row;
+            }
+            .member {
+                flex: 1;
+            }
+            .pwa-prompt {
+                left: 50%;
+                transform: translateX(-50%);
+                width: 400px;
+                right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PWA安装提示弹窗 -->
+    <div id="pwa-install-prompt" class="pwa-prompt">
+        <h3>添加到主屏幕</h3>
+        <p>将铲猫砂记录器添加到主屏幕，更方便使用！</p>
+        <div class="pwa-actions">
+            <button id="pwa-cancel" class="pwa-btn pwa-btn-cancel">暂不</button>
+            <button id="pwa-install" class="pwa-btn pwa-btn-install">添加</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h1>🐱 铲猫砂记录器</h1>
+        <!-- 下载按钮 -->
+        <div style="text-align: center; margin-bottom: 24px;">
+            <button id="download-btn" class="btn" style="background: var(--primary); color: white; margin: 0 auto;">
+                添加到桌面
+            </button>
+            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
+                <button onclick="setupCloud()" class="btn" style="background: #718096; color: white; font-size: 14px; padding: 8px 16px; min-width: auto;">
+                    ☁️ 云同步设置
+                </button>
+                <button onclick="loadFromCloud(this)" class="btn" style="background: #718096; color: white; font-size: 14px; padding: 8px 16px; min-width: auto;">
+                    ⬇️ 下载云端数据
+                </button>
+            </div>
+        </div>
+        
+        <div class="member-container">
+            <div class="member">
+                <h2>文弘</h2>
+                <div class="days-display" id="daysA">0</div>
+                <div class="btn-group">
+                    <textarea class="reason-input" id="reasonA" placeholder="请输入增加惩罚的原因..."></textarea>
+                    <div class="input-group">
+                        <input type="number" class="days-input" id="inputA" placeholder="输入天数" min="1" max="30">
+                        <button class="btn btn-add" onclick="addDays('A')">
+                            <span class="tooltip">确认<span class="tooltiptext">增加惩罚天数</span></span>
+                        </button>
+                    </div>
+                    <button class="btn btn-complete" onclick="completeDay('A')">
+                        <span class="tooltip">已完成<span class="tooltiptext">标记当天完成</span></span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="member">
+                <h2>玉梅</h2>
+                <div class="days-display" id="daysB">0</div>
+                <div class="btn-group">
+                    <textarea class="reason-input" id="reasonB" placeholder="请输入增加惩罚的原因..."></textarea>
+                    <div class="input-group">
+                        <input type="number" class="days-input" id="inputB" placeholder="输入天数" min="1" max="30">
+                        <button class="btn btn-add" onclick="addDays('B')">
+                            <span class="tooltip">确认<span class="tooltiptext">增加惩罚天数</span></span>
+                        </button>
+                    </div>
+                    <button class="btn btn-complete" onclick="completeDay('B')">
+                        <span class="tooltip">已完成<span class="tooltiptext">标记当天完成</span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="history">
+            <h3>📋 操作记录</h3>
+            <ul class="history-list" id="historyList"></ul>
+        </div>
+        
+        <button class="clear-btn" onclick="clearAll()">清空所有记录</button>
+    </div>
+    
+    <script>
+        // 初始化数据
+        function initData() {
+            if (!localStorage.getItem('litterBoxData')) {
+                const initialData = {
+                    A: 0,
+                    B: 0,
+                    history: [],
+                    lastUpdated: Date.now()
+                };
+                localStorage.setItem('litterBoxData', JSON.stringify(initialData));
+            } else {
+                // 迁移旧数据，添加 lastUpdated
+                const data = JSON.parse(localStorage.getItem('litterBoxData'));
+                if (!data.lastUpdated) {
+                    data.lastUpdated = Date.now();
+                    localStorage.setItem('litterBoxData', JSON.stringify(data));
+                }
+            }
+        }
+        
+        // 获取数据
+        function getData() {
+            return JSON.parse(localStorage.getItem('litterBoxData'));
+        }
+        
+        // 保存数据
+        function saveData(data, sync = true) {
+            data.lastUpdated = Date.now();
+            localStorage.setItem('litterBoxData', JSON.stringify(data));
+            if (sync) {
+                syncToCloud();
+            }
+        }
+        
+        // 更新显示
+        function updateDisplay() {
+            const data = getData();
+            document.getElementById('daysA').textContent = data.A;
+            document.getElementById('daysB').textContent = data.B;
+            updateHistory();
+        }
+        
+        // 更新历史记录
+        function updateHistory() {
+            const data = getData();
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            
+            // 只显示最近20条记录
+            const recentHistory = data.history.slice(-20).reverse();
+            
+            recentHistory.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'history-item';
+                li.textContent = `${item.timestamp} - ${item.action}`;
+                historyList.appendChild(li);
+            });
+        }
+        
+        // 添加操作记录
+        function addHistory(action) {
+            const data = getData();
+            const now = new Date();
+            const timestamp = now.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            
+            data.history.push({
+                timestamp: timestamp,
+                action: action
+            });
+            
+            saveData(data);
+        }
+        
+        // 增加天数
+        function addDays(member) {
+            const input = document.getElementById(`input${member}`);
+            const reasonInput = document.getElementById(`reason${member}`);
+            const days = parseInt(input.value);
+            const reason = reasonInput.value.trim() || '未说明原因';
+            
+            if (isNaN(days) || days < 1) {
+                alert('请输入有效的天数（至少1天）');
+                return;
+            }
+            
+            const data = getData();
+            data[member] += days;
+            saveData(data);
+            
+            // 获取当前日期（仅日期，不含时间）
+            const now = new Date();
+            const currentDate = now.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+            
+            addHistory(`${currentDate} - ${member} 增加${days}天惩罚 | 原因：${reason}`);
+            updateDisplay();
+            
+            // 清空输入框
+            input.value = '';
+            reasonInput.value = '';
+        }
+        
+        // 完成当天（清零天数）
+        function completeDay(member) {
+            const data = getData();
+            if (data[member] > 0) {
+                // 二次验证
+                if (confirm(`确定要清零${member}的所有惩罚天数吗？`)) {
+                    const clearedDays = data[member];
+                    data[member] = 0;
+                    saveData(data);
+                    
+                    // 获取当前日期（仅日期，不含时间）
+                    const now = new Date();
+                    const currentDate = now.toLocaleDateString('zh-CN', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    });
+                    
+                    addHistory(`${currentDate} - ${member} 清零惩罚天数（共${clearedDays}天）`);
+                    updateDisplay();
+                }
+            }
+        }
+        
+        // 清空所有记录
+        function clearAll() {
+            // 二次验证 - 更严格的确认
+            if (confirm('警告：此操作将清空所有记录，包括惩罚天数和历史记录，且不可恢复！\n\n确定要继续吗？')) {
+                localStorage.removeItem('litterBoxData');
+                initData();
+                updateDisplay();
+                addHistory('清空所有记录');
+            }
+        }
+        
+        // 页面加载时初始化
+        window.onload = function() {
+            initData();
+            updateDisplay();
+            
+            // 自动尝试拉取一次云端数据
+            console.log('云同步已就绪，当前 ID:', getPantryId());
+            autoLoadFromCloud();
+        };
+
+        // --- 云同步功能 ---
+        const PANTRY_ID_KEY = 'cat_pwa_pantry_id';
+        const BASKET_NAME = 'litter_box_data';
+        const DEFAULT_PANTRY_ID = '3cd7c478-6fd3-4d4b-ae02-a36124e1e68a';
+
+        function getPantryId() {
+            const stored = localStorage.getItem(PANTRY_ID_KEY);
+            return (stored && stored.trim()) ? stored.trim() : DEFAULT_PANTRY_ID;
+        }
+
+        // 自动静默拉取云端数据
+        async function autoLoadFromCloud() {
+            const id = getPantryId();
+            try {
+                const response = await fetch(`https://getpantry.cloud/apiv1/pantry/${id}/basket/${BASKET_NAME}`);
+                if (response.ok) {
+                    const cloudData = await response.json();
+                    if (cloudData && cloudData.lastUpdated) {
+                        const localData = getData();
+                        // 如果云端数据比本地新，则自动更新
+                        if (cloudData.lastUpdated > (localData.lastUpdated || 0)) {
+                            console.log('检测到云端数据较新，自动同步...');
+                            saveData(cloudData, false); // false = 不反向推送
+                            updateDisplay();
+                            // 可选：显示一个非侵入式提示
+                            // alert('已自动同步最新云端数据'); 
+                        } else {
+                            console.log('本地数据已是最新，无需更新');
+                        }
+                    }
+                }
+            } catch (err) {
+                console.error('自动同步失败:', err);
+            }
+        }
+
+        function setupCloud() {
+            const currentId = getPantryId();
+            const id = prompt('请输入 Pantry ID 实现多设备同步：\n(保留默认值即可使用公共存储，或输入新 ID)', currentId);
+            if (id !== null) {
+                let cleanId = id.trim();
+                // 如果用户清空输入，恢复默认ID
+                if (!cleanId) {
+                    cleanId = DEFAULT_PANTRY_ID;
+                }
+                localStorage.setItem(PANTRY_ID_KEY, cleanId);
+                alert('设置成功！您的操作将自动同步到云端。');
+                syncToCloud(); // 立即尝试同步当前数据到云端
+            }
+        }
+
+        function syncToCloud() {
+            const id = getPantryId();
+            const data = getData();
+            if (!data) return;
+
+            // 使用 fetch 发送数据，不阻塞 UI
+            fetch(`https://getpantry.cloud/apiv1/pantry/${id}/basket/${BASKET_NAME}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.ok) {
+                    console.log('云端同步成功');
+                } else {
+                    console.error('云端同步失败:', response.status);
+                }
+            }).catch(err => {
+                console.error('云端同步错误:', err);
+            });
+        }
+
+        async function loadFromCloud(btn) {
+            const id = getPantryId();
+            
+            const originalText = btn ? btn.textContent : '';
+            if (btn) {
+                btn.textContent = '加载中...';
+                btn.disabled = true;
+            }
+
+            try {
+                const response = await fetch(`https://getpantry.cloud/apiv1/pantry/${id}/basket/${BASKET_NAME}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data) {
+                        // 简单的校验
+                        if (data.A === undefined || data.B === undefined) {
+                            alert('云端数据格式不正确');
+                            return;
+                        }
+
+                        if(confirm('确定要用云端数据覆盖本地数据吗？\n(本地未同步的数据将丢失)')) {
+                            saveData(data, false); // false 表示不反向同步，避免死循环
+                            updateDisplay();
+                            alert('同步成功！');
+                        }
+                    }
+                } else {
+                    alert('未找到云端数据或 ID 错误，请检查设置。');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('网络错误，无法加载');
+            } finally {
+                if (btn) {
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }
+            }
+        }
+        
+        // 注册 Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(function(registration) {
+                        console.log('Service Worker 注册成功，作用域:', registration.scope);
+                    })
+                    .catch(function(error) {
+                        console.log('Service Worker 注册失败:', error);
+                    });
+            });
+        }
+        
+        // PWA安装提示相关代码
+        let deferredPrompt;
+
+        function isRunningAsPwa() {
+            return (
+                (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+                (window.matchMedia && window.matchMedia('(display-mode: fullscreen)').matches) ||
+                // iOS Safari
+                window.navigator.standalone === true
+            );
+        }
+
+        // 检查是否为PWA环境
+        if(isRunningAsPwa()) {
+            console.log('应用已以PWA模式打开');
+            // 隐藏下载按钮
+            document.getElementById('download-btn').style.display = 'none';
+        }
+        
+        // 监听beforeinstallprompt事件
+        window.addEventListener('beforeinstallprompt', (e) => {
+            console.log('捕获到beforeinstallprompt事件');
+            // 阻止Chrome 67及更早版本自动显示安装提示
+            e.preventDefault();
+            // 保存事件以便稍后触发
+            deferredPrompt = e;
+            console.log('保存了deferredPrompt事件');
+
+            if (!isRunningAsPwa()) {
+                // 显示自定义安装提示
+                showInstallPrompt();
+            }
+        });
+        
+        // 显示安装提示弹窗
+        function showInstallPrompt() {
+            if (isRunningAsPwa()) {
+                hideInstallPrompt();
+                return;
+            }
+
+            console.log('尝试显示安装提示，deferredPrompt:', !!deferredPrompt);
+            // 检查是否有deferredPrompt事件
+            if (deferredPrompt) {
+                document.getElementById('pwa-install-prompt').style.display = 'block';
+                console.log('显示了安装提示弹窗');
+            } else {
+                console.log('未显示安装提示，原因：没有deferredPrompt');
+                // 如果没有deferredPrompt，尝试直接显示手动安装指南
+                showManualInstallGuide();
+            }
+        }
+        
+        // 显示手动安装指南
+        function showManualInstallGuide() {
+            if (isRunningAsPwa()) {
+                hideInstallPrompt();
+                return;
+            }
+
+            document.getElementById('pwa-install-prompt').style.display = 'block';
+            document.querySelector('#pwa-install-prompt h3').textContent = '手动添加到主屏幕';
+            document.querySelector('#pwa-install-prompt p').innerHTML = '请按照以下步骤添加到主屏幕：<br>1. 点击Chrome浏览器右上角的三个点<br>2. 选择「添加到主屏幕」<br>3. 点击「添加」按钮';
+            document.getElementById('pwa-install').textContent = '知道了';
+            document.getElementById('pwa-cancel').style.display = 'none';
+        }
+        
+        // 隐藏安装提示弹窗
+        function hideInstallPrompt() {
+            document.getElementById('pwa-install-prompt').style.display = 'none';
+        }
+        
+        // 处理取消按钮点击
+        document.getElementById('pwa-cancel').addEventListener('click', () => {
+            hideInstallPrompt();
+            // 移除用户拒绝记录，确保下次仍会提示
+            console.log('用户点击了取消按钮，下次仍会提示安装');
+        });
+        
+        // 处理安装按钮点击
+        document.getElementById('pwa-install').addEventListener('click', async () => {
+            if (deferredPrompt) {
+                console.log('用户点击了安装按钮，显示安装提示');
+                // 显示安装提示
+                deferredPrompt.prompt();
+                // 等待用户响应
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`用户选择: ${outcome}`);
+                // 清除保存的事件
+                deferredPrompt = null;
+                // 隐藏弹窗
+                hideInstallPrompt();
+            } else {
+                console.log('用户点击了安装按钮，但没有deferredPrompt');
+                // 隐藏弹窗
+                hideInstallPrompt();
+            }
+        });
+        
+        // 处理手动下载按钮点击
+        document.getElementById('download-btn').addEventListener('click', () => {
+            console.log('用户点击了添加到桌面按钮');
+            if (deferredPrompt) {
+                console.log('有deferredPrompt，显示安装提示');
+                // 显示安装提示
+                deferredPrompt.prompt();
+                // 等待用户响应
+                deferredPrompt.userChoice.then(({ outcome }) => {
+                    console.log(`用户选择: ${outcome}`);
+                    // 清除保存的事件
+                    deferredPrompt = null;
+                });
+            } else {
+                console.log('没有deferredPrompt，显示手动安装指南');
+                // 显示手动安装指南
+                showManualInstallGuide();
+            }
+        });
+        
+        // 检查是否需要显示安装提示
+        function checkInstallPrompt() {
+            console.log('检查安装提示条件');
+            // 移除所有用户拒绝记录，确保每次都会提示
+            localStorage.removeItem('pwaInstallDismissed');
+            localStorage.removeItem('pwaInstallDismissedTime');
+            console.log('已清除用户拒绝记录，确保每次都会提示安装');
+        }
+        
+        // 页面加载时检查
+        window.addEventListener('load', () => {
+            checkInstallPrompt();
+            // 3秒后尝试显示安装提示
+            setTimeout(() => {
+                console.log('3秒后尝试显示安装提示');
+                showInstallPrompt();
+            }, 3000);
+        });
+        
+    </script>
+</body>
+</html>
