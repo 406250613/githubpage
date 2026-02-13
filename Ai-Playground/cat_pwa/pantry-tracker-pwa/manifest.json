@@ -3,7 +3,7 @@
   "short_name": "铲猫砂",
   "start_url": "./litter-box-tracker-pantry_cloud.html",
   "display": "standalone",
-  "background_color": "#f4f6f8",
+  "background_color": "#667eea",
   "theme_color": "#667eea",
   "icons": [
     {
