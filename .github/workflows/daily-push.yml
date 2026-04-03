@@ -14,12 +14,22 @@ jobs:
       - name: 安装 web-push
         run: npm install -g web-push
 
-      - name: 发送推送通知
+      - name: 发送推送给文弘
         run: |
           web-push send-notification \
             --endpoint="${{ secrets.PUSH_ENDPOINT }}" \
             --key="${{ secrets.PUSH_P256DH }}" \
             --auth="${{ secrets.PUSH_AUTH }}" \
+            --vapid-subject="mailto:406250613@qq.com" \
+            --vapid-pubkey="${{ secrets.VAPID_PUBLIC }}" \
+            --vapid-pvtkey="${{ secrets.VAPID_PRIVATE }}"
+
+      - name: 发送推送给玉梅
+        run: |
+          web-push send-notification \
+            --endpoint="${{ secrets.PUSH_ENDPOINT_B }}" \
+            --key="${{ secrets.PUSH_P256DH_B }}" \
+            --auth="${{ secrets.PUSH_AUTH_B }}" \
             --vapid-subject="mailto:406250613@qq.com" \
             --vapid-pubkey="${{ secrets.VAPID_PUBLIC }}" \
             --vapid-pvtkey="${{ secrets.VAPID_PRIVATE }}"
