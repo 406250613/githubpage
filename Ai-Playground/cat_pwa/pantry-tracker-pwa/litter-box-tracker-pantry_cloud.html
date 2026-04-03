@@ -508,7 +508,7 @@
     />
 
     <div class="container">
-      <h1>🐱 铲猫砂记录器.</h1>
+      <h1>🐱 铲猫砂记录器</h1>
       <!-- 下载按钮 -->
       <div style="text-align: center; margin-bottom: 24px">
         <button
@@ -1434,11 +1434,14 @@
       });
 
       // --- 推送通知相关逻辑 ---
-      // TODO: 请替换为你的 VAPID 公钥 (可通过 npx web-push generate-vapid-keys 生成)
-      // Public Key: BK8LI40647lh1lyPRTwslOs475KPC3TrEM3DCvbpeDoqcqjZ4Cj5ef8tAeZA7ghuslRtTrjm3st2Hk1t75XhoLQ
-      // (私钥请仅保存在服务端，切勿暴露在前端)
+      // 请替换为你的 VAPID 公钥 (可通过 npx web-push generate-vapid-keys 生成)
+      // Public Key: BPYMx1IkFPUCFMcQ5gJ5iXANv9NUQuOcgdz2x5BrddsVuvGzbXqaVudqsvbx87hzwjZLQUCBXI56bgShj0pSWks
+      // Private Key: 3Ou4BQjCWybKssgnhE7muBgO8oc-tSo8Kj7ZQC2gORo
       const publicVapidKey =
-        "BK8LI40647lh1lyPRTwslOs475KPC3TrEM3DCvbpeDoqcqjZ4Cj5ef8tAeZA7ghuslRtTrjm3st2Hk1t75XhoLQ";
+        "BPYMx1IkFPUCFMcQ5gJ5iXANv9NUQuOcgdz2x5BrddsVuvGzbXqaVudqsvbx87hzwjZLQUCBXI56bgShj0pSWks";
+
+      const privateVapidKey =
+        "3Ou4BQjCWybKssgnhE7muBgO8oc-tSo8Kj7ZQC2gORo";
 
       function initializePushUI(registration) {
         const pushButton = document.getElementById("enable-push-btn");
