@@ -23,3 +23,4 @@ jobs:
             --vapid-subject="mailto:406250613@qq.com" \
             --vapid-pubkey="${{ secrets.VAPID_PUBLIC }}" \
             --vapid-pvtkey="${{ secrets.VAPID_PRIVATE }}"
+            
