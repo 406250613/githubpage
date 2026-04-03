@@ -1,0 +1,36 @@
+name: 每日铲猫砂提醒推送
+
+on:
+  schedule:
+    # UTC 00:00 = 北京时间 08:00，每天早上提醒
+    - cron: "0 0 * * *"
+  # 允许手动触发，方便测试
+  workflow_dispatch:
+
+jobs:
+  send-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 安装 web-push
+        run: npm install -g web-push
+
+      - name: 发送推送通知
+        run: |
+          web-push send-notification \
+            --endpoint="${{ secrets.PUSH_ENDPOINT }}" \
+            --key="${{ secrets.PUSH_P256DH }}" \
+            --auth="${{ secrets.PUSH_AUTH }}" \
+            --vapid-subject="mailto:406250613@qq.com" \
+            --vapid-pubkey="${{ secrets.VAPID_PUBLIC }}" \
+            --vapid-pvtkey="${{ secrets.VAPID_PRIVATE }}"
+
+
+
+
+{
+  "endpoint":"https://fcm.googleapis.com/fcm/send/eNSjZBWxAo8:APA91bExyyYMdb6m5GX7dzj4Mi72j7t64Qrho6dVT4MDcN3DSfN3UDCoiPEaKQBbRc6JVxcJSGTbSP-GxfVNhGqbu2g_sYQqvVLyq-IdNlvHJhs0gHOc_BDne3KysGH4t0MuyCb6-4zK",
+  "expirationTime":null,
+  "keys":{
+    "p256dh":"BIFrTGWeYyfGmwGAba8VPwiIZvBoRX0ixcOosPxLxPXFE7EHsu9bv1-LswfKzCFdNU6WULIp_kvT6MPQwYDkrW8","auth":"IRadRm1a8wd3DwgXq1hcEg"
+    }
+}
