@@ -1434,32 +1434,30 @@
       });
 
       // --- 推送通知相关逻辑 ---
-      // 请替换为你的 VAPID 公钥 (可通过 npx web-push generate-vapid-keys 生成)
-      // Public Key:BK8LI40647lh1lyPRTwslOs475KPC3TrEM3DCvbpeDoqcqjZ4Cj5ef8tAeZA7ghuslRtTrjm3st2Hk1t75XhoLQ
+      // Public Key: BK8LI40647lh1lyPRTwslOs475KPC3TrEM3DCvbpeDoqcqjZ4Cj5ef8tAeZA7ghuslRtTrjm3st2Hk1t75XhoLQ
       // Private Key:pEmtNslkS-0aW4nBucc_xBZ2bLSclBGKlw8xuiUgOgo
+      // 私钥只保存在 GitHub Secrets (VAPID_PRIVATE)，不在前端存储
       const publicVapidKey =
         "BK8LI40647lh1lyPRTwslOs475KPC3TrEM3DCvbpeDoqcqjZ4Cj5ef8tAeZA7ghuslRtTrjm3st2Hk1t75XhoLQ";
 
-      const privateVapidKey =
-        "pEmtNslkS-0aW4nBucc_xBZ2bLSclBGKlw8xuiUgOgo";
-
       function initializePushUI(registration) {
         const pushButton = document.getElementById("enable-push-btn");
-        // 检查是否支持推送
         if (!("PushManager" in window)) {
           return;
         }
 
-        // 检查当前订阅状态
         registration.pushManager
           .getSubscription()
           .then(function (subscription) {
-            const isSubscribed = !(subscription === null);
-            if (isSubscribed) {
+            pushButton.style.display = "inline-flex";
+            if (subscription) {
               console.log("用户已订阅推送");
+              pushButton.textContent = "🔔 提醒已开启（点击重新订阅）";
+              pushButton.style.background = "#48bb78";
               showSubscriptionInfo(subscription);
             } else {
-              pushButton.style.display = "inline-flex";
+              pushButton.textContent = "🔔 开启每日提醒";
+              pushButton.style.background = "#e53e3e";
             }
           });
       }
@@ -1467,29 +1465,43 @@
       function subscribeToPush() {
         const pushButton = document.getElementById("enable-push-btn");
         pushButton.disabled = true;
-        pushButton.textContent = "正在订阅...";
+        pushButton.textContent = "订阅中...";
 
-        navigator.serviceWorker.ready
-          .then(function (registration) {
-            const subscribeOptions = {
-              userVisibleOnly: true,
-              applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
-            };
+        navigator.serviceWorker.ready.then(function (registration) {
+          // 先检查是否已有旧订阅，有则先取消
+          registration.pushManager.getSubscription().then(function (existing) {
+            const doSubscribe = () =>
+              registration.pushManager
+                .subscribe({
+                  userVisibleOnly: true,
+                  applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+                })
+                .then(function (pushSubscription) {
+                  console.log("订阅成功:", pushSubscription);
+                  showToast("✅ 订阅成功！请将下方信息更新到 GitHub Secrets");
+                  pushButton.textContent = "🔔 提醒已开启（点击重新订阅）";
+                  pushButton.style.background = "#48bb78";
+                  pushButton.disabled = false;
+                  showSubscriptionInfo(pushSubscription);
+                })
+                .catch(function (err) {
+                  console.log("订阅失败: ", err);
+                  showToast("订阅失败: " + err.message, "error");
+                  pushButton.disabled = false;
+                  pushButton.textContent = "🔔 开启每日提醒";
+                  pushButton.style.background = "#e53e3e";
+                });
 
-            return registration.pushManager.subscribe(subscribeOptions);
-          })
-          .then(function (pushSubscription) {
-            console.log("订阅成功:", pushSubscription);
-            showToast("订阅成功！请复制订阅信息");
-            showSubscriptionInfo(pushSubscription);
-            pushButton.style.display = "none";
-          })
-          .catch(function (err) {
-            console.log("订阅失败: ", err);
-            showToast("订阅失败: " + err.message, "error");
-            pushButton.disabled = false;
-            pushButton.textContent = "🔔 开启每日提醒";
+            if (existing) {
+              existing.unsubscribe().then(() => {
+                console.log("已取消旧订阅，重新订阅...");
+                doSubscribe();
+              });
+            } else {
+              doSubscribe();
+            }
           });
+        });
       }
 
       function showSubscriptionInfo(subscription) {
