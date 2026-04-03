@@ -2,8 +2,8 @@ name: 每日铲猫砂提醒推送
 
 on:
   schedule:
-    # UTC 00:00 = 北京时间 08:00，每天早上提醒
-    - cron: "0 0 * * *"
+    # UTC 13:00 = 北京时间 21:00，每天晚上 9 点提醒
+    - cron: "0 13 * * *"
   # 允许手动触发，方便测试
   workflow_dispatch:
 
@@ -23,4 +23,3 @@ jobs:
             --vapid-subject="mailto:406250613@qq.com" \
             --vapid-pubkey="${{ secrets.VAPID_PUBLIC }}" \
             --vapid-pvtkey="${{ secrets.VAPID_PRIVATE }}"
-            
