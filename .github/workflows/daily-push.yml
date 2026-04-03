@@ -1,0 +1,25 @@
+name: 每日铲猫砂提醒推送
+
+on:
+  schedule:
+    # UTC 00:00 = 北京时间 08:00，每天早上提醒
+    - cron: "0 0 * * *"
+  # 允许手动触发，方便测试
+  workflow_dispatch:
+
+jobs:
+  send-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 安装 web-push
+        run: npm install -g web-push
+
+      - name: 发送推送通知
+        run: |
+          web-push send-notification \
+            --endpoint="${{ secrets.PUSH_ENDPOINT }}" \
+            --key="${{ secrets.PUSH_P256DH }}" \
+            --auth="${{ secrets.PUSH_AUTH }}" \
+            --vapid-subject="mailto:406250613@qq.com" \
+            --vapid-pubkey="${{ secrets.VAPID_PUBLIC }}" \
+            --vapid-pvtkey="${{ secrets.VAPID_PRIVATE }}"
