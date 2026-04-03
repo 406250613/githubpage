@@ -104,7 +104,22 @@ self.addEventListener("push", (event) => {
                 baseDate.getTime() + (days - 1) * 24 * 60 * 60 * 1000;
               const endDate = new Date(endTimestamp);
               const endStr = `${endDate.getMonth() + 1}月${endDate.getDate()}日`;
-              body = `预计 ${endStr} 结束 (剩余 ${days} 天)`;
+
+              // 计算剩余天数 = 结束日期 - 今天
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              endDate.setHours(0, 0, 0, 0);
+              const remaining = Math.round(
+                (endDate.getTime() - today.getTime()) / (24 * 60 * 60 * 1000),
+              );
+              const remainingStr =
+                remaining > 0
+                  ? `剩余 ${remaining} 天`
+                  : remaining === 0
+                    ? "今天结束"
+                    : "已过期";
+
+              body = `预计 ${endStr} 结束 (${remainingStr})`;
             }
           } else {
             body = "暂无惩罚天数";
