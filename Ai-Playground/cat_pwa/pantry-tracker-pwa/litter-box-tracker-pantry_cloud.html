@@ -570,21 +570,6 @@
           >
             🔔 开启每日提醒
           </button>
-          <div
-            id="subscription-info"
-            style="
-              display: none;
-              margin-top: 10px;
-              padding: 10px;
-              background: #fff;
-              border-radius: 8px;
-              font-size: 12px;
-              word-break: break-all;
-              user-select: all;
-              text-align: left;
-              border: 1px solid #eee;
-            "
-          ></div>
         </div>
       </div>
 
@@ -1453,25 +1438,22 @@
 
       // --- 推送通知相关逻辑 ---
       // Public Key: BK8LI40647lh1lyPRTwslOs475KPC3TrEM3DCvbpeDoqcqjZ4Cj5ef8tAeZA7ghuslRtTrjm3st2Hk1t75XhoLQ
-      // Private Key:pEmtNslkS-0aW4nBucc_xBZ2bLSclBGKlw8xuiUgOgo
       const publicVapidKey =
         "BK8LI40647lh1lyPRTwslOs475KPC3TrEM3DCvbpeDoqcqjZ4Cj5ef8tAeZA7ghuslRtTrjm3st2Hk1t75XhoLQ";
 
+      let _currentPushSubscription = null;
+
       function initializePushUI(registration) {
         const pushButton = document.getElementById("enable-push-btn");
-        if (!("PushManager" in window)) {
-          return;
-        }
-
+        if (!("PushManager" in window)) return;
         registration.pushManager
           .getSubscription()
           .then(function (subscription) {
             pushButton.style.display = "inline-flex";
             if (subscription) {
-              console.log("用户已订阅推送");
-              pushButton.textContent = "🔔 提醒已开启（点击重新订阅）";
+              _currentPushSubscription = subscription;
+              pushButton.textContent = "🔔 提醒已开启";
               pushButton.style.background = "#48bb78";
-              showSubscriptionInfo(subscription);
             } else {
               pushButton.textContent = "🔔 开启每日提醒";
               pushButton.style.background = "#e53e3e";
@@ -1479,57 +1461,110 @@
           });
       }
 
+      // 按钮统一入口：已订阅 → 打开弹窗查看信息；未订阅 → 发起订阅
       function subscribeToPush() {
         const pushButton = document.getElementById("enable-push-btn");
-        pushButton.disabled = true;
-        pushButton.textContent = "订阅中...";
-
         navigator.serviceWorker.ready.then(function (registration) {
-          // 先检查是否已有旧订阅，有则先取消
           registration.pushManager.getSubscription().then(function (existing) {
-            const doSubscribe = () =>
+            if (existing) {
+              _currentPushSubscription = existing;
+              openPushModal();
+              return;
+            }
+            pushButton.disabled = true;
+            pushButton.textContent = "订阅中...";
+            registration.pushManager
+              .subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+              })
+              .then(function (pushSubscription) {
+                _currentPushSubscription = pushSubscription;
+                pushButton.textContent = "🔔 提醒已开启";
+                pushButton.style.background = "#48bb78";
+                pushButton.disabled = false;
+                openPushModal();
+              })
+              .catch(function (err) {
+                console.log("订阅失败:", err);
+                showToast("订阅失败: " + err.message, "error");
+                pushButton.disabled = false;
+                pushButton.textContent = "🔔 开启每日提醒";
+                pushButton.style.background = "#e53e3e";
+              });
+          });
+        });
+      }
+
+      function openPushModal() {
+        if (!_currentPushSubscription) return;
+        document.getElementById("push-modal-info").textContent = JSON.stringify(
+          _currentPushSubscription,
+        );
+        document.getElementById("resubscribe-confirm").style.display = "none";
+        document.getElementById("resubscribe-btn").style.display = "block";
+        document.getElementById("push-modal-overlay").style.display = "flex";
+      }
+
+      function closePushModal() {
+        document.getElementById("push-modal-overlay").style.display = "none";
+        document.getElementById("resubscribe-confirm").style.display = "none";
+        document.getElementById("resubscribe-btn").style.display = "block";
+      }
+
+      function copyPushInfo() {
+        if (!_currentPushSubscription) return;
+        navigator.clipboard
+          .writeText(JSON.stringify(_currentPushSubscription))
+          .then(() => showToast("✅ 订阅信息已复制到剪贴板"));
+      }
+
+      function showResubscribeConfirm() {
+        document.getElementById("resubscribe-confirm").style.display = "block";
+        document.getElementById("resubscribe-btn").style.display = "none";
+      }
+
+      function cancelResubscribe() {
+        document.getElementById("resubscribe-confirm").style.display = "none";
+        document.getElementById("resubscribe-btn").style.display = "block";
+      }
+
+      // 确认后执行：取消旧订阅 → 重新订阅
+      function doResubscribe() {
+        closePushModal();
+        const pushButton = document.getElementById("enable-push-btn");
+        pushButton.disabled = true;
+        pushButton.textContent = "重新订阅中...";
+        navigator.serviceWorker.ready.then(function (registration) {
+          registration.pushManager.getSubscription().then(function (existing) {
+            const doNew = () =>
               registration.pushManager
                 .subscribe({
                   userVisibleOnly: true,
                   applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
                 })
-                .then(function (pushSubscription) {
-                  console.log("订阅成功:", pushSubscription);
-                  showToast("✅ 订阅成功！请将下方信息更新到 GitHub Secrets");
-                  pushButton.textContent = "🔔 提醒已开启（点击重新订阅）";
+                .then(function (newSub) {
+                  _currentPushSubscription = newSub;
+                  pushButton.textContent = "🔔 提醒已开启";
                   pushButton.style.background = "#48bb78";
                   pushButton.disabled = false;
-                  showSubscriptionInfo(pushSubscription);
+                  openPushModal();
+                  showToast(
+                    "✅ 重新订阅成功！请复制新的订阅信息更新到 GitHub Secrets",
+                  );
                 })
                 .catch(function (err) {
-                  console.log("订阅失败: ", err);
                   showToast("订阅失败: " + err.message, "error");
                   pushButton.disabled = false;
-                  pushButton.textContent = "🔔 开启每日提醒";
-                  pushButton.style.background = "#e53e3e";
+                  pushButton.textContent = "🔔 提醒已开启";
+                  pushButton.style.background = "#48bb78";
                 });
-
             if (existing) {
-              existing.unsubscribe().then(() => {
-                console.log("已取消旧订阅，重新订阅...");
-                doSubscribe();
-              });
+              existing.unsubscribe().then(doNew);
             } else {
-              doSubscribe();
+              doNew();
             }
           });
-        });
-      }
-
-      function showSubscriptionInfo(subscription) {
-        const infoDiv = document.getElementById("subscription-info");
-        infoDiv.style.display = "block";
-        infoDiv.innerHTML =
-          '<p style="color:#666;margin-bottom:5px;font-weight:bold;">📋 订阅信息 (用于发送通知):</p>' +
-          JSON.stringify(subscription);
-        // 自动复制
-        navigator.clipboard.writeText(JSON.stringify(subscription)).then(() => {
-          showToast("订阅信息已复制到剪贴板");
         });
       }
 
@@ -1546,5 +1581,182 @@
         return outputArray;
       }
     </script>
+
+    <!-- 推送订阅信息弹窗 -->
+    <div
+      id="push-modal-overlay"
+      onclick="if (event.target === this) closePushModal();"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      "
+    >
+      <div
+        style="
+          background: #fff;
+          border-radius: 16px;
+          padding: 24px;
+          max-width: 360px;
+          width: 100%;
+          max-height: 80vh;
+          overflow-y: auto;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        "
+      >
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+          "
+        >
+          <h3 style="margin: 0; font-size: 16px; color: #333">
+            🔔 推送提醒已开启
+          </h3>
+          <button
+            onclick="closePushModal()"
+            style="
+              background: none;
+              border: none;
+              font-size: 22px;
+              cursor: pointer;
+              color: #bbb;
+              line-height: 1;
+              padding: 0;
+            "
+          >
+            ×
+          </button>
+        </div>
+        <p style="color: #666; font-size: 13px; margin: 0 0 8px">
+          📋 当前订阅信息（配置 GitHub Secrets 用）：
+        </p>
+        <div
+          id="push-modal-info"
+          style="
+            background: #f7f8fa;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 11px;
+            word-break: break-all;
+            color: #444;
+            border: 1px solid #eee;
+            max-height: 140px;
+            overflow-y: auto;
+            user-select: all;
+            line-height: 1.5;
+          "
+        ></div>
+        <button
+          onclick="copyPushInfo()"
+          style="
+            margin-top: 12px;
+            width: 100%;
+            padding: 11px;
+            background: #4299e1;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+          "
+        >
+          📋 复制订阅信息
+        </button>
+        <hr
+          style="margin: 20px 0; border: none; border-top: 1px solid #f0f0f0"
+        />
+        <div
+          id="resubscribe-confirm"
+          style="
+            display: none;
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #7a5800;
+            line-height: 1.5;
+          "
+        >
+          ⚠️ 重新订阅会生成新的订阅信息，需重新配置 GitHub Secrets
+          才能继续收到推送。确定继续吗？
+          <div style="display: flex; gap: 8px; margin-top: 10px">
+            <button
+              onclick="doResubscribe()"
+              style="
+                flex: 1;
+                padding: 8px;
+                background: #e53e3e;
+                color: #fff;
+                border: none;
+                border-radius: 6px;
+                font-size: 13px;
+                cursor: pointer;
+              "
+            >
+              确定重新订阅
+            </button>
+            <button
+              onclick="cancelResubscribe()"
+              style="
+                flex: 1;
+                padding: 8px;
+                background: #f0f0f0;
+                color: #666;
+                border: none;
+                border-radius: 6px;
+                font-size: 13px;
+                cursor: pointer;
+              "
+            >
+              取消
+            </button>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px">
+          <button
+            onclick="closePushModal()"
+            style="
+              flex: 1;
+              padding: 10px;
+              background: #f0f0f0;
+              color: #666;
+              border: none;
+              border-radius: 8px;
+              font-size: 14px;
+              cursor: pointer;
+            "
+          >
+            关闭
+          </button>
+          <button
+            id="resubscribe-btn"
+            onclick="showResubscribeConfirm()"
+            style="
+              flex: 1;
+              padding: 10px;
+              background: transparent;
+              color: #ccc;
+              border: 1px solid #e0e0e0;
+              border-radius: 8px;
+              font-size: 12px;
+              cursor: pointer;
+            "
+          >
+            重新订阅
+          </button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
