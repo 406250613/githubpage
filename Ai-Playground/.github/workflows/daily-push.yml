@@ -2,8 +2,8 @@ name: 每日铲猫砂提醒推送
 
 on:
   schedule:
-    # UTC 00:00 = 北京时间 08:00，每天早上提醒
-    - cron: "0 0 * * *"
+    # UTC 13:00 = 北京时间 21:00，每天晚上 9 点提醒
+    - cron: "0 13 * * *"
   # 允许手动触发，方便测试
   workflow_dispatch:
 
@@ -14,7 +14,7 @@ jobs:
       - name: 安装 web-push
         run: npm install -g web-push
 
-      - name: 发送推送通知
+      - name: 发送推送给文弘
         run: |
           web-push send-notification \
             --endpoint="${{ secrets.PUSH_ENDPOINT }}" \
@@ -23,4 +23,13 @@ jobs:
             --vapid-subject="mailto:406250613@qq.com" \
             --vapid-pubkey="${{ secrets.VAPID_PUBLIC }}" \
             --vapid-pvtkey="${{ secrets.VAPID_PRIVATE }}"
-            
+
+      - name: 发送推送给玉梅
+        run: |
+          web-push send-notification \
+            --endpoint="${{ secrets.PUSH_ENDPOINT_B }}" \
+            --key="${{ secrets.PUSH_P256DH_B }}" \
+            --auth="${{ secrets.PUSH_AUTH_B }}" \
+            --vapid-subject="mailto:406250613@qq.com" \
+            --vapid-pubkey="${{ secrets.VAPID_PUBLIC }}" \
+            --vapid-pvtkey="${{ secrets.VAPID_PRIVATE }}"
