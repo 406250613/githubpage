@@ -1046,21 +1046,30 @@
         if (data[member] === 0) {
           data[`startDate${member}`] = new Date().toISOString();
         }
-
         data[member] += days;
-        saveData(data);
 
-        // 获取当前日期（仅日期，不含时间）
+        // 将历史记录合并到同一次保存，避免两次 syncToCloud 的竞态条件
         const now = new Date();
         const currentDate = now.toLocaleDateString("zh-CN", {
           year: "numeric",
           month: "2-digit",
           day: "2-digit",
         });
+        const timestamp = now.toLocaleString("zh-CN", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+        data.history.push({
+          timestamp,
+          action: `${currentDate} - ${member} 增加${days}天惩罚 | 原因：${reason}`,
+        });
 
-        addHistory(
-          `${currentDate} - ${member} 增加${days}天惩罚 | 原因：${reason}`,
-        );
+        saveData(data); // 只同步一次，天数+历史同时写入云端
+
         updateDisplay();
         showToast("添加成功！");
 
@@ -1080,19 +1089,28 @@
             // 清除起始日期
             delete data[`startDate${member}`];
 
-            saveData(data);
-
-            // 获取当前日期（仅日期，不含时间）
+            // 合并历史记录，只调用一次 saveData
             const now = new Date();
             const currentDate = now.toLocaleDateString("zh-CN", {
               year: "numeric",
               month: "2-digit",
               day: "2-digit",
             });
+            const timestamp = now.toLocaleString("zh-CN", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+            });
+            data.history.push({
+              timestamp,
+              action: `${currentDate} - ${member} 清零惩罚天数（共${clearedDays}天）`,
+            });
 
-            addHistory(
-              `${currentDate} - ${member} 清零惩罚天数（共${clearedDays}天）`,
-            );
+            saveData(data); // 只同步一次
+
             updateDisplay();
             showToast("已清零，恭喜完成！");
           }
