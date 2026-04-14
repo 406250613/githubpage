@@ -6,9 +6,10 @@ const APP_SHELL_URL = new URL(
 
 const ASSETS_TO_CACHE = [
   APP_SHELL_URL,
-  new URL("./manifest.json", self.location).toString(),
-  new URL("./icon-192.png", self.location).toString(),
-  new URL("./icon-512.png", self.location).toString(),
+  new URL('./manifest.json', self.location).toString(),
+  new URL('./icon-144.png', self.location).toString(),
+  new URL('./icon-192.png', self.location).toString(),
+  new URL('./icon-512.png', self.location).toString(),
 ];
 
 // Install Event
