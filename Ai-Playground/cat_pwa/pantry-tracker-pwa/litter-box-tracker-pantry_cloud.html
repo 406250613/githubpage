@@ -167,6 +167,7 @@
         display: flex;
         flex-direction: column;
         gap: 12px;
+        position: relative;
       }
 
       .input-group {
@@ -509,6 +510,65 @@
 
     <div class="container">
       <h1>🐱 铲猫砂记录器</h1>
+
+      <!-- 身份选择器 -->
+      <div
+        style="
+          margin-bottom: 24px;
+          padding: 15px;
+          background: var(--card-bg);
+          border-radius: var(--radius);
+          box-shadow: var(--shadow);
+          text-align: center;
+        "
+      >
+        <p
+          id="identity-text"
+          style="
+            margin-bottom: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--text-main);
+          "
+        >
+          👤 请先选择你的身份 (选定后不可更改)
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center">
+          <button
+            id="btn-identity-A"
+            onclick="setCurrentUser('A')"
+            class="btn"
+            style="
+              background: transparent;
+              border: 2px solid var(--primary);
+              color: var(--primary);
+              font-size: 14px;
+              padding: 8px 24px;
+              min-width: auto;
+              border-radius: 20px;
+            "
+          >
+            文弘
+          </button>
+          <button
+            id="btn-identity-B"
+            onclick="setCurrentUser('B')"
+            class="btn"
+            style="
+              background: transparent;
+              border: 2px solid var(--primary);
+              color: var(--primary);
+              font-size: 14px;
+              padding: 8px 24px;
+              min-width: auto;
+              border-radius: 20px;
+            "
+          >
+            玉梅
+          </button>
+        </div>
+      </div>
+
       <!-- 下载按钮 -->
       <div style="text-align: center; margin-bottom: 24px">
         <button
@@ -738,6 +798,29 @@
         }
       }
 
+      // 设置当前身份
+      function setCurrentUser(member) {
+        // 如果已经有身份记录，则不允许更改
+        const existingUser = localStorage.getItem("currentUser");
+        if (existingUser) {
+          const name = existingUser === "A" ? "文弘" : "玉梅";
+          showToast(`已绑定身份：${name}，不可更改`, "error");
+          return;
+        }
+
+        // 首次选择身份，弹窗二次确认
+        const name = member === "A" ? "文弘" : "玉梅";
+        if (
+          confirm(
+            `确定你是 ${name} 吗？\n一旦确认，在此设备上将不可更改，并且你只能修改对方的数据。`,
+          )
+        ) {
+          localStorage.setItem("currentUser", member);
+          updateDisplay();
+          showToast(`身份已锁定：${name}。你现在只能修改对方的数据。`);
+        }
+      }
+
       // 临时存储准备切换的成员
       let pendingTurnMember = null;
 
@@ -781,6 +864,18 @@
 
       // 处理快速选择
       function handleQuickSelect(member, selectElement) {
+        const currentUser = localStorage.getItem("currentUser");
+        if (!currentUser) {
+          showToast("❌ 请先在顶部选择你的身份！", "error");
+          selectElement.value = "";
+          return;
+        }
+        if (currentUser === member) {
+          showToast("❌ 互相监督：不能修改自己的数据！", "error");
+          selectElement.value = "";
+          return;
+        }
+
         const selectedValue = selectElement.value;
         if (!selectedValue) return;
 
@@ -863,6 +958,56 @@
         const data = getData();
         const currentTurn = data.currentTurn || "A";
         const currentTurnDate = data.currentTurnDate;
+        const currentUser = localStorage.getItem("currentUser");
+
+        // 更新身份选择器按钮状态
+        const btnA = document.getElementById("btn-identity-A");
+        const btnB = document.getElementById("btn-identity-B");
+        const identityText = document.getElementById("identity-text");
+
+        if (btnA && btnB) {
+          if (currentUser) {
+            // 已经选定身份，禁用两个按钮，并修改提示文字
+            btnA.disabled = true;
+            btnB.disabled = true;
+            if (identityText) {
+              identityText.textContent = `👤 你的身份是：${currentUser === "A" ? "文弘" : "玉梅"} (已锁定)`;
+            }
+
+            if (currentUser === "A") {
+              btnA.style.background = "var(--primary)";
+              btnA.style.color = "white";
+              btnA.style.cursor = "not-allowed";
+              btnB.style.background = "transparent";
+              btnB.style.color = "var(--text-light)";
+              btnB.style.borderColor = "var(--text-light)";
+              btnB.style.cursor = "not-allowed";
+            } else if (currentUser === "B") {
+              btnB.style.background = "var(--primary)";
+              btnB.style.color = "white";
+              btnB.style.cursor = "not-allowed";
+              btnA.style.background = "transparent";
+              btnA.style.color = "var(--text-light)";
+              btnA.style.borderColor = "var(--text-light)";
+              btnA.style.cursor = "not-allowed";
+            }
+          } else {
+            // 尚未选定，重置状态
+            if (identityText) {
+              identityText.textContent = `👤 请先选择你的身份 (选定后不可更改)`;
+            }
+            btnA.disabled = false;
+            btnB.disabled = false;
+            btnA.style.cursor = "pointer";
+            btnB.style.cursor = "pointer";
+            btnA.style.background = "transparent";
+            btnA.style.color = "var(--primary)";
+            btnA.style.borderColor = "var(--primary)";
+            btnB.style.background = "transparent";
+            btnB.style.color = "var(--primary)";
+            btnB.style.borderColor = "var(--primary)";
+          }
+        }
 
         ["A", "B"].forEach((member) => {
           const days = data[member];
@@ -900,11 +1045,7 @@
             badge.onclick = () => initiateTurnSelection(member);
           }
 
-          // 将日期显示附加到徽章后面（先清空 badge 后面的内容，再添加）
-          // 注意：这里需要操作 DOM 结构，避免重复添加
-          // 简单做法：把 dateHtml 放在 badge 内部或者 badge 后面
-          // 由于 badge 是 span，我们在 badge 后面追加一个 span
-          // 先移除旧的 turn-date
+          // 将日期显示附加到徽章后面
           const h2 = badge.parentElement;
           const existingDate = h2.querySelector(".turn-date");
           if (existingDate) {
@@ -929,10 +1070,8 @@
 
             // 预计结束日期 (仅在轮到该人时显示)
             if (isTurn) {
-              // 计算逻辑：基于“开始日期”往后推 days-1 天
               let baseDate = new Date();
               if (currentTurnDate) {
-                // 解析 YYYY-MM-DD 为本地时间，避免时区偏差
                 const parts = currentTurnDate.split("-");
                 if (parts.length === 3) {
                   baseDate = new Date(parts[0], parts[1] - 1, parts[2]);
@@ -951,6 +1090,46 @@
             dateInfoEl.style.display = "block";
           } else {
             dateInfoEl.style.display = "none";
+          }
+
+          // 4. 互相监督逻辑：控制操作区的可用性
+          const isSelf = currentUser === member;
+          const btnGroup = document.querySelector(
+            `#member${member} .btn-group`,
+          );
+          const inputs = btnGroup.querySelectorAll(
+            "input, textarea, select, button",
+          );
+
+          let overlay = document.getElementById(`overlay${member}`);
+          if (!overlay) {
+            overlay = document.createElement("div");
+            overlay.id = `overlay${member}`;
+            overlay.style.position = "absolute";
+            overlay.style.top = "0";
+            overlay.style.left = "0";
+            overlay.style.width = "100%";
+            overlay.style.height = "100%";
+            overlay.style.background = "rgba(255, 255, 255, 0.5)";
+            overlay.style.zIndex = "5";
+            overlay.style.display = "flex";
+            overlay.style.alignItems = "center";
+            overlay.style.justifyContent = "center";
+            overlay.style.borderRadius = "12px";
+            overlay.innerHTML =
+              '<span style="background: rgba(0,0,0,0.7); color: white; padding: 6px 12px; border-radius: 20px; font-size: 13px; cursor: not-allowed; display: flex; align-items: center; gap: 4px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> 只能由对方操作</span>';
+
+            btnGroup.appendChild(overlay);
+          }
+
+          // 如果没有选择身份，默认可以看，但是提交时会拦截。为了体验，我们可以不加遮罩，或者加上提示。
+          // 这里我们选择：只有当明确 isSelf 时，才遮罩。
+          if (isSelf) {
+            overlay.style.display = "flex";
+            inputs.forEach((el) => (el.disabled = true));
+          } else {
+            overlay.style.display = "none";
+            inputs.forEach((el) => (el.disabled = false));
           }
         });
 
@@ -1010,6 +1189,16 @@
 
       // 增加天数
       function addDays(member) {
+        const currentUser = localStorage.getItem("currentUser");
+        if (!currentUser) {
+          showToast("❌ 请先在顶部选择你的身份！", "error");
+          return;
+        }
+        if (currentUser === member) {
+          showToast("❌ 互相监督：不能修改自己的数据！", "error");
+          return;
+        }
+
         const input = document.getElementById(`input${member}`);
         const reasonInput = document.getElementById(`reason${member}`);
         const days = parseInt(input.value);
@@ -1065,6 +1254,16 @@
 
       // 完成当天（清零天数）
       function completeDay(member) {
+        const currentUser = localStorage.getItem("currentUser");
+        if (!currentUser) {
+          showToast("❌ 请先在顶部选择你的身份！", "error");
+          return;
+        }
+        if (currentUser === member) {
+          showToast("❌ 互相监督：不能自己免除惩罚，请让对方操作！", "error");
+          return;
+        }
+
         const data = getData();
         if (data[member] > 0) {
           // 二次验证
