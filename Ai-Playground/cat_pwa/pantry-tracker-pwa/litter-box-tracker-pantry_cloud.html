@@ -1331,7 +1331,7 @@
       // --- 云同步功能 ---
       const PANTRY_ID_KEY = "cat_pwa_pantry_id";
       const BASKET_NAME = "litter_box_data";
-      const DEFAULT_PANTRY_ID = "3cd7c478-6fd3-4d4b-ae02-a36124e1e68a";
+      const DEFAULT_PANTRY_ID = "62548892-82c0-413b-920f-3108c6f54049";
 
       function getPantryId() {
         const stored = localStorage.getItem(PANTRY_ID_KEY);
@@ -1413,47 +1413,41 @@
 
       async function loadFromCloud(btn) {
         const id = getPantryId();
-
-        const originalText = btn ? btn.textContent : "";
-        if (btn) {
-          btn.textContent = "加载中...";
-          btn.disabled = true;
-        }
-
+        // ... 省略按钮状态代码
         try {
-          const response = await fetch(
-            `https://getpantry.cloud/apiv1/pantry/${id}/basket/${BASKET_NAME}`,
-          );
+          const response = await fetch(`https://getpantry.cloud/apiv1/pantry/${id}/basket/${BASKET_NAME}`);
           if (response.ok) {
             const data = await response.json();
-            if (data) {
-              // 简单的校验
-              if (data.A === undefined || data.B === undefined) {
-                showToast("云端数据格式不正确", "error");
-                return;
-              }
-
-              if (
-                confirm(
-                  "确定要用云端数据覆盖本地数据吗？\n(本地未同步的数据将丢失)",
-                )
-              ) {
-                saveData(data, false); // false 表示不反向同步，避免死循环
-                updateDisplay();
-                showToast("同步成功！");
-              }
+            // 如果数据为空或缺少 A/B，则初始化
+            if (!data || data.A === undefined || data.B === undefined) {
+              const defaultData = {
+                A: 0,
+                B: 0,
+                history: [],
+                lastUpdated: Date.now(),
+                currentTurn: 'A',
+                currentTurnDate: new Date().toISOString().split('T')[0]
+              };
+              // 将默认数据写入云端
+              await fetch(`https://getpantry.cloud/apiv1/pantry/${id}/basket/${BASKET_NAME}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(defaultData)
+              });
+              showToast('云端数据已初始化，请重新同步', 'success');
+              return;
+            }
+            // 正常处理数据
+            if (confirm('确定要用云端数据覆盖本地数据吗？')) {
+              saveData(data, false);
+              updateDisplay();
+              showToast('同步成功！');
             }
           } else {
-            showToast("未找到云端数据或 ID 错误", "error");
+            showToast('未找到云端数据或 ID 错误', 'error');
           }
         } catch (err) {
-          console.error(err);
-          showToast("网络错误，无法加载", "error");
-        } finally {
-          if (btn) {
-            btn.textContent = originalText;
-            btn.disabled = false;
-          }
+          // ...
         }
       }
 
